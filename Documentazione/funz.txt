@@ -1,0 +1,28 @@
+Segreteria
+1.Inserire uno studente
+2.Conferma domanda tirocinio
+
+Studente
+1.Invio domanda tirocinio
+ 1.1 Scelta azienda
+ 1.2 Scelta tutor accademico
+2.Visualizzazione aziende convenzionate
+3.Richista eventuale convenzione
+4.Visualizzazione stato domanda
+5.Firma del progetto formativo
+6.Gestione account
+
+Azienda convenzionata
+1.Firma progetto formativo
+2.Gestione account
+
+Azienda non convenzionata
+1.Registrazione
+2.Invio domanda convenzione
+
+Direttore di Dipartimento
+1.Accettazione richiesta di convenzione
+2.Firma progetto formativo
+
+Tutor accademico
+1.Firma progetto formativo
