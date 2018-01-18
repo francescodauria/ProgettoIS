@@ -1,0 +1,193 @@
+package com.example.user.tirociniosmart.ConvenzionePackage;
+
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.EntityPackage.Azienda;
+import com.example.user.tirociniosmart.R;
+
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Created by User on 21/10/2017.
+ */
+
+public class FragmentListaAziende extends Fragment {
+    private ListView listView;
+    private View mProgressView;
+
+    boolean internet = true;
+    ImageView image;
+    AziendeAdapter adapter;
+    View view;
+    Connection newConnection = null;
+    Context context;
+    @Override
+    public void onAttach(Activity activity) {
+        // TODO Auto-generated method stub
+        super.onAttach(activity);
+        context=activity;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_lista_aziende_layout, container, false);
+        image = (ImageView) view.findViewById(R.id.elem_lista_logo);
+
+        mProgressView = view.findViewById(R.id.aziende_progress);
+
+        new LoadIconTask().execute(1);
+
+
+
+        return view;
+
+    }
+
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    class LoadIconTask extends AsyncTask<Integer, Integer, ArrayList<Azienda>> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected ArrayList<Azienda> doInBackground(Integer... img_ids) {
+            byte[] imgData = null;
+
+            showProgress(true);
+            ArrayList<Azienda> aziende = new ArrayList<>();
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+
+                MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
+
+                newConnection = (Connection) pool.getConnection();
+
+                newConnection.setAutoCommit(false);
+
+                System.out.println("Database connesso");
+                PreparedStatement stt = null;
+
+
+                stt = newConnection.prepareStatement("SELECT * FROM azienda_convenzionata order by nome");
+
+                ResultSet rs = null;
+
+                rs = stt.executeQuery();
+
+
+                while (rs.next()) {
+                    Blob dat = rs.getBlob("logo");
+
+                    imgData = dat.getBytes(1, (int) dat.length());
+
+                    String nome = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String descrizione = rs.getString("descrizione");
+
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+                    Azienda a = new Azienda("azienda1", nome, email,"Napoli", descrizione, bitmap,"492", null);
+                    aziende.add(a);
+                    Log.d("prova", "" + dat.toString());
+                    Log.d("prova2", "" + imgData.length);
+
+
+                }
+
+
+                newConnection.commit();
+                stt.close();
+
+
+                pool.releaseConnection(newConnection);
+            }
+            catch (SQLException e) {
+                internet=false;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return aziende;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Azienda> lista) {
+            showProgress(false);
+            if(internet) {
+                adapter = new AziendeAdapter(context, R.layout.custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
+
+                listView = (ListView) view.findViewById(R.id.mylistview);
+                listView.setAdapter(adapter);
+
+                for (Azienda a : lista) {
+                    adapter.add(a);
+
+                }
+
+            }
+            else {
+                Toast.makeText(getActivity(),"Attenzione: connessione non disponibile", Toast.LENGTH_LONG).show();
+
+            }
+
+            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
+        }
+
+
+    }
+
+
+
+
+
+}

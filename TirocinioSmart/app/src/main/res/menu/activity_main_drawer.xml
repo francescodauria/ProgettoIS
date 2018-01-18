@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Benvenuto nel servizio gestione tirocini"
+        >
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/state_request"
+                    android:icon="@drawable/statorichiesta"
+                    android:title="Visualizza stato richiesta tirocinio" />
+                <item
+                    android:id="@+id/list_agency"
+                    android:icon="@drawable/list"
+                    android:title="Visualizza lista aziende convenzionate" />
+                <item
+                    android:id="@+id/nav_manage"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Gestisci account" />
+            </group>
+        </menu>
+    </item>
+    <item android:title="Comunicazioni via network">
+        <menu>
+            <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Invia nuova domanda tirocinio" />
+            </group>
+
+        </menu>
+    </item>
+    <item android:title="Effettua logout">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </group>
+
+        </menu>
+    </item>
+</menu>

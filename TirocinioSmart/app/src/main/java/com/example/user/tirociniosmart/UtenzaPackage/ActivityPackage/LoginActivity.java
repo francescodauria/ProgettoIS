@@ -3,9 +3,16 @@ package com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.IntentCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -59,7 +66,7 @@ public class LoginActivity extends AppCompatActivity  {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -69,7 +76,7 @@ public class LoginActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -102,17 +109,6 @@ public class LoginActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -124,11 +120,11 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUsernameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String email = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -143,12 +139,8 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
             cancel = true;
         }
           else if(TextUtils.isEmpty(password)){
@@ -177,15 +169,6 @@ public class LoginActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
 
 
 
@@ -256,35 +239,11 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
+    public void registerAzienda(View view) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Intent intent = new Intent(LoginActivity.this, RegistrazioneTutorActivity.class);
+            startActivity(intent);
+    }
 
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -320,20 +279,33 @@ public class LoginActivity extends AppCompatActivity  {
             return true;
         }
 
+
+
+
+
+
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent i = new Intent(LoginActivity.this, StudentActivity.class);
+                i.putExtra("email", mUsernameView.getText().toString());
+                i.putExtra("password", mPasswordView.getText().toString());
+
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+
+
+
+                startActivity(i);
+                ActivityCompat.finishAffinity(LoginActivity.this);
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
         }
-
-
 
 
 
