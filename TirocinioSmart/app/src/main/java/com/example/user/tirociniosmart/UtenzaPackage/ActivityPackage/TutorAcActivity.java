@@ -19,13 +19,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
 
+import java.sql.SQLException;
+
 public class TutorAcActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    FragmentManager fm;
+    private FragmentManager fm;
+    private static MySQLConnectionPoolFreeSqlDB pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class TutorAcActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        pool = new MySQLConnectionPoolFreeSqlDB();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -103,6 +108,17 @@ public class TutorAcActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
     }
 }
 

@@ -1,4 +1,4 @@
-package com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage;
+package com.example.user.tirociniosmart.ConvenzionePackage;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -19,18 +19,18 @@ import java.sql.SQLException;
  * Created by User on 18/01/2018.
  */
 
-public class ModificaPasswordFragment extends Fragment {
+public class RichiediConvenzioneFragment extends Fragment {
     private View view;
 
-    private Button registra;
+    private Button richiestaConvenzione;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_modifica_password, container, false);
+        view = inflater.inflate(R.layout.fragment_richiedi_convenzione, container, false);
 
-        registra = view.findViewById(R.id.modificaPassword);
-        registra.setOnClickListener(new View.OnClickListener(){
+        richiestaConvenzione = view.findViewById(R.id.richiestaConvenzioneButton);
+        richiestaConvenzione.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
 

@@ -7,7 +7,7 @@
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/richiesta_convenzione_TutorAziendale_convenzionato"
+                    android:id="@+id/richiesta_convenzione_TutorAziendale_non_convenzionato"
                     android:icon="@drawable/ic_menu_send"
                     android:title="Invia richiesta convenzione" />
 

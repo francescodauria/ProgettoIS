@@ -11,19 +11,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.GenericConnectionPool;
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+
 public class RegistrazioneTutorActivity extends AppCompatActivity {
     public static final int GET_FROM_GALLERY = 3;
     private ImageView logo;
+    private static MySQLConnectionPoolFreeSqlDB pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrazione_tutor);
         logo = findViewById(R.id.logoAzienda);
+        pool = new MySQLConnectionPoolFreeSqlDB();
+
     }
 
     public void effettuaRegistrazione(View view) {
@@ -59,4 +66,21 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    @Override
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
+    }
+
+
+
+
 }

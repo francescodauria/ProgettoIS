@@ -19,13 +19,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.R;
+import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.InserisciStudFragment;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
+
+import java.sql.SQLException;
 
 public class SegreteriaActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    FragmentManager fm;
+    private FragmentManager fm;
+    private static MySQLConnectionPoolFreeSqlDB pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class SegreteriaActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fm = getFragmentManager();
+        pool = new MySQLConnectionPoolFreeSqlDB();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,6 +48,13 @@ public class SegreteriaActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+        Fragment f = new InserisciStudFragment();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.contenitoreFrammentiSegreteria, f, "inserisciStud");
+        ft.addToBackStack(null);
+
+        ft.commit();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -68,7 +81,29 @@ public class SegreteriaActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.insert_studente) {
-            // Handle the camera action
+
+            Fragment f = fm.findFragmentByTag("inserisciStud");
+            if (f == null) {
+                f = new InserisciStudFragment();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "inserisciStud");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                f = new InserisciStudFragment();
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "inserisciStud");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
+
+
         } else if (id == R.id.richieste_tirocinio_segreteria) {
 
         } else if (id == R.id.account_Segreteria) {
@@ -103,6 +138,18 @@ public class SegreteriaActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
     }
 }
 

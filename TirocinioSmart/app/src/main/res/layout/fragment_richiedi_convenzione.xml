@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment">
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <ImageView
+                android:background="@drawable/agency_tutor"
+                android:layout_margin="8dp"
+
+                android:layout_gravity="left"
+                android:layout_width="130dp"
+                android:layout_height="65dp" />
+
+            <ImageView
+                android:background="@drawable/doublearrow"
+                android:layout_marginLeft="10dp"
+
+                android:layout_gravity="center"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+
+            <ImageView
+                android:layout_gravity="right"
+                android:background="@drawable/unisa"
+                android:layout_width="150dp"
+                android:layout_height="80dp" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:text="Attraverso la funzionalità richiesta convenzione è possibile richiedere una convenzione con il dipartimento di informatica dell'Università di Salerno. Se una richiesta è in stato di attesa di accettazione, non verranno prese in carico nuove richieste."
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/richiestaConvenzioneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Richiedi convenzione"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

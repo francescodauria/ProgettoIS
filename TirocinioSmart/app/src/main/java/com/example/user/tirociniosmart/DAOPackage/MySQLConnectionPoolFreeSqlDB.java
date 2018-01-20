@@ -1,5 +1,7 @@
 package com.example.user.tirociniosmart.DAOPackage;
 
+import android.util.Log;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -76,5 +78,14 @@ public class MySQLConnectionPoolFreeSqlDB implements  GenericConnectionPool {
             this.freeDbConnections.add(connection);
 
     }
+
+    public void closeAllConnection() throws SQLException {
+        for(Connection con:freeDbConnections) {
+            con.close();
+        }
+        freeDbConnections.clear();
+    }
+
+
 }
 

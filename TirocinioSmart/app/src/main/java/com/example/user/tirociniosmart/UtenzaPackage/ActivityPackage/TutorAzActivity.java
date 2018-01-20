@@ -19,13 +19,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment;
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
+
+import java.sql.SQLException;
 
 public class TutorAzActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FragmentManager fm;
+    private static MySQLConnectionPoolFreeSqlDB pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +47,22 @@ public class TutorAzActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        pool = new MySQLConnectionPoolFreeSqlDB();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         String username = getIntent().getStringExtra("username");
         if(username.equals("conv"))
-        navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
-        else if(username.equals("nonconv"))
-        navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
+            navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
+        else if(username.equals("nonconv")) {
+            navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
+            Fragment f = new RichiediConvenzioneFragment();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "statoRichiesta");
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 
     @Override
@@ -75,8 +88,27 @@ public class TutorAzActivity extends AppCompatActivity
 
         if (id == R.id.richieste_tirocinio_TutorAziendale_convenzionato) {
             // Handle the camera action
-        } else if (id == R.id.richiesta_convenzione_TutorAziendale_convenzionato) {
+        } else if (id == R.id.richiesta_convenzione_TutorAziendale_non_convenzionato) {
 
+            Fragment f = fm.findFragmentByTag("richiediConvenzione");
+            if (f == null) {
+                f = new RichiediConvenzioneFragment();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiediConvenzione");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                f = new RichiediConvenzioneFragment();
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiediConvenzione");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            }
         } else if (id == R.id.account_TutorAziendale_convenzionato) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
@@ -139,5 +171,17 @@ public class TutorAzActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
+    }
+
 }
 

@@ -13,18 +13,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.ProgFormativoPackage.CreaProgFormFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
 
+import java.sql.SQLException;
+
 public class StudentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FragmentManager fm;
+    private FragmentManager fm;
+    public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +55,11 @@ public class StudentActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Fragment f = fm.findFragmentByTag("statoRichiesta");
-
-        if (f == null) {
-            f = new VisualizzaStatoFragment();
+        Fragment f = new VisualizzaStatoFragment();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
-            ft.commit();
-        } else {
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.remove(f);
-            f = new VisualizzaStatoFragment();
-
-            ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
-            ft.commit();
-        }
+        ft.addToBackStack(null);
+        ft.commit();
 
 
     }
@@ -114,6 +110,8 @@ public class StudentActivity extends AppCompatActivity
             Fragment f = fm.findFragmentByTag("listaAziende");
             if (f == null) {
                 f = new FragmentListaAziende();
+                FragmentListaAziende fe = new FragmentListaAziende();
+
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
 
@@ -186,6 +184,17 @@ public class StudentActivity extends AppCompatActivity
         return true;
     }
 
+
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
+    }
 
 
 }

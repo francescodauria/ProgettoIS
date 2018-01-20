@@ -3,6 +3,7 @@ package com.example.user.tirociniosmart.DAOPackage;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Obiettivo;
@@ -116,11 +117,13 @@ public class AziendaDAO extends GenericDAO {
 
         newConnection.commit();
         stt.close();
-
-
         genericConnectionPool.releaseConnection(newConnection);
 
         return lista;
     }
+
+
+
+
 
 }

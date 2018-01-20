@@ -22,6 +22,7 @@ import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.R;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 
 import java.sql.Blob;
 import java.sql.Connection;
@@ -42,7 +43,6 @@ public class FragmentListaAziende extends Fragment {
     ImageView image;
     AziendeAdapter adapter;
     View view;
-    Connection newConnection = null;
     Context context;
     @Override
     public void onAttach(Activity activity) {
@@ -98,8 +98,8 @@ public class FragmentListaAziende extends Fragment {
         protected ArrayList<Azienda> doInBackground(Integer... img_ids) {
             ArrayList<Azienda> aziende = new ArrayList<>();
 
-            MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-            AziendaDAO.setConnectionPool(pool);
+
+            AziendaDAO.setConnectionPool(StudentActivity.pool);
             try {
                 aziende = AziendaDAO.getAllAziende();
             } catch (SQLException e) {

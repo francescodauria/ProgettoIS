@@ -20,9 +20,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
+
+import java.sql.SQLException;
 
 /**
  * A login screen that offers login via email/password.
@@ -32,6 +36,8 @@ public class LoginActivity extends AppCompatActivity  {
     /**
      * Id to identity READ_CONTACTS permission request.
      */
+    private MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();;
+
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
@@ -318,5 +324,19 @@ public class LoginActivity extends AppCompatActivity  {
             showProgress(false);
         }
     }
+
+
+
+    public void onStop(){
+
+        try {
+            pool.closeAllConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        super.onStop();
+    }
+
 }
 
