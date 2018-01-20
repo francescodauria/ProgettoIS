@@ -22,6 +22,14 @@ public class Convenzione {
         this.stato=stato;
     }
 
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
+
     public String getId() {
         return id;
     }

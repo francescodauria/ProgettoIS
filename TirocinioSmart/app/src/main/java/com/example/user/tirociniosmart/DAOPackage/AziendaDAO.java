@@ -35,6 +35,45 @@ public class AziendaDAO extends GenericDAO {
     public static void search() {
     }
 
+    public static Azienda findById(String id) throws SQLException {
+        Azienda azienda = null;
+
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+
+        newConnection.setAutoCommit(false);
+
+        System.out.println("Database connesso");
+        PreparedStatement stt = null;
+
+        stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE id="+id);
+
+        ResultSet rs = null;
+        rs = stt.executeQuery();
+
+        while(rs.next()) {
+            Blob dat = rs.getBlob("logo");
+
+            byte[] imgData = dat.getBytes(1, (int) dat.length());
+
+            String idAzienda = rs.getString("ID");
+            String sede = rs.getString("Sede");
+            String nome = rs.getString("Nome");
+            String email = rs.getString("Email");
+            String descrizione = rs.getString("Descrizione");
+            String numero = rs.getString("N_tel");
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+            azienda = new Azienda(idAzienda, nome, email,sede, descrizione, bitmap,numero, null);
+        }
+
+        newConnection.commit();
+        stt.close();
+
+        genericConnectionPool.releaseConnection(newConnection);
+
+        return azienda;
+
+    }
+
     public static ArrayList<Azienda>getAllAziende() throws SQLException {
 
         ArrayList<Azienda> lista = new ArrayList<Azienda>();
