@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.R;
@@ -52,14 +53,12 @@ public class FragmentListaAziende extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_lista_aziende_layout, container, false);
+        view = inflater.inflate(R.layout.student_fragment_lista_aziende_layout, container, false);
         image = (ImageView) view.findViewById(R.id.elem_lista_logo);
 
         mProgressView = view.findViewById(R.id.aziende_progress);
 
         new LoadIconTask().execute(1);
-
-
 
         return view;
 
@@ -97,61 +96,16 @@ public class FragmentListaAziende extends Fragment {
 
         @Override
         protected ArrayList<Azienda> doInBackground(Integer... img_ids) {
-            byte[] imgData = null;
-
-            showProgress(true);
             ArrayList<Azienda> aziende = new ArrayList<>();
 
+            MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
+            AziendaDAO.setConnectionPool(pool);
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-
-                MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-
-                newConnection = (Connection) pool.getConnection();
-
-                newConnection.setAutoCommit(false);
-
-                System.out.println("Database connesso");
-                PreparedStatement stt = null;
-
-
-                stt = newConnection.prepareStatement("SELECT * FROM azienda_convenzionata order by nome");
-
-                ResultSet rs = null;
-
-                rs = stt.executeQuery();
-
-
-                while (rs.next()) {
-                    Blob dat = rs.getBlob("logo");
-
-                    imgData = dat.getBytes(1, (int) dat.length());
-
-                    String nome = rs.getString("nome");
-                    String email = rs.getString("email");
-                    String descrizione = rs.getString("descrizione");
-
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
-                    Azienda a = new Azienda("azienda1", nome, email,"Napoli", descrizione, bitmap,"492", null);
-                    aziende.add(a);
-                    Log.d("prova", "" + dat.toString());
-                    Log.d("prova2", "" + imgData.length);
-
-
-                }
-
-
-                newConnection.commit();
-                stt.close();
-
-
-                pool.releaseConnection(newConnection);
-            }
-            catch (SQLException e) {
-                internet=false;
-            } catch (ClassNotFoundException e) {
+                aziende = AziendaDAO.getAllAziende();
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             return aziende;
         }
 
@@ -164,7 +118,7 @@ public class FragmentListaAziende extends Fragment {
         protected void onPostExecute(ArrayList<Azienda> lista) {
             showProgress(false);
             if(internet) {
-                adapter = new AziendeAdapter(context, R.layout.custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
+                adapter = new AziendeAdapter(context, R.layout.student_custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
 
                 listView = (ListView) view.findViewById(R.id.mylistview);
                 listView.setAdapter(adapter);

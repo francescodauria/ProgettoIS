@@ -12,10 +12,14 @@ public class Convenzione {
     private Azienda azienda;
     private Date dataStipula;
     private Direttore direttore;
+    private String stato;
 
-    public Convenzione(String id, Azienda azienda) {
+    public Convenzione(String id, Azienda azienda, Date dataStipula, Direttore direttore,String stato) {
         this.id = id;
         this.azienda = azienda;
+        this.dataStipula=dataStipula;
+        this.direttore=direttore;
+        this.stato=stato;
     }
 
     public String getId() {

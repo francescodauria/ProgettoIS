@@ -7,7 +7,9 @@ package com.example.user.tirociniosmart.EntityPackage;
 public class Utente {
     private String username;
     private String password;
+   // private String ruolo;
     public Utente(String username, String password){
+     //   this.ruolo=ruolo;
         this.username=username;
         this.password=password;
 
@@ -28,4 +30,6 @@ public class Utente {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

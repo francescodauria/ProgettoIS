@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity"
-    tools:showIn="@layout/activity_student_main">
+    tools:context="com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.DirettoreActivity"
+    tools:showIn="@layout/direttore_activity_main">
     <FrameLayout
-        android:id="@+id/contenitoreFrammenti"
+        android:id="@+id/contenitoreFrammentiDirettore"
         android:background="#abcdef"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

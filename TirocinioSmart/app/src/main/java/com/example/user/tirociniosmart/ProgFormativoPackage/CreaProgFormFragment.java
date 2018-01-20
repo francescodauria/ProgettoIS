@@ -25,7 +25,7 @@ public class CreaProgFormFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_nuova_richiesta_layout, container, false);
+        view = inflater.inflate(R.layout.student_fragment_nuova_richiesta_layout, container, false);
 
 
         //NextFragment nextFrag= new NextFragment();

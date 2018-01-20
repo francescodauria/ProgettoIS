@@ -39,7 +39,7 @@ public class AziendeAdapter extends ArrayAdapter<Azienda> {
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
             Log.d("DEBUG","Inflating view");
-            v = inflater.inflate(R.layout.custom_adapter_lista_aziende_layout, null);
+            v = inflater.inflate(R.layout.student_custom_adapter_lista_aziende_layout, null);
         }
 
         a= getItem(position);
@@ -77,7 +77,7 @@ public class AziendeAdapter extends ArrayAdapter<Azienda> {
 
 
                 Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.custom_dialog_descrizione);
+                dialog.setContentView(R.layout.student_custom_dialog_descrizione);
                 ImageView image = (ImageView)dialog.findViewById(R.id.dialog_logo);
                 image.setImageBitmap(az.getLogo());
                 TextView txt = (TextView)dialog.findViewById(R.id.dialog_descrizione);

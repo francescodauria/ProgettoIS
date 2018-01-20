@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Benvenuto nel servizio gestione tirocini"
+        >
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/richiesta_convenzione_TutorAziendale_convenzionato"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Invia richiesta convenzione" />
+
+
+
+                <item
+                    android:id="@+id/account_TutorAziendale_non_convenzionato"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Gestisci account" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Effettua logout">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/logoutTutorAziendale_non_convenzionato"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </group>
+
+        </menu>
+    </item>
+</menu>

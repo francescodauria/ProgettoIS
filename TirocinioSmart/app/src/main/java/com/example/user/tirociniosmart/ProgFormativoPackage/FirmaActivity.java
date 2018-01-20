@@ -21,7 +21,7 @@ public class FirmaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frament_inserimento_firma_layout);
+        setContentView(R.layout.activity_inserimento_firma_layout);
 
            saveButton = (Button)findViewById(R.id.saveButton);
           clearButton = (Button)findViewById(R.id.clearButton);

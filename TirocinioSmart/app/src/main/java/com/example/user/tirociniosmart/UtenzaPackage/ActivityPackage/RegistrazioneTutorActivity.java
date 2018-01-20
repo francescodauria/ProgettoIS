@@ -27,6 +27,7 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
     }
 
     public void effettuaRegistrazione(View view) {
+
     }
 
     public void caricaLogo(View view) {

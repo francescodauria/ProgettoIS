@@ -30,17 +30,34 @@
             android:name=".UtenzaPackage.ActivityPackage.StudentActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-
-        android:windowSoftInputMode="stateVisible|adjustPan"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".ProgFormativoPackage.FirmaActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
-        <activity android:name=".UtenzaPackage.ActivityPackage.RegistrazioneTutorActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-
-        </activity>
+        <activity
+            android:name=".UtenzaPackage.ActivityPackage.RegistrazioneTutorActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
+        <activity
+            android:name=".UtenzaPackage.ActivityPackage.DirettoreActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UtenzaPackage.ActivityPackage.SegreteriaActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UtenzaPackage.ActivityPackage.TutorAcActivity"
+            android:label="@string/title_activity_tutor_ac"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UtenzaPackage.ActivityPackage.TutorAzActivity"
+            android:label="@string/title_activity_tutor_az"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

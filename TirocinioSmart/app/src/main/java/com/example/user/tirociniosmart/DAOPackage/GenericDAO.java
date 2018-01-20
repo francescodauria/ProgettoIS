@@ -9,12 +9,12 @@ public abstract class GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
 
-    public abstract void insert();
+    public static void insert(){};
 
 
 
-    public abstract void update();
+    public static void update(){};
 
-    public abstract void search();
+    public static void search(){};
 
 }

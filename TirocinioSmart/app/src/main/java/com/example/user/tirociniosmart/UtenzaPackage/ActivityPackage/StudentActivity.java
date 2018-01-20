@@ -29,7 +29,7 @@ public class StudentActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student);
+        setContentView(R.layout.student_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,14 +54,14 @@ public class StudentActivity extends AppCompatActivity
         if (f == null) {
             f = new VisualizzaStatoFragment();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.contenitoreFrammenti, f, "statoRichiesta");
+            ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
             ft.commit();
         } else {
             FragmentTransaction ft = fm.beginTransaction();
             ft.remove(f);
             f = new VisualizzaStatoFragment();
 
-            ft.add(R.id.contenitoreFrammenti, f, "statoRichiesta");
+            ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
             ft.commit();
         }
 
@@ -76,18 +76,8 @@ public class StudentActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment f = fm.findFragmentByTag("statoRichiesta");
-            Fragment f2 = fm.findFragmentByTag("listaAziende");
-            Fragment f3 = fm.findFragmentByTag("nuovaRichiesta");
-            if (f != null && f.isVisible() || f2 != null && f2.isVisible() || f3 != null && f3.isVisible()) {
 
-                if (!drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.openDrawer(GravityCompat.START);
-                }
-
-            } else {
-                super.onBackPressed();
-            }
         }
 
 
@@ -108,14 +98,14 @@ public class StudentActivity extends AppCompatActivity
             if (f == null) {
                 f = new VisualizzaStatoFragment();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammenti, f, "statoRichiesta");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
                 ft.commit();
             } else {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.remove(f);
                 f = new VisualizzaStatoFragment();
 
-                ft.add(R.id.contenitoreFrammenti, f, "statoRichiesta");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
                 ft.commit();
             }
 
@@ -125,7 +115,7 @@ public class StudentActivity extends AppCompatActivity
             if (f == null) {
                 f = new FragmentListaAziende();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammenti, f, "listaAziende");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
 
                 ft.commit();
             } else {
@@ -133,7 +123,7 @@ public class StudentActivity extends AppCompatActivity
 
                 ft.remove(f);
                 f = new FragmentListaAziende();
-                ft.add(R.id.contenitoreFrammenti, f, "listaAziende");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
                 ft.commit();
             }
 
@@ -143,7 +133,7 @@ public class StudentActivity extends AppCompatActivity
             if (f == null) {
                 f = new ModificaPasswordFragment();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammenti, f, "cambiaPassword");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -153,7 +143,7 @@ public class StudentActivity extends AppCompatActivity
                 ft.remove(f);
                 fm.popBackStack();
                 f = new ModificaPasswordFragment();
-                ft.add(R.id.contenitoreFrammenti, f, "cambiaPassword");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -164,7 +154,7 @@ public class StudentActivity extends AppCompatActivity
             if (f == null) {
                 f = new CreaProgFormFragment();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammenti, f, "nuovaRichiesta");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "nuovaRichiesta");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -174,7 +164,7 @@ public class StudentActivity extends AppCompatActivity
                 ft.remove(f);
                 fm.popBackStack();
                 f = new CreaProgFormFragment();
-                ft.add(R.id.contenitoreFrammenti, f, "nuovaRichiesta");
+                ft.add(R.id.contenitoreFrammentiStudente, f, "nuovaRichiesta");
                 ft.addToBackStack(null);
 
                 ft.commit();

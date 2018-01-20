@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Benvenuto nel servizio gestione tirocini"
+        >
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/richieste_tirocinio_TutorAccademico"
+                    android:icon="@drawable/firma"
+                    android:title="Visualizza richieste di tirocinio" />
+
+
+
+                <item
+                    android:id="@+id/account_TutorAccademico"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="Gestisci account" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Effettua logout">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/logoutTutorAccademico"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+            </group>
+
+        </menu>
+    </item>
+</menu>

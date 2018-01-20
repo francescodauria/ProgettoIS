@@ -3,45 +3,26 @@ package com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Fragment;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.IntentCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -288,12 +269,32 @@ public class LoginActivity extends AppCompatActivity  {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
+            Intent i = null;
             if (success) {
-                Intent i = new Intent(LoginActivity.this, StudentActivity.class);
-                i.putExtra("email", mUsernameView.getText().toString());
-                i.putExtra("password", mPasswordView.getText().toString());
 
+
+               if(mEmail.equals("dir"))
+                    i= new Intent(LoginActivity.this, DirettoreActivity.class);
+
+                else if(mEmail.equals("conv"))
+                   i=  new Intent(LoginActivity.this, TutorAzActivity.class);
+               else if(mEmail.equals("nonconv"))
+                   i=  new Intent(LoginActivity.this, TutorAzActivity.class);
+
+
+               else if(mEmail.equals("tutorac"))
+                   i= new Intent(LoginActivity.this, TutorAcActivity.class);
+
+                else if(mEmail.equals("segr"))
+                   i=  new Intent(LoginActivity.this, SegreteriaActivity.class);
+
+
+                else if(mEmail.equals("stud"))
+                   i= new Intent(LoginActivity.this, StudentActivity.class);
+
+
+                i.putExtra("username", mUsernameView.getText().toString());
+                i.putExtra("password", mPasswordView.getText().toString());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
 
 

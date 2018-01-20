@@ -17,7 +17,7 @@ public class VisualizzaStatoFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
 
-        View view = inflater.inflate(R.layout.fragment_stato_richiesta_layout, container, false);
+        View view = inflater.inflate(R.layout.student_fragment_stato_richiesta_layout, container, false);
         return view;
 
     }

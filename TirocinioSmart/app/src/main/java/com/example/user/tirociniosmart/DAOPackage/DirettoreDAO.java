@@ -12,16 +12,13 @@ public class DirettoreDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
-
-    @Override
-    public void insert() {
+    public static void insert() {
     }
 
-    @Override
-    public void update() {
+    public static void update() {
     }
 
-    @Override
-    public void search() {
+    public static void search() {
     }
+
 }
