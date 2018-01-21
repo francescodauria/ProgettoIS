@@ -8,14 +8,13 @@ import java.sql.Date;
 
 public class Convenzione {
 
-    private String id;
+    private int id;
     private Azienda azienda;
     private Date dataStipula;
     private Direttore direttore;
     private String stato;
 
-    public Convenzione(String id, Azienda azienda, Date dataStipula, Direttore direttore,String stato) {
-        this.id = id;
+    public Convenzione(Azienda azienda, Date dataStipula, Direttore direttore,String stato) {
         this.azienda = azienda;
         this.dataStipula=dataStipula;
         this.direttore=direttore;
@@ -30,11 +29,11 @@ public class Convenzione {
         this.stato = stato;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
