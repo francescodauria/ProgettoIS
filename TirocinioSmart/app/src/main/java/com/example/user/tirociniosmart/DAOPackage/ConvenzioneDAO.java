@@ -27,7 +27,7 @@ public class ConvenzioneDAO extends GenericDAO {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
         newConnection.setAutoCommit(false);
- 
+
         System.out.println("Database connesso");
         PreparedStatement stt = null;
 

@@ -49,7 +49,7 @@ public class StudenteDAO extends GenericDAO {
             String data_nascita = rs.getString("Data_Nascita");
             String numero = rs.getString("N_tel");
             String email = rs.getString("Email");
-            studente = new Studente(username, password, null,
+            studente = new Studente(username, password, "Studente",
                     matricola, nome, cognome, cf,
                     email, indirizzo, luogo_nascita, data_nascita,
                     n_tirocini, numero, new ArrayList<ProgFormativo>());
@@ -74,10 +74,21 @@ public class StudenteDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
             if(StudenteDAO.checkStudente(studente)) {
-                stt = newConnection.prepareStatement("INSERT INTO Studente (`Matricola`, `Nome`, `Cognome`," +
-                        "`Indirizzo`, `Username`, `Password`, `CF`, `#tirocini`, `Luogo_Nascita`, `Data_Nascita`, `N_Tel`, `Email`) " +
+                stt = newConnection.prepareStatement("INSERT INTO Studente (Matricola, Nome, Cognome," +
+                        "Indirizzo, Username, Password, CF, #tirocini, Luogo_Nascita, Data_Nascita, N_Tel, Email)" +
                         " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
                 stt.setString(1,studente.getMatricola());
+                stt.setString(2,studente.getNome());
+                stt.setString(3,studente.getCognome());
+                stt.setString(4,studente.getIndirizzo());
+                stt.setString(5,studente.getUsername());
+                stt.setString(6,studente.getPassword());
+                stt.setString(7,studente.getCF());
+                stt.setInt(8, studente.getNumeroTirocini());
+                stt.setString(9,studente.getLuogoNascita());
+                stt.setString(10,studente.getDataNascita());
+                stt.setString(11,studente.getNumeroTel());
+                stt.setString(12,studente.getEmail());
                 stt.executeUpdate();
 
                 newConnection.commit();
@@ -85,13 +96,12 @@ public class StudenteDAO extends GenericDAO {
 
                 genericConnectionPool.releaseConnection(newConnection);
 
-                return "Inserimento avveuto correttamente";
+                return "Inserimento avvenuto correttamente";
             } else
                 return "Esiste già uno studente con tale matricola";
         } catch (SQLException e) {
             return "Connessione al database non presente";
         }
-
 
     }
 
