@@ -37,7 +37,7 @@ public class AziendaDAO extends GenericDAO {
                 newConnection.setAutoCommit(false);
 
                 System.out.println("Database connesso");
-                PreparedStatement stt = newConnection.prepareStatement("INSERT INTO Azienda ('ID', 'Nome','Sede','Descrizione','Logo','N_tel','Email'" +
+                PreparedStatement stt = newConnection.prepareStatement("INSERT INTO Azienda (ID, Nome, Sede, Descrizione, Logo, N_tel, Email" +
                         "VALUES (?,?,?,?,?,?,?)");
                 stt.setString(1, azienda.getId());
                 stt.setString(2, azienda.getNome());
