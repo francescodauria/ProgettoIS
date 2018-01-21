@@ -39,7 +39,7 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
             Log.d("DEBUG","Inflating view");
-            v = inflater.inflate(R.layout.student_custom_adapter_lista_aziende_layout, null);
+            v = inflater.inflate(R.layout.student_custom_adapter_lista_richieste_layout, null);
         }
         progettoFormativo= getItem(position);
 
@@ -60,14 +60,15 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
 
 
-//        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear());
- //       dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear());
-//        numeroOre.setText(progettoFormativo.getNumeroOre()+"");
-//        stato.setText(progettoFormativo.getStato());
-       // firmaStudente = v.findViewById(R.drawable)
+        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear());
+       dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear());
+        numeroOre.setText(progettoFormativo.getNumeroOre()+"");
+        stato.setText(progettoFormativo.getStato());
+        if(progettoFormativo.getFirmaStudente()!=null)
+            //firmaStudente = v.findViewById(R.drawable)
 
 
-/*        dataInizio.setTag(position);
+        dataInizio.setTag(position);
         dataFine.setTag(position);
         numeroOre.setTag(position);
         azienda.setTag(position);
@@ -81,7 +82,7 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         accettazioneSegreteria.setTag(position);
         dataStipula.setTag(position);
         obiettivi.setTag(position);
-        motivazione.setTag(position);*/
+        motivazione.setTag(position);
         return v;
     }
 
