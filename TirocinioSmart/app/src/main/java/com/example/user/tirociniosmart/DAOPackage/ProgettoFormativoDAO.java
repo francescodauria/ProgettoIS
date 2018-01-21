@@ -60,6 +60,9 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 stt.setString(9, progetto.getCFTutor());
                 stt.setString(10, progetto.getMatricolaDir());
                 stt.executeUpdate();
+                newConnection.commit();
+                stt.close();
+                genericConnectionPool.releaseConnection(newConnection);
                 return "Inserimento avvenuto con successo";
             }
             else return "Inserimento non avvenuto poiché è già presente un progetto formativo";
@@ -132,6 +135,9 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Log.d("dentro al while", "prova");
 
             }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
             return progetti;
         } catch (SQLException e) {
             return null;
@@ -149,7 +155,18 @@ public class ProgettoFormativoDAO extends GenericDAO {
         System.out.println("Database connesso");
         PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ? AND Stato = 'IN CORSO");
         ResultSet rs=stt.executeQuery();
-        if(rs.next()) return false;
-        else return true;
+        if(rs.next())
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
     }
 }

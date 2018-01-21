@@ -52,6 +52,10 @@ public class AziendaDAO extends GenericDAO {
                 stt.setString(6, azienda.getNumeroTel());
                 stt.setString(7, azienda.getEmail());
                 stt.executeUpdate();
+                newConnection.commit();
+                stt.close();
+
+                genericConnectionPool.releaseConnection(newConnection);
                 return "Inserimento dell'azienda avvenuto con successo";
             } else return "L'azienda è già presente";
         }catch (SQLException e)
@@ -69,8 +73,19 @@ public class AziendaDAO extends GenericDAO {
         PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE ID = ?");
         stt.setString(1,azienda.getId());
         ResultSet rs=stt.executeQuery();
-        if(rs.next()) return false;
-        else return true;
+        if(rs.next()) {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
     }
     public static String update() {
         return "";
