@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class ProgFormativo {
 
+    private int id;
     private String stato;
     private String motivazione;
     private int numeroOre;
@@ -22,7 +23,7 @@ public class ProgFormativo {
     private Date dataFine;
     private Date dataStipula;
     private Bitmap firmaDirettore;
-    private String matrcolaStud;
+    private String matricolaStud;
     private String matricolaDir;
     private String matricolaTutor;
     private String CFTutor;
@@ -36,7 +37,7 @@ public class ProgFormativo {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.firmaStudente=firmaStudente;
-        this.matrcolaStud=matricolaStud;
+        this.matricolaStud=matricolaStud;
         this.matricolaTutor=matricolaTutor;
         this.CFTutor=CFTutor;
         this.dataStipula = dataStipula;
@@ -50,7 +51,15 @@ public class ProgFormativo {
     }
 
     public String getMatricolaStud() {
-        return matrcolaStud;
+        return matricolaStud;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMatricolaDir() {
@@ -76,8 +85,6 @@ public class ProgFormativo {
     public void setFirmaDirettore(Bitmap firmaDirettore) {
         this.firmaDirettore = firmaDirettore;
     }
-
-
 
     public String getStato() {
         return stato;
@@ -118,8 +125,6 @@ public class ProgFormativo {
     public void setGetFirmaTutorAz(Bitmap getFirmaTutorAz) {
         this.getFirmaTutorAz = getFirmaTutorAz;
     }
-
-
 
     public Date getDataInizio() {
         return dataInizio;

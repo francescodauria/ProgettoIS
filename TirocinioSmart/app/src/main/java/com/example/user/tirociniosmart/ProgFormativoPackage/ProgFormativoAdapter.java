@@ -62,7 +62,7 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
 
         dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear()+1900);
        dataFine.setText(progettoFormativo.getDataFine().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear()+1900);
-       dataStipula.setText(progettoFormativo.getDataStipula().getDay()+"/"+progettoFormativo.getDataStipula().getMonth()+1+"/"+progettoFormativo.getDataStipula().getYear()+1900);
+       dataStipula.setText(progettoFormativo.getDataStipula().getDay()+"/"+progettoFormativo.getDataStipula().getMonth()+1+"/"+(progettoFormativo.getDataStipula().getYear()+1900));
         numeroOre.setText(progettoFormativo.getNumeroOre()+"");
         stato.setText(progettoFormativo.getStato());
         if(progettoFormativo.getFirmaStudente()!=null)

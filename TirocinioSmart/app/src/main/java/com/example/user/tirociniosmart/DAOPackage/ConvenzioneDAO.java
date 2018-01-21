@@ -31,7 +31,7 @@ public class ConvenzioneDAO extends GenericDAO {
         System.out.println("Database connesso");
         PreparedStatement stt = null;
 
-        stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE stato='in corso' and id="+id);
+        stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE stato='IN CORSO' and id="+id);
 
         ResultSet rs = null;
 
