@@ -12,7 +12,8 @@ public class ObiettivoDAO extends GenericDAO {
     }
 
 
-    public static void insert() {
+    public static boolean insert() {
+        return true;
     }
 
     public static void update() {

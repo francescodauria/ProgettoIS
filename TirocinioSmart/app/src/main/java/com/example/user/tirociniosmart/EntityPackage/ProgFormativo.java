@@ -17,13 +17,14 @@ public class ProgFormativo {
     private int numeroOre;
     private Bitmap firmaTutorAcc;
     private Bitmap getFirmaTutorAz;
+    private Bitmap firmaStudente;
     private ArrayList<Obiettivo> listaObiettivi;
     private Date dataInizio;
     private Date dataFine;
     private Date dataStipula;
 
 
-    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, ArrayList<Obiettivo> listaObiettivi, Date dataInizio, Date dataFine) {
+    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, ArrayList<Obiettivo> listaObiettivi, Date dataInizio, Date dataFine, Bitmap firmaStudente) {
         this.id = id;
         this.stato = stato;
         this.motivazione = motivazione;
@@ -31,6 +32,7 @@ public class ProgFormativo {
         this.listaObiettivi = listaObiettivi;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.firmaStudente=firmaStudente;
     }
 
     public String getId() {
@@ -122,5 +124,9 @@ public class ProgFormativo {
 
     public void setDataStipula(Date dataStipula) {
         this.dataStipula = dataStipula;
+    }
+
+    public Bitmap getFirmaStudente() {
+        return firmaStudente;
     }
 }
