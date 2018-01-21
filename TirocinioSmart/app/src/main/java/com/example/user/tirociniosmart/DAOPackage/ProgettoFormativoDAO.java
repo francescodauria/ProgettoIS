@@ -72,7 +72,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
         newConnection.setAutoCommit(false);
 
         System.out.println("Database connesso");
-        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Studente WHERE Matricola = ?");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ?");
         stt.setString(1,studente.getMatricola());
         ArrayList<ProgFormativo> progetti=new ArrayList<>();
         ResultSet rs=stt.executeQuery();
