@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.DAOPackage;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 
@@ -68,8 +69,9 @@ public class ProgettoFormativoDAO extends GenericDAO {
     public static void update() {
     }
     public static ArrayList<ProgFormativo> findAllByStudente(Studente studente) throws SQLException{
-        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        Log.d("fuori al while", "prova");
 
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
 
         System.out.println("Database connesso");
@@ -81,21 +83,30 @@ public class ProgettoFormativoDAO extends GenericDAO {
         {
             String id=rs.getString(1);
             Blob firmaDirettore=rs.getBlob(2);
-            byte[] imgData1 = firmaDirettore.getBytes(1, (int) firmaDirettore.length());
-            Bitmap firmaDir = BitmapFactory.decodeByteArray(imgData1, 0, imgData1.length);
-
+            Bitmap firmaDir=null;
+            if(firmaDirettore!=null) {
+                byte[] imgData1 = firmaDirettore.getBytes(1, (int) firmaDirettore.length());
+                firmaDir = BitmapFactory.decodeByteArray(imgData1, 0, imgData1.length);
+            }
             Blob firmaStudente = rs.getBlob(3);
-            byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
-            Bitmap firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
-
+            Bitmap firmaStud =null;
+            if(firmaStudente!=null) {
+                byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
+                firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
+            }
             Blob firmaTutorAziendale=rs.getBlob(4);
-            byte[] imgData3 = firmaTutorAziendale.getBytes(1, (int) firmaTutorAziendale.length());
-            Bitmap firmaTutor = BitmapFactory.decodeByteArray(imgData3, 0, imgData3.length);
+            Bitmap firmaTutor =null;
+            if(firmaTutorAziendale!=null) {
+                byte[] imgData3 = firmaTutorAziendale.getBytes(1, (int) firmaTutorAziendale.length());
+                firmaTutor = BitmapFactory.decodeByteArray(imgData3, 0, imgData3.length);
+            }
 
             Blob firmaTutorAccademico=rs.getBlob(5);
-            byte[] imgData4 = firmaTutorAccademico.getBytes(1, (int) firmaTutorAccademico.length());
-            Bitmap firmaTutorAc = BitmapFactory.decodeByteArray(imgData4, 0, imgData4.length);
-
+            Bitmap firmaTutorAc = null;
+            if(firmaTutorAccademico!=null) {
+                byte[] imgData4 = firmaTutorAccademico.getBytes(1, (int) firmaTutorAccademico.length());
+                firmaTutorAc = BitmapFactory.decodeByteArray(imgData4, 0, imgData4.length);
+            }
             String obiettivi=rs.getString(6);
             String stato=rs.getString(7);
             String motivazione=rs.getString(8);
@@ -108,11 +119,12 @@ public class ProgettoFormativoDAO extends GenericDAO {
             String tutor_az_CF=rs.getString(15);
             String direttore=rs.getString(16);
 
-            ProgFormativo progetto=new ProgFormativo(id,stato,motivazione,ore,obiettivi,data_inizio,data_fine,firmaStud,matricola_stud,tutor_acc_matricola,tutor_az_CF);
+            ProgFormativo progetto=new ProgFormativo(id,stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,matricola_stud,direttore,tutor_acc_matricola,tutor_az_CF);
             progetto.setFirmaTutorAcc(firmaTutorAc);
             progetto.setGetFirmaTutorAz(firmaTutor);
             progetto.setFirmaDirettore(firmaDir);
             progetti.add(progetto);
+            Log.d("dentro al while", "prova");
 
         }
         return progetti;

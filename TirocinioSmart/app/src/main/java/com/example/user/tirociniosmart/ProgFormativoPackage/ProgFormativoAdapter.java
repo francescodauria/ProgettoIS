@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.ProgFormativoPackage;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +41,47 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
             Log.d("DEBUG","Inflating view");
             v = inflater.inflate(R.layout.student_custom_adapter_lista_aziende_layout, null);
         }
-
         progettoFormativo= getItem(position);
 
+        TextView dataInizio = v.findViewById(R.id.dataInizioRichiestaStudente);
+        TextView dataFine = v.findViewById(R.id.datafineRichiestaStudente);
+        TextView numeroOre = v.findViewById(R.id.numeroOreRichiestaStudente);
+        TextView azienda = v.findViewById(R.id.nomaAziendaRichiestaStudente);
+        TextView tutorAzienda = v.findViewById(R.id.tutorAziendaleRichiestaStudente);
+        TextView tutorAccademico = v.findViewById(R.id.tutorAccademicoRichiestaStudente);
+        TextView stato = v.findViewById(R.id.statoRichiestaStudente);
+        ImageView firmaStudente = v.findViewById(R.id.firmaStudenteRichiestaStudente);
+        ImageView firmaTutorAziendale = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
+        ImageView firmaTutorAccademico = v.findViewById(R.id.firmaTutorAccademicoRichiestaStudente);
+        ImageView firmaDirettore = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
+        ImageView accettazioneSegreteria = v.findViewById(R.id.accettazioneSegreteriaRichiestaStudente);
+        TextView  dataStipula = v.findViewById(R.id.dataStipulaRichiestaStudente);
+        TextView obiettivi = v.findViewById(R.id.obiettiviRichiestaStudente);
+        TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
 
+
+//        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear());
+ //       dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear());
+//        numeroOre.setText(progettoFormativo.getNumeroOre()+"");
+//        stato.setText(progettoFormativo.getStato());
+       // firmaStudente = v.findViewById(R.drawable)
+
+
+/*        dataInizio.setTag(position);
+        dataFine.setTag(position);
+        numeroOre.setTag(position);
+        azienda.setTag(position);
+        tutorAzienda.setTag(position);
+        tutorAccademico.setTag(position);
+        stato.setTag(position);
+        firmaStudente.setTag(position);
+        firmaTutorAziendale.setTag(position);
+        firmaTutorAccademico.setTag(position);
+        firmaDirettore.setTag(position);
+        accettazioneSegreteria.setTag(position);
+        dataStipula.setTag(position);
+        obiettivi.setTag(position);
+        motivazione.setTag(position);*/
         return v;
     }
 

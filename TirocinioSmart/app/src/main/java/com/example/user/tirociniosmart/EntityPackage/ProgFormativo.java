@@ -28,7 +28,7 @@ public class ProgFormativo {
     private String matricolaTutor;
     private String CFTutor;
 
-    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, String listaObiettivi, Date dataInizio, Date dataFine, Bitmap firmaStudente, String matricolaStud, String matricolaTutor, String CFTutor) {
+    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, String listaObiettivi, Date dataInizio, Date dataFine,Date dataStipula, Bitmap firmaStudente, String matricolaStud, String matricolaDir,String matricolaTutor, String CFTutor) {
         this.id = id;
         this.stato = stato;
         this.motivazione = motivazione;
@@ -40,6 +40,8 @@ public class ProgFormativo {
         this.matrcolaStud=matricolaStud;
         this.matricolaTutor=matricolaTutor;
         this.CFTutor=CFTutor;
+        this.dataStipula = dataStipula;
+        this.matricolaDir=matricolaDir;
     }
 
     public String getId() {

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
+import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
@@ -48,8 +49,10 @@ public class VisualizzaStatoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         View v = inflater.inflate(R.layout.student_fragment_stato_richiesta_layout, container, false);
-        mProgressView = view.findViewById(R.id.tirocini_studente_progress);
         view = v;
+
+        mProgressView = view.findViewById(R.id.tirocini_studente_progress);
+        new LoadIconTask().execute(1);
 
         return v;
 
@@ -91,7 +94,7 @@ public class VisualizzaStatoFragment extends Fragment {
             ArrayList<ProgFormativo> progetti = new ArrayList<>();
 
             Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
-            AziendaDAO.setConnectionPool(StudentActivity.pool);
+            ProgettoFormativoDAO.setConnectionPool(StudentActivity.pool);
             try {
                 progetti = ProgettoFormativoDAO.findAllByStudente(s);
             } catch (SQLException e) {
