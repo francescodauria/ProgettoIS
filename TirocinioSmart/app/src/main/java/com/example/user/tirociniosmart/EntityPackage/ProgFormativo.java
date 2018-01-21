@@ -18,13 +18,17 @@ public class ProgFormativo {
     private Bitmap firmaTutorAcc;
     private Bitmap getFirmaTutorAz;
     private Bitmap firmaStudente;
-    private ArrayList<Obiettivo> listaObiettivi;
+    private String listaObiettivi;
     private Date dataInizio;
     private Date dataFine;
     private Date dataStipula;
+    private Bitmap firmaDirettore;
+    private String matrcolaStud;
+    private String matricolaDir;
+    private String matricolaTutor;
+    private String CFTutor;
 
-
-    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, ArrayList<Obiettivo> listaObiettivi, Date dataInizio, Date dataFine, Bitmap firmaStudente) {
+    public ProgFormativo(String id, String stato, String motivazione, int numeroOre, String listaObiettivi, Date dataInizio, Date dataFine, Bitmap firmaStudente, String matricolaStud, String matricolaTutor, String CFTutor) {
         this.id = id;
         this.stato = stato;
         this.motivazione = motivazione;
@@ -33,21 +37,45 @@ public class ProgFormativo {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.firmaStudente=firmaStudente;
+        this.matrcolaStud=matricolaStud;
+        this.matricolaTutor=matricolaTutor;
+        this.CFTutor=CFTutor;
     }
 
     public String getId() {
         return id;
     }
 
-
-    public void addObiettivoFormativo(Obiettivo o){
-        listaObiettivi.add(o);
+    public String getListaObiettivi() {
+        return listaObiettivi;
     }
 
-    public void removeObiettivoFormativo(Obiettivo o){
-        if( listaObiettivi.contains(o))
-            listaObiettivi.remove(o);
+    public String getMatrcolaStud() {
+        return matrcolaStud;
+    }
 
+    public String getMatricolaDir() {
+        return matricolaDir;
+    }
+
+    public String getMatricolaTutor() {
+        return matricolaTutor;
+    }
+
+    public String getCFTutor() {
+        return CFTutor;
+    }
+
+    public void setListaObiettivi(String listaObiettivi) {
+        this.listaObiettivi = listaObiettivi;
+    }
+
+    public Bitmap getFirmaDirettore() {
+        return firmaDirettore;
+    }
+
+    public void setFirmaDirettore(Bitmap firmaDirettore) {
+        this.firmaDirettore = firmaDirettore;
     }
 
     public void setId(String id) {
@@ -94,13 +122,7 @@ public class ProgFormativo {
         this.getFirmaTutorAz = getFirmaTutorAz;
     }
 
-    public ArrayList<Obiettivo> getListaObiettivi() {
-        return listaObiettivi;
-    }
 
-    public void setListaObiettivi(ArrayList<Obiettivo> listaObiettivi) {
-        this.listaObiettivi = listaObiettivi;
-    }
 
     public Date getDataInizio() {
         return dataInizio;

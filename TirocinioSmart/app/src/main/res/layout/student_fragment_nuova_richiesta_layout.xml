@@ -49,15 +49,14 @@
                 android:orientation="vertical">
 
                 <Spinner
-                    android:layout_margin="20dp"
                     android:id="@+id/spinnerAzienda"
-                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Azienda"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:spinnerMode="dialog"
 
-                    >
-                </Spinner>
+                    android:text="Azienda"></Spinner>
 
 
                 <Spinner
