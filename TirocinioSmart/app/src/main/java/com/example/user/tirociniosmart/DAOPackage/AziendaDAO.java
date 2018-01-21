@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Obiettivo;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,10 +29,45 @@ public class AziendaDAO extends GenericDAO {
     }
 
 
-    public static boolean insert() {
-        return true;
-    }
+    public static boolean insert(Azienda azienda) throws SQLException{
+        if(AziendaDAO.checkAzienda(azienda)){
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
+            newConnection.setAutoCommit(false);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = newConnection.prepareStatement("INSERT INTO Azienda ('ID', 'Nome','Sede','Descrizione','Logo','N_tel','Email'" +
+                    "VALUES (?,?,?,?,?,?,?)");
+            stt.setString(1,azienda.getId());
+            stt.setString(2,azienda.getNome());
+            stt.setString(3,azienda.getSede());
+            stt.setString(4,azienda.getDescrizione());
+            Bitmap logo=azienda.getLogo();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            logo.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            stt.setBlob(5,bs);
+            stt.setString(6,azienda.getNumeroTel());
+            stt.setString(7,azienda.getEmail());
+            stt.executeUpdate();
+            return true;
+        }
+        else return false;
+    }
+    public static boolean checkAzienda(Azienda azienda) throws SQLException
+    {
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+
+        newConnection.setAutoCommit(false);
+
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE ID = ?");
+        stt.setString(1,azienda.getId());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next()) return false;
+        else return true;
+    }
     public static void update() {
     }
 
