@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
@@ -37,6 +39,8 @@ public class RichiediConvenzioneFragment extends Fragment {
     private View view;
     private View mProgressView;
 
+
+
     private Button richiestaConvenzione;
 
     @Override
@@ -46,6 +50,8 @@ public class RichiediConvenzioneFragment extends Fragment {
 
         mProgressView = view.findViewById(R.id.invio_convenzione_progress);
         showProgress(false);
+
+
         richiestaConvenzione = view.findViewById(R.id.richiestaConvenzioneButton);
         richiestaConvenzione.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

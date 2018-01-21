@@ -29,7 +29,7 @@
             android:layout_height="140dp" />
 
         <ProgressBar
-            android:id="@+id/change_pass_progress"
+            android:id="@+id/insert_studente_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/cognnomeStudente"
+                            android:id="@+id/cognomeStudente"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Cognome"
