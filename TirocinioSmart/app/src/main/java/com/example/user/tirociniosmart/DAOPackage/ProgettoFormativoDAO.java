@@ -44,6 +44,8 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
             byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            stt.setBlob(2,bs);
 
             return true;
         }
