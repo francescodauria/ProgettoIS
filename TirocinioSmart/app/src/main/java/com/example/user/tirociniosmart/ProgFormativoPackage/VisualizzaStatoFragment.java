@@ -36,18 +36,19 @@ public class VisualizzaStatoFragment extends Fragment {
     private ProgFormativoAdapter adapter;
     private Context context;
     private View view;
+
     @Override
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        context=activity;
+        context = activity;
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         View v = inflater.inflate(R.layout.student_fragment_stato_richiesta_layout, container, false);
         mProgressView = view.findViewById(R.id.tirocini_studente_progress);
-        view=v;
+        view = v;
 
         return v;
 
@@ -88,7 +89,7 @@ public class VisualizzaStatoFragment extends Fragment {
         protected ArrayList<ProgFormativo> doInBackground(Integer... img_ids) {
             ArrayList<ProgFormativo> progetti = new ArrayList<>();
 
-            Studente s = new Studente(null, null,null,"0512103671",null,null,null,null,null,null,null,0,null,null);
+            Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
             AziendaDAO.setConnectionPool(StudentActivity.pool);
             try {
                 progetti = findAllByStudente(s);
@@ -107,21 +108,20 @@ public class VisualizzaStatoFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
-                adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
+            adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
 
-                listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);
-                listView.setAdapter(adapter);
+            listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);
+            listView.setAdapter(adapter);
 
-                for (ProgFormativo pr: lista) {
-                    adapter.add(pr);
+            for (ProgFormativo pr : lista) {
+                adapter.add(pr);
 
-                }
-
+            }
 
 
             //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
 
-
+    }
 }
