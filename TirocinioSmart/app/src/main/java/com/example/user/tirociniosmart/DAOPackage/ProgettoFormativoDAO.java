@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
-import com.mysql.jdbc.Blob;
 
 
 import java.io.ByteArrayInputStream;

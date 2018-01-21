@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.ProgFormativoPackage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 import com.github.gcacace.signaturepad.views.SignaturePad;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by User on 29/10/2017.
@@ -53,9 +56,16 @@ public class FirmaActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Bitmap image = signaturePad.getSignatureBitmap();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
                 //write code for saving the signature here
                 Intent returnIntent = new Intent(FirmaActivity.this, StudentActivity.class);
-                returnIntent.putExtra("firma","Simone");
+                returnIntent.putExtra("bitmapdata",bitmapdata);
+
+
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

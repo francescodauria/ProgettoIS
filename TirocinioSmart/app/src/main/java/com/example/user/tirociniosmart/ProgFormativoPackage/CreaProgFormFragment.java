@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.R;
@@ -19,10 +22,10 @@ import com.example.user.tirociniosmart.R;
 
 public class CreaProgFormFragment extends Fragment {
 
-    View view;
-    FragmentManager fm;
-    Button signature;
-
+    private View view;
+    private FragmentManager fm;
+    private Button signature;
+    private ImageView imageFirma;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         view = inflater.inflate(R.layout.student_fragment_nuova_richiesta_layout, container, false);
@@ -30,7 +33,7 @@ public class CreaProgFormFragment extends Fragment {
 
         //NextFragment nextFrag= new NextFragment();
         fm = getActivity().getFragmentManager();
-
+        imageFirma = view.findViewById(R.id.imageFirma);
         signature = (Button) view.findViewById(R.id.signature);
         signature.setOnClickListener(new View.OnClickListener() {
 
@@ -52,10 +55,13 @@ public class CreaProgFormFragment extends Fragment {
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                String result = data.getStringExtra("firma");
+                byte[] bitmapdata = data.getByteArrayExtra("bitmapdata");
 
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
 
-                Toast.makeText(getActivity(), "Firma salvata correttamente "+result, Toast.LENGTH_SHORT).show();
+                imageFirma.setImageBitmap(bitmap);
+
+                Toast.makeText(getActivity(), "Firma salvata correttamente", Toast.LENGTH_SHORT).show();
 
 
             }
