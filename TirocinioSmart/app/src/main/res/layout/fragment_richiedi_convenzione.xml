@@ -5,11 +5,25 @@
     android:background="@drawable/immagine"
 
     tools:context="com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/invio_convenzione_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     <LinearLayout
         android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
         <LinearLayout
             android:gravity="center"
             android:layout_marginTop="100dp"
@@ -77,5 +91,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </RelativeLayout>
 </FrameLayout>
