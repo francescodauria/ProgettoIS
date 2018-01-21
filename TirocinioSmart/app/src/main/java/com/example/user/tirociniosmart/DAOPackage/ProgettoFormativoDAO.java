@@ -40,25 +40,25 @@ public class ProgettoFormativoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
             if(ProgettoFormativoDAO.checkProgetto(progetto)) {
-                stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo ('ID','FirmaStudente','Obiettivi','Stato','#Ore'" +
+                stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo ('FirmaStudente','Obiettivi','Stato','#Ore'" +
                         ",'Data_inizio','Data_fine','StudenteMatricola','Tutor_AccademicoMatricola','Tutor_AziendaleCF','Direttore_DipartimentoMatricola'" +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?");
-                stt.setString(1, progetto.getId());
+                        "VALUES (?,?,?,?,?,?,?,?,?,?");
+
                 Bitmap firmaStudente = progetto.getFirmaStudente();
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
                 ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                stt.setBlob(2, bs);
-                stt.setString(3, progetto.getListaObiettivi());
-                stt.setString(4, progetto.getStato());
-                stt.setInt(5, progetto.getNumeroOre());
-                stt.setDate(6, progetto.getDataInizio());
-                stt.setDate(7, progetto.getDataFine());
-                stt.setString(8, progetto.getMatrcolaStud());
-                stt.setString(9, progetto.getMatricolaTutor());
-                stt.setString(10, progetto.getCFTutor());
-                stt.setString(11, progetto.getMatricolaDir());
+                stt.setBlob(1, bs);
+                stt.setString(2, progetto.getListaObiettivi());
+                stt.setString(3, progetto.getStato());
+                stt.setInt(4, progetto.getNumeroOre());
+                stt.setDate(5, progetto.getDataInizio());
+                stt.setDate(6, progetto.getDataFine());
+                stt.setString(7, progetto.getMatricolaStud());
+                stt.setString(8, progetto.getMatricolaTutor());
+                stt.setString(9, progetto.getCFTutor());
+                stt.setString(10, progetto.getMatricolaDir());
                 stt.executeUpdate();
                 return "Inserimento avvenuto con successo";
             }
@@ -124,7 +124,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 String tutor_az_CF=rs.getString(15);
                 String direttore=rs.getString(16);
 
-                ProgFormativo progetto=new ProgFormativo(id,stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,matricola_stud,direttore,tutor_acc_matricola,tutor_az_CF);
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,matricola_stud,direttore,tutor_acc_matricola,tutor_az_CF);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaDirettore(firmaDir);
