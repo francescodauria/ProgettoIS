@@ -149,7 +149,7 @@ public class ConvenzioneDAO extends GenericDAO {
 
                 return "Inserimento avvenuto correttamente";
             }
-            else return "Esiste già una convenzione";
+            else return "C'è già una convenzione in attesa di accettazione";
         } catch (SQLException e) {
             return "Connessione al database non presente";
         }

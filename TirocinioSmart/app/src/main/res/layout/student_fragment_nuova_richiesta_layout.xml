@@ -24,7 +24,7 @@
 
 
         <ImageView
-            android:src="@drawable/change_password"
+            android:src="@drawable/richiesta"
             android:layout_gravity="center"
             android:layout_width="140dp"
             android:layout_height="140dp" />
