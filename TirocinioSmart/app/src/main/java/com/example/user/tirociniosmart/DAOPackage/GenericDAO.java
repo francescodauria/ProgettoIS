@@ -1,5 +1,7 @@
 package com.example.user.tirociniosmart.DAOPackage;
 
+import java.sql.SQLException;
+
 /**
  * Created by User on 17/01/2018.
  */
@@ -9,7 +11,7 @@ public abstract class GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
 
-    public static void insert(){};
+    public static boolean insert()throws SQLException {return true;} ;
 
 
 
