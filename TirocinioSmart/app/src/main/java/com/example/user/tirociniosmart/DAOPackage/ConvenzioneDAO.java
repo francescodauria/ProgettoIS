@@ -125,24 +125,10 @@ public class ConvenzioneDAO extends GenericDAO {
 
     public static String insert(Convenzione convenzione) {
 
-<<<<<<< Updated upstream
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
             newConnection.setAutoCommit(false);
-=======
-        Connection newConnection = (Connection) genericConnectionPool.getConnection();
-        newConnection.setAutoCommit(false);
-
-        System.out.println("Database connesso");
-        PreparedStatement stt = null;
-        if(ConvenzioneDAO.checkConvenzione(convenzione))
-        {
-            stt = newConnection.prepareStatement("INSERT INTO Convenzione (`ID`, `Data_Stipula`, `AziendaID`, `Direttore_DipartimentoMatricola`, `Stato`) " +
-                    "                                   VALUES ("+ convenzione.getId() +", "+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
-                    + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
-            stt.executeUpdate();
->>>>>>> Stashed changes
 
             System.out.println("Database connesso");
             PreparedStatement stt = null;
