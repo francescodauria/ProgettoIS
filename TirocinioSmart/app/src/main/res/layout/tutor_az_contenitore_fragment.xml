@@ -9,7 +9,6 @@
     tools:showIn="@layout/tutor_az_activity_main">
     <FrameLayout
         android:id="@+id/contenitoreFrammentiTutorAziendale"
-        android:background="@drawable/immagine"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
