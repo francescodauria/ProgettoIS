@@ -4,10 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
-<<<<<<< HEAD
-=======
+
 import com.example.user.tirociniosmart.EntityPackage.Studente;
->>>>>>> master
 
 
 import java.io.ByteArrayInputStream;

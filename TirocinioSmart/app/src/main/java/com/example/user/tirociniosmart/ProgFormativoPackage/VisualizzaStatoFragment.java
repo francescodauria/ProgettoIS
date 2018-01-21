@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
 import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
+import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
@@ -92,7 +93,7 @@ public class VisualizzaStatoFragment extends Fragment {
             Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
             AziendaDAO.setConnectionPool(StudentActivity.pool);
             try {
-                progetti = findAllByStudente(s);
+                progetti = ProgettoFormativoDAO.findAllByStudente(s);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
