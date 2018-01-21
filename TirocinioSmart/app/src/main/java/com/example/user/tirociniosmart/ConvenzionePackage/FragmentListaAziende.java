@@ -100,11 +100,8 @@ public class FragmentListaAziende extends Fragment {
 
 
             AziendaDAO.setConnectionPool(StudentActivity.pool);
-            try {
+
                 aziende = AziendaDAO.getAllAziende();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
 
             return aziende;
         }

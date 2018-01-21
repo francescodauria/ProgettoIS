@@ -43,7 +43,7 @@ public class ConvenzioneDAO extends GenericDAO {
             String aziendaID = rs.getString("AziendaID");
             String direttoreMatricola = rs.getString("Direttore_DipartimentoMatricola");
             String stato = rs.getString("Stato");
-            Convenzione convenzione = new Convenzione(idConvenzione, AziendaDAO.findById(aziendaID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
+            Convenzione convenzione = new Convenzione(AziendaDAO.findById(aziendaID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
             listaConvenzioni.add(convenzione);
         }
 
@@ -78,7 +78,7 @@ public class ConvenzioneDAO extends GenericDAO {
             String azID = rs.getString("AziendaID");
             String direttoreMatricola = rs.getString("Direttore_DipartimentoMatricola");
             String stato = rs.getString("Stato");
-            convenzione = new Convenzione(idConvenzione, AziendaDAO.findById(azID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
+            convenzione = new Convenzione(AziendaDAO.findById(azID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
         }
 
         newConnection.commit();
