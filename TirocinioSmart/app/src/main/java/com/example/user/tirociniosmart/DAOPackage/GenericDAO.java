@@ -11,11 +11,11 @@ public abstract class GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
 
-    public static boolean insert()throws SQLException {return true;} ;
+    public static String insert()throws SQLException {return "";} ;
 
 
 
-    public static void update(){};
+    public static String update(){return "";};
 
     public static void search(){};
 

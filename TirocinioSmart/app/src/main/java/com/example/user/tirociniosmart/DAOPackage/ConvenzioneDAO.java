@@ -123,32 +123,39 @@ public class ConvenzioneDAO extends GenericDAO {
 
     }
 
-    public static boolean insert(Convenzione convenzione) throws SQLException {
+    public static String insert(Convenzione convenzione) {
 
-        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
 
-        newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            if(ConvenzioneDAO.checkConvenzione(convenzione))
+            {
+                stt = newConnection.prepareStatement("INSERT INTO Convenzione (`ID`, `Data_Stipula`, `AziendaID`, `Direttore_DipartimentoMatricola`, `Stato`) " +
+                        "                                   VALUES ("+ convenzione.getId() +", "+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
+                        + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
+                stt.executeUpdate();
 
-        System.out.println("Database connesso");
-        PreparedStatement stt = null;
-        if(ConvenzioneDAO.checkConvenzione(convenzione))
-        {
-            stt = newConnection.prepareStatement("INSERT INTO Convenzione (`ID`, `Data_Stipula`, `AziendaID`, `Direttore_DipartimentoMatricola`, `Stato`) " +
-                    "                                   VALUES ("+ convenzione.getId() +", "+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
-                    + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
-            stt.executeUpdate();
+                newConnection.commit();
+                stt.close();
 
-            newConnection.commit();
-            stt.close();
+                genericConnectionPool.releaseConnection(newConnection);
 
-            genericConnectionPool.releaseConnection(newConnection);
-
-            return true;
+                return "Inserimento avveuto correttamente";
+            }
+            else return "Esiste già una convenzione";
+        } catch (SQLException e) {
+            return "Connessione al database non presente";
         }
-        else return false;
+
+
     }
 
-    public static void update() {
+    public static String update() {
+        return "";
     }
 
     public static void search() {

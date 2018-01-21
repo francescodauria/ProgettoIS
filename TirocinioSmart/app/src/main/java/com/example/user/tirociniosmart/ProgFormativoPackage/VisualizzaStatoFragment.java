@@ -95,12 +95,8 @@ public class VisualizzaStatoFragment extends Fragment {
 
             Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
             ProgettoFormativoDAO.setConnectionPool(StudentActivity.pool);
-            try {
-                progetti = ProgettoFormativoDAO.findAllByStudente(s);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
 
+            progetti = ProgettoFormativoDAO.findAllByStudente(s);
             return progetti;
         }
 
@@ -112,6 +108,7 @@ public class VisualizzaStatoFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
+            if(lista==null) Toast.makeText(getActivity(),"Connessione al database non presente",Toast.LENGTH_LONG);
             adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
 
             listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);

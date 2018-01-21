@@ -13,11 +13,12 @@ public class StudenteDAO extends GenericDAO {
     }
 
 
-    public static boolean insert() {
-        return true;
+    public static String insert() {
+        return "";
     }
 
-    public static void update() {
+    public static String update() {
+        return "";
     }
 
     public static void search() {

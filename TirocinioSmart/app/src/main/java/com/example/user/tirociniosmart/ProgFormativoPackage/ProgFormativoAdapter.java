@@ -60,8 +60,8 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
 
 
-        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear());
-       dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear());
+        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear()+1900);
+       dataFine.setText(progettoFormativo.getDataFine().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear()+1900);
         numeroOre.setText(progettoFormativo.getNumeroOre()+"");
         stato.setText(progettoFormativo.getStato());
         if(progettoFormativo.getFirmaStudente()!=null)
