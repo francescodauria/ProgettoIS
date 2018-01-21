@@ -134,8 +134,8 @@ public class ConvenzioneDAO extends GenericDAO {
             PreparedStatement stt = null;
             if(ConvenzioneDAO.checkConvenzione(convenzione))
             {
-                stt = newConnection.prepareStatement("INSERT INTO Convenzione ('Data_Stipula', 'AziendaID', 'Direttore_DipartimentoMatricola, 'Stato') " +
-                        " VALUES ("+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
+                stt = newConnection.prepareStatement("INSERT INTO Convenzione ('Data_Stipula','AziendaID','Direttore_DipartimentoMatricola','Stato') " +
+                        " VALUES ("+ convenzione.getDataStipula() +","+ convenzione.getAzienda().getId() +","
                         + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
                 stt.executeUpdate();
 
@@ -144,7 +144,7 @@ public class ConvenzioneDAO extends GenericDAO {
 
                 genericConnectionPool.releaseConnection(newConnection);
 
-                return "Inserimento avveuto correttamente";
+                return "Inserimento avvenuto correttamente";
             }
             else return "Esiste già una convenzione";
         } catch (SQLException e) {
@@ -169,7 +169,19 @@ public class ConvenzioneDAO extends GenericDAO {
         PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE AziendaID = ? AND Stato = 'IN CORSO'");
         stt.setString(1,convenzione.getAzienda().getId());
         ResultSet rs=stt.executeQuery();
-        if(rs.next()) return false;
-        else return true;
+        if(rs.next())
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
     }
 }
