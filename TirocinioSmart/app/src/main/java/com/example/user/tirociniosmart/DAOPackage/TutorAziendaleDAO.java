@@ -28,7 +28,7 @@ public class TutorAziendaleDAO extends GenericDAO {
             PreparedStatement stt = null;
             if(TutorAziendaleDAO.checkTutor(tutor))
             {
-                stt=newConnection.prepareStatement("INSERT INTO Tutor_Aziendale ('CF','Nome','Cognome','Email','Password','Username','N_tel','AziendaID'" +
+                stt=newConnection.prepareStatement("INSERT INTO Tutor_Aziendale (CF,Nome,Cognome,Email,Password,Username,N_tel,AziendaID" +
                         "VALUES (?,?,?,?,?,?,?,?");
                 stt.setString(1,tutor.getCF());
                 stt.setString(2,tutor.getNome());
