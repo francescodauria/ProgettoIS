@@ -126,7 +126,7 @@ public class ConvenzioneDAO extends GenericDAO {
     public static String insert(Convenzione convenzione) throws SQLException {
 
         Connection newConnection = null;
-   //     try {
+        try {
             newConnection = (Connection) genericConnectionPool.getConnection();
             newConnection.setAutoCommit(false);
 
@@ -134,9 +134,12 @@ public class ConvenzioneDAO extends GenericDAO {
             PreparedStatement stt = null;
             if(ConvenzioneDAO.checkConvenzione(convenzione))
             {
-                stt = newConnection.prepareStatement("INSERT INTO Convenzione (`Data_Stipula`, `AziendaID`, `Direttore_DipartimentoMatricola`, `Stato`) " +
-                        " VALUES (" +convenzione.getDataStipula()  +", " + convenzione.getAzienda().getId() +", "
-                         + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
+                stt = newConnection.prepareStatement("INSERT INTO Convenzione (ID, AziendaID, Direttore_DipartimentoMatricola, Stato) " +
+                        " VALUES (?,?,?,?)");
+                stt.setString(1, String.valueOf(convenzione.getId()));
+                stt.setString(2, convenzione.getAzienda().getId());
+                stt.setString(3, convenzione.getDirettore().getMatricola());
+                stt.setString(4, convenzione.getStato());
                 stt.executeUpdate();
 
                 newConnection.commit();
@@ -147,9 +150,9 @@ public class ConvenzioneDAO extends GenericDAO {
                 return "Inserimento avvenuto correttamente";
             }
             else return "Esiste già una convenzione";
-     //   } catch (SQLException e) {
-      //      return "Connessione al database non presente";
-     //   }
+        } catch (SQLException e) {
+            return "Connessione al database non presente";
+        }
 
 
     }
@@ -161,13 +164,13 @@ public class ConvenzioneDAO extends GenericDAO {
     public static void search() {
     }
 
-    public static boolean checkConvenzione(Convenzione convenzione) throws SQLException
-    {
+    public static boolean checkConvenzione(Convenzione convenzione) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
         System.out.println("Database connesso");
-        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE `AziendaID` = ? AND `Stato` = 'IN CORSO'");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE AziendaID = ? AND Stato = ?");
         stt.setString(1,convenzione.getAzienda().getId());
+        stt.setString(2, "IN CORSO");
         ResultSet rs=stt.executeQuery();
         if(rs.next())
         {

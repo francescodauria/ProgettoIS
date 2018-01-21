@@ -3,11 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TirocinioSmart.iml" filepath="$PROJECT_DIR$/TirocinioSmart.iml" />
-      <module fileurl="file://C:\Users\Raimondo\ProgettoIS\TirocinioSmart\TirocinioSmart.iml" filepath="C:\Users\Raimondo\ProgettoIS\TirocinioSmart\TirocinioSmart.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Raimondo\ProgettoIS\TirocinioSmart\app\app.iml" filepath="C:\Users\Raimondo\ProgettoIS\TirocinioSmart\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.0.8-bin/mysql-connector-java-5.0.8-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.0.8-bin/mysql-connector-java-5.0.8-bin.iml" />
-      <module fileurl="file://C:\Users\Raimondo\ProgettoIS\TirocinioSmart\mysql-connector-java-5.0.8-bin\mysql-connector-java-5.0.8-bin.iml" filepath="C:\Users\Raimondo\ProgettoIS\TirocinioSmart\mysql-connector-java-5.0.8-bin\mysql-connector-java-5.0.8-bin.iml" />
     </modules>
   </component>
 </project>
