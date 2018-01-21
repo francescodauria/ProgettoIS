@@ -148,8 +148,8 @@ public class ConvenzioneDAO extends GenericDAO {
             PreparedStatement stt = null;
             if(ConvenzioneDAO.checkConvenzione(convenzione))
             {
-                stt = newConnection.prepareStatement("INSERT INTO Convenzione (`ID`, `Data_Stipula`, `AziendaID`, `Direttore_DipartimentoMatricola`, `Stato`) " +
-                        "                                   VALUES ("+ convenzione.getId() +", "+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
+                stt = newConnection.prepareStatement("INSERT INTO Convenzione ('Data_Stipula', 'AziendaID', 'Direttore_DipartimentoMatricola, 'Stato') " +
+                        " VALUES ("+ convenzione.getDataStipula() +", "+ convenzione.getAzienda().getId() +", "
                         + convenzione.getDirettore().getMatricola() +", "+ convenzione.getStato() +")");
                 stt.executeUpdate();
 
