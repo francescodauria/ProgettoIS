@@ -138,7 +138,9 @@ public class TutorAziendaleDAO extends GenericDAO {
         System.out.println("Database connesso");
         PreparedStatement stt = null;
 
-        stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE Username ="+utente.getUsername());
+        stt = newConnection.prepareStatement("SELECT * FROM Studente WHERE Username = ? and Password = ?");
+        stt.setString(1, utente.getUsername());
+        stt.setString(2, utente.getPassword());
 
         ResultSet rs = null;
         rs = stt.executeQuery();
