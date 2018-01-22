@@ -1,6 +1,7 @@
 package com.example.user.tirociniosmart.DAOPackage;
 
 import com.example.user.tirociniosmart.EntityPackage.TutorAc;
+import com.example.user.tirociniosmart.EntityPackage.Utente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,8 +98,7 @@ public class TutorAccademicoDAO extends GenericDAO {
 
     public static void search() {
     }
-    public static boolean checkTutor(TutorAc tutor) throws SQLException
-    {
+    public static boolean checkTutor(TutorAc tutor) throws SQLException {
         Connection newConnection = null;
         newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
@@ -120,5 +120,44 @@ public class TutorAccademicoDAO extends GenericDAO {
             genericConnectionPool.releaseConnection(newConnection);
             return true;
         }
+    }
+
+    public static TutorAc findByUtente(Utente utente) throws SQLException {
+        TutorAc tutorAc = null;
+
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+
+        newConnection.setAutoCommit(false);
+
+        System.out.println("Database connesso");
+        PreparedStatement stt = null;
+
+        stt = newConnection.prepareStatement("SELECT * FROM Tutor_Accademico WHERE Username ="+utente.getUsername());
+
+        ResultSet rs = null;
+        rs = stt.executeQuery();
+
+        if (rs.next()) {
+            String username = rs.getString("Username");
+            String password = rs.getString("Password");
+            String nome = rs.getString("Nome");
+            String cognome = rs.getString("Cognome");
+            String matricola = rs.getString("Matricola");
+            tutorAc = new TutorAc(username, password, "Tutor Accademico", matricola, nome, cognome);
+        } else {
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+
+            return null;
+        }
+
+        newConnection.commit();
+        stt.close();
+
+        genericConnectionPool.releaseConnection(newConnection);
+
+        return tutorAc;
     }
 }

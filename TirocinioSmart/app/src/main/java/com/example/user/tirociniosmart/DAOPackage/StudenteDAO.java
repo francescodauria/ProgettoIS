@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.DAOPackage;
 
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.EntityPackage.Utente;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -114,6 +115,56 @@ public class StudenteDAO extends GenericDAO {
         ResultSet rs=stt.executeQuery();
         if(rs.next()) return false;
         else return true;
+    }
+
+    public static Studente findByUtente(Utente utente) throws SQLException {
+        Studente studente = null;
+
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+
+        newConnection.setAutoCommit(false);
+
+        System.out.println("Database connesso");
+        PreparedStatement stt = null;
+
+        stt = newConnection.prepareStatement("SELECT * FROM Studente WHERE Username ="+utente.getUsername());
+
+        ResultSet rs = null;
+        rs = stt.executeQuery();
+
+        if (rs.next()) {
+
+            String nome = rs.getString("Nome");
+            String cognome = rs.getString("Cognome");
+            String indirizzo = rs.getString("Indirizzo");
+            String username = rs.getString("Username");
+            String password = rs.getString("Password");
+            String matricola = rs.getString("Matricola");
+            String cf = rs.getString("CF");
+            int n_tirocini = rs.getInt("#tirocini");
+            String luogo_nascita = rs.getString("Luogo_Nascita");
+            String data_nascita = rs.getString("Data_Nascita");
+            String numero = rs.getString("N_tel");
+            String email = rs.getString("Email");
+            studente = new Studente(username, password, "Studente",
+                    matricola, nome, cognome, cf,
+                    email, indirizzo, luogo_nascita, data_nascita,
+                    n_tirocini, numero, new ArrayList<ProgFormativo>());
+        } else {
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+
+            return null;
+        }
+
+        newConnection.commit();
+        stt.close();
+
+        genericConnectionPool.releaseConnection(newConnection);
+
+        return studente;
     }
 
     public static String update() {
