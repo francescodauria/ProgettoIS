@@ -4,304 +4,388 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp">
+    android:background="@drawable/student_refused_state"
+    >
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlegreen"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataInizioRichiestaStudenteImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
 
 
         <TextView
+
+            android:id="@+id/dataInizioRichiestaStudenteTextView"
+            android:layout_toRightOf="@+id/dataInizioRichiestaStudenteImageView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data inizio:" />
 
         <TextView
+
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/dataInizioRichiestaStudenteTextView"
             android:id="@+id/dataInizioRichiestaStudente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlered"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataFineRichiestaStudenteImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
 
         <TextView
+            android:id="@+id/datafineRichiestaStudenteTextView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_toRightOf="@+id/dataFineRichiestaStudenteImageView"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data fine:" />
 
         <TextView
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/datafineRichiestaStudenteTextView"
             android:id="@+id/datafineRichiestaStudente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Numero ore:" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/numeroOreRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome azienda:"
-
+            <ImageView
+                android:id="@+id/logoAziendaRichiestaStudente"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
             />
 
-        <TextView
-            android:id="@+id/nomaAziendaRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
+          <LinearLayout
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
 
-    <LinearLayout
+              <TextView
+                  android:textColor="#000000"
+                  android:layout_marginLeft="10dp"
+                  android:fontFamily="sans-serif-condensed"
+                  android:textStyle="italic"
+                  android:textSize="20sp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Azienda:"
+
+                  />
+
+              <TextView
+                  android:layout_marginLeft="10dp"
+                  android:fontFamily="sans-serif-condensed"
+                  android:textStyle="italic"
+                  android:textSize="20sp"
+                  android:id="@+id/nomaAziendaRichiestaStudente"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+
+            </LinearLayout>
+              <LinearLayout
+                  android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+              <TextView
+                  android:textColor="#000000"
+                  android:layout_marginLeft="10dp"
+                  android:fontFamily="sans-serif-condensed"
+                  android:textStyle="italic"
+                  android:textSize="20sp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Tutor az:" />
+
+              <TextView
+                  android:layout_marginLeft="10dp"
+                  android:fontFamily="sans-serif-condensed"
+                  android:textStyle="italic"
+                  android:textSize="20sp"
+                  android:id="@+id/tutorAziendaleRichiestaStudente"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+              </LinearLayout>
+
+
+              <LinearLayout
+                  android:layout_marginTop="10dp"
+                  android:layout_marginBottom="10dp"
+                  android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+
+
+                  <TextView
+                      android:textColor="#000000"
+                      android:layout_marginLeft="10dp"
+                      android:fontFamily="sans-serif-condensed"
+                      android:textStyle="italic"
+                      android:textSize="20sp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Tutor ac:"
+
+                      />
+
+                  <TextView
+                      android:layout_marginLeft="10dp"
+                      android:fontFamily="sans-serif-condensed"
+                      android:textStyle="italic"
+                      android:textSize="20sp"
+                      android:id="@+id/tutorAccademicoRichiestaStudente"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+
+              </LinearLayout>
+
+
+          </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Firma studente:" />
+
+    <ImageView
+        android:layout_marginRight="60dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/spunta"
+        android:id="@+id/firmaStudenteRichiestaStudente"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+
+ </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
         <TextView
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tutor aziendale:" />
+            android:text="Firma tutor aziendale:" />
 
-        <TextView
-            android:id="@+id/tutorAziendaleRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        <ImageView
+            android:layout_marginRight="60dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/spunta"
+            android:id="@+id/firmaTutorAziendaleRichiestaStudente"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
-    <LinearLayout
+
+    </RelativeLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
 
         <TextView
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tutor accademico:" />
+            android:text="Firma tutor accademico:" />
 
-        <TextView
-            android:id="@+id/tutorAccademicoRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        <ImageView
+            android:layout_marginRight="60dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/spunta"
+            android:id="@+id/firmaTutorAccademicoRichiestaStudente"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
 
-    <LinearLayout
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
 
         <TextView
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Firma direttore:" />
+
+        <ImageView
+            android:layout_marginRight="60dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/spunta"
+            android:id="@+id/firmaDirettoreRichiestaStudente"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/statoRichiestaStudenteTextView"
+            android:layout_centerVertical="true"
+            android:textColor="#000000"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stato:" />
 
         <TextView
             android:id="@+id/statoRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Firma studente:" />
-
-        <ImageView
-            android:id="@+id/firmaStudenteRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:text="prova" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Firma tutor aziendale:" />
+    </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/firmaTutorAziendaleRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Firma tutor accademico:" />
-
-        <ImageView
-            android:id="@+id/firmaTutorAccademicoRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Firma direttore:" />
-
-        <ImageView
-            android:id="@+id/firmaDirettoreRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Accettazione segreteria:" />
-
-        <ImageView
-            android:id="@+id/accettazioneSegreteriaRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Data Stipula:" />
-
-        <TextView
-            android:id="@+id/dataStipulaRichiestaStudente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Obiettivi" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutMotivazione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/obiettiviRichiestaStudente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Motivazione rifiuto" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/motivazioneRichiestaStudente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
-
-
-        </LinearLayout>
-    </LinearLayout>
 
 
 </LinearLayout>

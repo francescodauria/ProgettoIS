@@ -83,18 +83,20 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection.setAutoCommit(false);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ?");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ? Order by Stato");
             stt.setString(1,studente.getMatricola());
             ArrayList<ProgFormativo> progetti=new ArrayList<>();
             ResultSet rs=stt.executeQuery();
             while(rs.next())
             {
                 String id=rs.getString(1);
+                
                 Blob firmaDirettore=rs.getBlob(2);
                 Bitmap firmaDir=null;
                 if(firmaDirettore!=null) {
                     byte[] imgData1 = firmaDirettore.getBytes(1, (int) firmaDirettore.length());
                     firmaDir = BitmapFactory.decodeByteArray(imgData1, 0, imgData1.length);
+                    System.out.println(firmaDirettore+ "firma del direttore");
                 }
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;

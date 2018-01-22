@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
@@ -43,9 +45,10 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         }
         progettoFormativo= getItem(position);
 
+        LinearLayout layout = v.findViewById(R.id.linearLayoutRichiestaStudente);
         TextView dataInizio = v.findViewById(R.id.dataInizioRichiestaStudente);
         TextView dataFine = v.findViewById(R.id.datafineRichiestaStudente);
-        TextView numeroOre = v.findViewById(R.id.numeroOreRichiestaStudente);
+        //    TextView numeroOre = v.findViewById(R.id.numeroOreRichiestaStudente);
         TextView azienda = v.findViewById(R.id.nomaAziendaRichiestaStudente);
         TextView tutorAzienda = v.findViewById(R.id.tutorAziendaleRichiestaStudente);
         TextView tutorAccademico = v.findViewById(R.id.tutorAccademicoRichiestaStudente);
@@ -54,24 +57,72 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         ImageView firmaTutorAziendale = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
         ImageView firmaTutorAccademico = v.findViewById(R.id.firmaTutorAccademicoRichiestaStudente);
         ImageView firmaDirettore = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
-        ImageView accettazioneSegreteria = v.findViewById(R.id.accettazioneSegreteriaRichiestaStudente);
-        TextView  dataStipula = v.findViewById(R.id.dataStipulaRichiestaStudente);
-        TextView obiettivi = v.findViewById(R.id.obiettiviRichiestaStudente);
-        TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
+        ImageView logoAzienda = v.findViewById(R.id.logoAziendaRichiestaStudente);
+        //    ImageView accettazioneSegreteria = v.findViewById(R.id.accettazioneSegreteriaRichiestaStudente);
+        //    TextView  dataStipula = v.findViewById(R.id.dataStipulaRichiestaStudente);
+        //    TextView obiettivi = v.findViewById(R.id.obiettiviRichiestaStudente);
+        //    TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
+
+        //Azienda a = AziendaDAO.findById(progettoFormativo.getMatricolaTutor())
 
 
-        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+progettoFormativo.getDataInizio().getYear()+1900);
-       dataFine.setText(progettoFormativo.getDataFine().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+progettoFormativo.getDataFine().getYear()+1900);
-       dataStipula.setText(progettoFormativo.getDataStipula().getDay()+"/"+progettoFormativo.getDataStipula().getMonth()+1+"/"+(progettoFormativo.getDataStipula().getYear()+1900));
-        numeroOre.setText(progettoFormativo.getNumeroOre()+"");
+        dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+(progettoFormativo.getDataInizio().getYear()+1900));
+        dataFine.setText(progettoFormativo.getDataFine().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+(progettoFormativo.getDataFine().getYear()+1900));
+
+
+        logoAzienda.setBackgroundResource(R.drawable.seti);
+
+
         stato.setText(progettoFormativo.getStato());
-        if(progettoFormativo.getFirmaStudente()!=null)
-            //firmaStudente = v.findViewById(R.drawable)
+
+        String statoString = progettoFormativo.getStato();
+
+        if(statoString.equalsIgnoreCase("In corso")){
+            layout.setBackgroundResource(R.drawable.student_incorso_state);
+        }
+        else if(statoString.equalsIgnoreCase("Accettato")){
+            layout.setBackgroundResource(R.drawable.student_accepted_state);
+        }
+
+        else if(statoString.equalsIgnoreCase("Rifiutato")){
+            layout.setBackgroundResource(R.drawable.student_accepted_state);
+        }
+
+
+        if(progettoFormativo.getFirmaStudente()==null)
+            firmaStudente.setBackgroundResource(R.drawable.croce);
+        else
+            firmaStudente.setBackgroundResource(R.drawable.spunta);
+
+        if(progettoFormativo.getGetFirmaTutorAz()==null)
+            firmaTutorAziendale.setBackgroundResource(R.drawable.croce);
+        else
+            firmaTutorAziendale.setBackgroundResource(R.drawable.spunta);
+
+        if(progettoFormativo.getFirmaTutorAcc()==null)
+            firmaTutorAccademico.setBackgroundResource(R.drawable.croce);
+        else
+            firmaTutorAccademico.setBackgroundResource(R.drawable.spunta);
+
+        if(progettoFormativo.getFirmaDirettore()==null)
+            firmaDirettore.setBackgroundResource(R.drawable.croce);
+        else
+            firmaDirettore.setBackgroundResource(R.drawable.spunta);
+
+
+        tutorAzienda.setText("Pasquale Scafa");
+        tutorAccademico.setText("Vittorio Fuccella");
+        azienda.setText("ITSystem");
+
+        stato.setText(statoString);
+
+
+
+
 
 
         dataInizio.setTag(position);
         dataFine.setTag(position);
-        numeroOre.setTag(position);
         azienda.setTag(position);
         tutorAzienda.setTag(position);
         tutorAccademico.setTag(position);
@@ -80,10 +131,12 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         firmaTutorAziendale.setTag(position);
         firmaTutorAccademico.setTag(position);
         firmaDirettore.setTag(position);
+
+/*        numeroOre.setTag(position);
         accettazioneSegreteria.setTag(position);
         dataStipula.setTag(position);
         obiettivi.setTag(position);
-        motivazione.setTag(position);
+        motivazione.setTag(position);*/
         return v;
     }
 
