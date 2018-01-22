@@ -18,6 +18,42 @@ public class TutorAccademicoDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
+    public static TutorAc findByMatricola(String matricola) {
+        TutorAc tutorAc = null;
+
+        Connection newConnection = null;
+
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Accademico WHERE Matricola="+matricola);
+
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+
+            while(rs.next()) {
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                String nome = rs.getString("Nome");
+                String cognome = rs.getString("Cognome");
+                tutorAc = new TutorAc(username, password, "Tutor Accademico", matricola, nome, cognome);
+            }
+
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+
+            return tutorAc;
+        } catch(SQLException e) {
+            return null;
+        }
+    }
+
 
     public static String insert(TutorAc tutor) {
         Connection newConnection = null;
@@ -26,9 +62,8 @@ public class TutorAccademicoDAO extends GenericDAO {
             newConnection.setAutoCommit(false);
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            if(TutorAccademicoDAO.checkTutor(tutor))
-            {
-                stt=newConnection.prepareStatement("INSERT INTO Tutor_Accademico ('Matricola','Nome','Cognome','Password','Username'" +
+            if(TutorAccademicoDAO.checkTutor(tutor)) {
+                stt=newConnection.prepareStatement("INSERT INTO Tutor_Accademico (Matricola,Nome,Cognome,Password,Username" +
                         "VALUES (?,?,?,?,?");
                 stt.setString(1,tutor.getMatricola());
                 stt.setString(2,tutor.getNome());

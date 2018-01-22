@@ -13,8 +13,9 @@ public class TutorAz extends Utente {
     private String CF;
     private String email;
     private String numeroTel;
+    private Azienda azienda;
 
-    public TutorAz(String username, String password, String ruolo, String nome, String cognome, String CF, String email, String numeroTel) {
+    public TutorAz(String username, String password, String ruolo, String nome, String cognome, String CF, String email, String numeroTel, Azienda azienda) {
         super(username, password);
         this.ruolo = ruolo;
         this.nome = nome;
@@ -22,6 +23,15 @@ public class TutorAz extends Utente {
         this.CF = CF;
         this.email = email;
         this.numeroTel = numeroTel;
+        this.azienda = azienda;
+    }
+
+    public Azienda getAzienda() {
+        return azienda;
+    }
+
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
     }
 
     public String getRuolo() {

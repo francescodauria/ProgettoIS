@@ -1,5 +1,6 @@
 package com.example.user.tirociniosmart.DAOPackage;
 
+import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 
 import java.sql.Connection;
@@ -18,6 +19,47 @@ public class TutorAziendaleDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
+    public static TutorAz findByCF(String codFiscale) {
+        TutorAz tutorAz = null;
+
+        Connection newConnection = null;
+
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE CF="+codFiscale);
+
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+
+            while(rs.next()) {
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                String nome = rs.getString("Nome");
+                String cognome = rs.getString("Cognome");
+                String cf = rs.getString("CF");
+                String email = rs.getString("Email");
+                String numeroTel = rs.getString("N_tel");
+                String aziendaId = rs.getString("AziendaID");
+                AziendaDAO.setConnectionPool((GenericConnectionPool) newConnection);
+                Azienda azienda = AziendaDAO.findById(aziendaId);
+                tutorAz = new TutorAz(username, password, "Tutor Aziendale", nome, cognome, cf, email, numeroTel, azienda);
+            }
+
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+
+            return tutorAz;
+        } catch(SQLException e) {
+            return null;
+        }
+    }
 
     public static String insert(TutorAz tutor, String idAzienda) {
         Connection newConnection = null;
