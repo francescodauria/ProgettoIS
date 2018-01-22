@@ -136,7 +136,9 @@ public class InserisciStudFragment extends android.app.Fragment {
                     focusView = codiceFiscale;
                     focusView.requestFocus();
                 }
+                else {
 
+                }
                 //    new LoadIconTask().execute(1);
             }
 

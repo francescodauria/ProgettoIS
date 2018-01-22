@@ -1,12 +1,13 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
  */
 
-public class Studente extends Utente {
+public class Studente extends Utente implements Serializable{
 
     private String ruolo;
     private String matricola;

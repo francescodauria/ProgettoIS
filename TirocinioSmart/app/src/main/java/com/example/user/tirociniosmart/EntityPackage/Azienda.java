@@ -2,13 +2,14 @@ package com.example.user.tirociniosmart.EntityPackage;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
  */
 
-public class Azienda {
+public class Azienda implements Serializable{
 
 
     private String id;

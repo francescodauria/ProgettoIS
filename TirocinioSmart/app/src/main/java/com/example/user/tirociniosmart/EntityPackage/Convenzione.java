@@ -1,12 +1,13 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Created by User on 17/01/2018.
  */
 
-public class Convenzione {
+public class Convenzione implements Serializable{
 
     private int id;
     private Azienda azienda;

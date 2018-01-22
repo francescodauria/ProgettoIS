@@ -1,10 +1,12 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by User on 17/01/2018.
  */
 
-public class TutorAc extends Utente {
+public class TutorAc extends Utente implements Serializable{
 
     private String ruolo;
     private String matricola;

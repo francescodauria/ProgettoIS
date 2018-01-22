@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.EntityPackage.Studente;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.ProgFormativoPackage.CreaProgFormFragment;
@@ -31,6 +32,7 @@ public class StudentActivity extends AppCompatActivity
 
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
+    private Studente studente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class StudentActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        studente=(Studente)getIntent().getSerializableExtra("STUDENTE");
         //   String password = getIntent().getStringExtra("password");
         //   String email = getIntent().getStringExtra("email");
         //   Toast.makeText(getApplicationContext(),"ciao " + prova, Toast.LENGTH_LONG).show();

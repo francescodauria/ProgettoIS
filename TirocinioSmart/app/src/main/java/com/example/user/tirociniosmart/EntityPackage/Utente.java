@@ -1,10 +1,12 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by User on 17/01/2018.
  */
 
-public class Utente {
+public class Utente implements Serializable{
     private String username;
     private String password;
  //   private String ruolo;

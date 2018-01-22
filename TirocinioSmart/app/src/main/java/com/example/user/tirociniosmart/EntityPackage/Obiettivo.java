@@ -1,10 +1,12 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
+import java.io.Serializable;
+
 /**
  * Created by User on 17/01/2018.
  */
 
-public class Obiettivo {
+public class Obiettivo implements Serializable{
 
     private String nome;
     private String descrizione;

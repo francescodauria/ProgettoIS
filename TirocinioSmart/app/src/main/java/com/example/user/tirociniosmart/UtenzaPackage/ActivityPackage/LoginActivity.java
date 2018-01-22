@@ -22,8 +22,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.DirettoreDAO;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.DAOPackage.SegreteriaDAO;
+import com.example.user.tirociniosmart.DAOPackage.StudenteDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
+import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.EntityPackage.Segreteria;
+import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.EntityPackage.TutorAc;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
+import com.example.user.tirociniosmart.EntityPackage.Utente;
 import com.example.user.tirociniosmart.R;
 
 import java.sql.SQLException;
@@ -144,7 +154,7 @@ public class LoginActivity extends AppCompatActivity  {
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuthTask.execute();
         }
     }
 
@@ -231,31 +241,60 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Utente> {
 
         private final String mEmail;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
+        public UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Utente doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                Utente utente = new Utente(mEmail, mPassword);
+
+                StudenteDAO.setConnectionPool(pool);
+                TutorAccademicoDAO.setConnectionPool(pool);
+                TutorAziendaleDAO.setConnectionPool(pool);
+                SegreteriaDAO.setConnectionPool(pool);
+                DirettoreDAO.setConnectionPool(pool);
+                if (null != StudenteDAO.findByUtente(utente)) {
+                    Utente studente = StudenteDAO.findByUtente(utente);
+                    return studente;
+
+                } else if (null != TutorAziendaleDAO.findByUtente(utente)) {
+                    Utente tutor = TutorAziendaleDAO.findByUtente(utente);
+                    return tutor;
+
+                } else if (null != TutorAccademicoDAO.findByUtente(utente)) {
+                    Utente tutor = TutorAccademicoDAO.findByUtente(utente);
+                    return tutor;
+
+                } else if (null != SegreteriaDAO.findByUtente(utente)) {
+                    Utente segr = SegreteriaDAO.findByUtente(utente);
+                    return segr;
+
+                } else if (null != DirettoreDAO.findByUtente(utente)) {
+                    Utente dir = DirettoreDAO.findByUtente(utente);
+                    return dir;
+
+                }
+
             }
+            catch (SQLException e)
+             {
+             }
 
 
 
             // TODO: register the new account here.
-            return true;
+            return null;
         }
 
 
@@ -264,35 +303,47 @@ public class LoginActivity extends AppCompatActivity  {
 
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(Utente utente) {
             mAuthTask = null;
             showProgress(false);
             Intent i = null;
-            if (success) {
+
+            if (null!=utente) {
+                if(utente instanceof Studente)
+                {
+                    i=new Intent(getApplication(),StudentActivity.class);
+
+                    i.putExtra("STUDENTE",(Studente)utente);
+                }
+                if(utente instanceof TutorAc)
+                {
+                    i=new Intent(getApplication(),TutorAcActivity.class);
+
+                    i.putExtra("TUTORAC",(TutorAc)utente);
+                }
+                if(utente instanceof TutorAz)
+                {
+                    i=new Intent(getApplication(),TutorAzActivity.class);
+
+                    i.putExtra("TUTORAZ",(TutorAz)utente);
+                }
+                if(utente instanceof Segreteria)
+                {
+                    i=new Intent(getApplication(),SegreteriaActivity.class);
+
+                    i.putExtra("SEGRETERIA",(Segreteria)utente);
+                }
+                if(utente instanceof Direttore)
+                {
+                    i=new Intent(getApplication(),DirettoreActivity.class);
+
+                    i.putExtra("DIRETTORE",(Direttore)utente);
+                }
 
 
-               if(mEmail.equals("dir"))
-                    i= new Intent(LoginActivity.this, DirettoreActivity.class);
-
-                else if(mEmail.equals("conv"))
-                   i=  new Intent(LoginActivity.this, TutorAzActivity.class);
-               else if(mEmail.equals("nonconv"))
-                   i=  new Intent(LoginActivity.this, TutorAzActivity.class);
 
 
-               else if(mEmail.equals("tutorac"))
-                   i= new Intent(LoginActivity.this, TutorAcActivity.class);
 
-                else if(mEmail.equals("segr"))
-                   i=  new Intent(LoginActivity.this, SegreteriaActivity.class);
-
-
-                else if(mEmail.equals("stud"))
-                   i= new Intent(LoginActivity.this, StudentActivity.class);
-
-
-                i.putExtra("username", mUsernameView.getText().toString());
-                i.putExtra("password", mPasswordView.getText().toString());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
 
 

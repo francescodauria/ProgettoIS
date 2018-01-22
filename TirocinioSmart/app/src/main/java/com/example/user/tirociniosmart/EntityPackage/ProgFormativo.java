@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.EntityPackage;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * Created by User on 17/01/2018.
  */
 
-public class ProgFormativo {
+public class ProgFormativo implements Serializable{
 
     private int id;
     private String stato;
