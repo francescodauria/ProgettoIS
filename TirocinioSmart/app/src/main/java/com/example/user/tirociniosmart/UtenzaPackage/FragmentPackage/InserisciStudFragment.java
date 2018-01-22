@@ -77,18 +77,63 @@ public class InserisciStudFragment extends android.app.Fragment {
                 View focusView = null;
 
                 if(TextUtils.isEmpty(nome.getText().toString())) {
-                    nome.setError("Il campo nome non può essere vuoto");
+                    nome.setError("Il campo nome non \npuò essere vuoto");
                     focusView = nome;
                     focusView.requestFocus();
                 }
-                else if (TextUtils.isEmpty(nome.getText().toString())) {
-                    cognome.setError("Il campo cognome non può essere vuoto");
+                else if (TextUtils.isEmpty(cognome.getText().toString())) {
+                    cognome.setError("Il campo cognome non \npuò essere vuoto");
                     focusView = cognome;
                     focusView.requestFocus();
                 }
-                else if(TextUtils.isEmpty(nome.getText().toString())) {
-                    matricola.setError("Il campo matricola non può essere vuoto");
+                else if(TextUtils.isEmpty(matricola.getText().toString())) {
+                    matricola.setError("Il campo matricola non \npuò essere vuoto");
                     focusView = matricola;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(username.getText().toString())) {
+                    username.setError("Il campo username non \npuò essere vuoto");
+                    focusView = username;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(password.getText().toString())) {
+                    password.setError("Il campo password non \npuò essere vuoto");
+                    focusView = password;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(passwordRipetuta.getText().toString())) {
+                    passwordRipetuta.setError("Il campo password ripetuta non \npuò essere vuoto");
+                    focusView = passwordRipetuta;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(mail.getText().toString())) {
+                    mail.setError("Il campo email non \npuò essere vuoto");
+                    focusView = mail;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(telefono.getText().toString())) {
+                    telefono.setError("Il campo telefono non \npuò essere vuoto");
+                    focusView = telefono;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(indirizzo.getText().toString())) {
+                    indirizzo.setError("Il campo indirizzo non \npuò essere vuoto");
+                    focusView = indirizzo;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(luogoNascita.getText().toString())) {
+                    luogoNascita.setError("Il campo \nluogo di nascita non \npuò essere vuoto");
+                    focusView = luogoNascita;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(numeroTirocini.getText().toString())) {
+                    numeroTirocini.setError("Il campo numero tirocini non \npuò essere vuoto");
+                    focusView = numeroTirocini;
+                    focusView.requestFocus();
+                }
+                else if(TextUtils.isEmpty(codiceFiscale.getText().toString())) {
+                    codiceFiscale.setError("Il campo CF non \npuò essere vuoto");
+                    focusView = codiceFiscale;
                     focusView.requestFocus();
                 }
 
