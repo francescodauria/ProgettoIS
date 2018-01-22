@@ -14,11 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
+import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
+import com.example.user.tirociniosmart.EntityPackage.TutorAc;
+import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAcActivity;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -63,14 +72,20 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         //    TextView obiettivi = v.findViewById(R.id.obiettiviRichiestaStudente);
         //    TextView motivazione = v.findViewById(R.id.motivazioneRichiestaStudente);
 
-        //Azienda a = AziendaDAO.findById(progettoFormativo.getMatricolaTutor())
 
+
+
+        azienda.setText(progettoFormativo.getTutorAz().getAzienda().getNome());
+
+        tutorAccademico.setText(progettoFormativo.getTutorAc().getNome()+ " "+progettoFormativo.getTutorAc().getCognome() );
+
+        tutorAzienda.setText(progettoFormativo.getTutorAz().getNome()+ " "+progettoFormativo.getTutorAz().getCognome() );
+
+        logoAzienda.setImageBitmap(progettoFormativo.getTutorAz().getAzienda().getLogo());
 
         dataInizio.setText(progettoFormativo.getDataInizio().getDay()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+(progettoFormativo.getDataInizio().getYear()+1900));
         dataFine.setText(progettoFormativo.getDataFine().getDay()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+(progettoFormativo.getDataFine().getYear()+1900));
 
-
-        logoAzienda.setBackgroundResource(R.drawable.seti);
 
 
         stato.setText(progettoFormativo.getStato());
@@ -105,22 +120,17 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         else
             firmaTutorAccademico.setBackgroundResource(R.drawable.spunta);
 
-        
+
 
         if(progettoFormativo.getFirmaDirettore()==null) {
             firmaDirettore.setBackgroundResource(R.drawable.croce);
-            System.out.println(progettoFormativo.getFirmaDirettore() + " firma del direttore fuori");
 
         }
         else {
             firmaDirettore.setBackgroundResource(R.drawable.spunta);
-            System.out.println(progettoFormativo.getFirmaDirettore() + " firma del direttore nell'else");
 
         }
 
-        tutorAzienda.setText("Pasquale Scafa");
-        tutorAccademico.setText("Vittorio Fuccella");
-        azienda.setText("ITSystem");
 
         stato.setText(statoString);
 

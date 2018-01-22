@@ -18,29 +18,33 @@ public class TutorAccademicoDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
-    public static TutorAc findByMatricola(String matricola) {
+    public static TutorAc findByMatricola(String matricola)  {
         TutorAc tutorAc = null;
 
         Connection newConnection = null;
 
         try {
+            System.out.println(genericConnectionPool.toString()+ "tutor accademico");
+
             newConnection = (Connection) genericConnectionPool.getConnection();
+            System.out.println(newConnection);
             newConnection.setAutoCommit(false);
 
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
-            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Accademico WHERE Matricola="+matricola);
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Accademico WHERE Matricola=" + matricola);
 
             ResultSet rs = null;
             rs = stt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 String username = rs.getString("Username");
                 String password = rs.getString("Password");
                 String nome = rs.getString("Nome");
                 String cognome = rs.getString("Cognome");
                 tutorAc = new TutorAc(username, password, "Tutor Accademico", matricola, nome, cognome);
+
             }
 
             newConnection.commit();
@@ -49,10 +53,13 @@ public class TutorAccademicoDAO extends GenericDAO {
             genericConnectionPool.releaseConnection(newConnection);
 
             return tutorAc;
-        } catch(SQLException e) {
-            return null;
+                   } catch(SQLException e) {
+                        e.printStackTrace();
+                         return null;
+
         }
-    }
+        }
+
 
 
     public static String insert(TutorAc tutor) {

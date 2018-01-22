@@ -4,9 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.example.user.tirociniosmart.EntityPackage.Azienda;
+import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 
 import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.EntityPackage.TutorAc;
+import com.example.user.tirociniosmart.EntityPackage.TutorAz;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 
 
 import java.io.ByteArrayInputStream;
@@ -55,10 +60,10 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 stt.setInt(4, progetto.getNumeroOre());
                 stt.setDate(5, progetto.getDataInizio());
                 stt.setDate(6, progetto.getDataFine());
-                stt.setString(7, progetto.getMatricolaStud());
-                stt.setString(8, progetto.getMatricolaTutor());
-                stt.setString(9, progetto.getCFTutor());
-                stt.setString(10, progetto.getMatricolaDir());
+                stt.setString(7, progetto.getStudente().getMatricola());
+                stt.setString(8, progetto.getTutorAc().getMatricola());
+                stt.setString(9, progetto.getTutorAz().getCF());
+                stt.setString(10, progetto.getDirettore().getMatricola());
                 stt.executeUpdate();
                 newConnection.commit();
                 stt.close();
@@ -82,6 +87,9 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection = (Connection) genericConnectionPool.getConnection();
             newConnection.setAutoCommit(false);
 
+            TutorAccademicoDAO.setConnectionPool(genericConnectionPool);
+            TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
+
             System.out.println("Database connesso");
             PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ? Order by Stato");
             stt.setString(1,studente.getMatricola());
@@ -89,6 +97,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next())
             {
+
                 String id=rs.getString(1);
 
                 Blob firmaDirettore=rs.getBlob(2);
@@ -125,12 +134,30 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Date data_inizio=rs.getDate(10);
                 Date data_fine=rs.getDate(11);
                 Date data_stipula=rs.getDate(12);
-                String matricola_stud=rs.getString(13);
-                String tutor_acc_matricola=rs.getString(14);
-                String tutor_az_CF=rs.getString(15);
-                String direttore=rs.getString(16);
 
-                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,matricola_stud,direttore,tutor_acc_matricola,tutor_az_CF);
+                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
+                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
+
+                Azienda a = tutorAz.getAzienda();
+
+
+                System.out.println(a.getEmail());
+                System.out.println(a.getNome());
+                System.out.println(a.getSede());
+                System.out.println(a.getDescrizione());
+                System.out.println(a.getId());
+                System.out.println();
+
+
+                Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
+
+
+
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaDirettore(firmaDir);

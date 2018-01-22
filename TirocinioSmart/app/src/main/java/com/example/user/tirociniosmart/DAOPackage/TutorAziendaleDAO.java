@@ -19,7 +19,7 @@ public class TutorAziendaleDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
-    public static TutorAz findByCF(String codFiscale) {
+    public static TutorAz findByCF(String codFiscale)  {
         TutorAz tutorAz = null;
 
         Connection newConnection = null;
@@ -31,9 +31,11 @@ public class TutorAziendaleDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
-            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE CF="+codFiscale);
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE CF=?");
+            stt.setString(1,codFiscale);
 
-            ResultSet rs = null;
+
+        ResultSet rs = null;
             rs = stt.executeQuery();
 
             while(rs.next()) {
@@ -45,7 +47,7 @@ public class TutorAziendaleDAO extends GenericDAO {
                 String email = rs.getString("Email");
                 String numeroTel = rs.getString("N_tel");
                 String aziendaId = rs.getString("AziendaID");
-                AziendaDAO.setConnectionPool((GenericConnectionPool) newConnection);
+                AziendaDAO.setConnectionPool(genericConnectionPool);
                 Azienda azienda = AziendaDAO.findById(aziendaId);
                 tutorAz = new TutorAz(username, password, "Tutor Aziendale", nome, cognome, cf, email, numeroTel, azienda);
             }

@@ -23,12 +23,13 @@ public class ProgFormativo {
     private Date dataFine;
     private Date dataStipula;
     private Bitmap firmaDirettore;
-    private String matricolaStud;
-    private String matricolaDir;
-    private String matricolaTutor;
-    private String CFTutor;
+    private Studente studente;
+    private TutorAc tutorAc;
+    private TutorAz tutorAz;
+    private Direttore direttore;
 
-    public ProgFormativo(String stato, String motivazione, int numeroOre, String listaObiettivi, Date dataInizio, Date dataFine,Date dataStipula, Bitmap firmaStudente, String matricolaStud, String matricolaDir,String matricolaTutor, String CFTutor) {
+
+    public ProgFormativo(String stato, String motivazione, int numeroOre, String listaObiettivi, Date dataInizio, Date dataFine,Date dataStipula, Bitmap firmaStudente, Studente studente, Direttore dir,TutorAc tutorAc, TutorAz tutorAz) {
 
         this.stato = stato;
         this.motivazione = motivazione;
@@ -37,22 +38,54 @@ public class ProgFormativo {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.firmaStudente=firmaStudente;
-        this.matricolaStud=matricolaStud;
-        this.matricolaTutor=matricolaTutor;
-        this.CFTutor=CFTutor;
+        this.studente=studente;
+        this.tutorAc = tutorAc;
+        this.tutorAz = tutorAz;
         this.dataStipula = dataStipula;
-        this.matricolaDir=matricolaDir;
+        this.direttore=direttore;
     }
 
 
+    public void setFirmaStudente(Bitmap firmaStudente) {
+        this.firmaStudente = firmaStudente;
+    }
+
+    public Studente getStudente() {
+        return studente;
+    }
+
+    public void setStudente(Studente studente) {
+        this.studente = studente;
+    }
+
+    public TutorAc getTutorAc() {
+        return tutorAc;
+    }
+
+    public void setTutorAc(TutorAc tutorAc) {
+        this.tutorAc = tutorAc;
+    }
+
+    public TutorAz getTutorAz() {
+        return tutorAz;
+    }
+
+    public void setTutorAz(TutorAz tutorAz) {
+        this.tutorAz = tutorAz;
+    }
+
+    public Direttore getDirettore() {
+        return direttore;
+    }
+
+    public void setDirettore(Direttore direttore) {
+        this.direttore = direttore;
+    }
 
     public String getListaObiettivi() {
         return listaObiettivi;
     }
 
-    public String getMatricolaStud() {
-        return matricolaStud;
-    }
 
     public int getId() {
         return id;
@@ -62,17 +95,6 @@ public class ProgFormativo {
         this.id = id;
     }
 
-    public String getMatricolaDir() {
-        return matricolaDir;
-    }
-
-    public String getMatricolaTutor() {
-        return matricolaTutor;
-    }
-
-    public String getCFTutor() {
-        return CFTutor;
-    }
 
     public void setListaObiettivi(String listaObiettivi) {
         this.listaObiettivi = listaObiettivi;

@@ -29,7 +29,7 @@ public class AziendaDAO extends GenericDAO {
     }
 
 
-    public static String insert(Azienda azienda) {
+    public static String insert(Azienda azienda) throws SQLException {
         try {
             if (AziendaDAO.checkAzienda(azienda)) {
                 Connection newConnection = (Connection) genericConnectionPool.getConnection();
@@ -97,39 +97,46 @@ public class AziendaDAO extends GenericDAO {
     public static Azienda findById(String id) throws SQLException {
         Azienda azienda = null;
 
-        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        try {
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
-        newConnection.setAutoCommit(false);
+            newConnection.setAutoCommit(false);
 
-        System.out.println("Database connesso");
-        PreparedStatement stt = null;
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
 
-        stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE id="+id);
+            stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE id=?");
+            stt.setString(1, id);
 
-        ResultSet rs = null;
-        rs = stt.executeQuery();
 
-        while(rs.next()) {
-            Blob dat = rs.getBlob("logo");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
 
-            byte[] imgData = dat.getBytes(1, (int) dat.length());
+            while (rs.next()) {
+                Blob dat = rs.getBlob("logo");
 
-            String idAzienda = rs.getString("ID");
-            String sede = rs.getString("Sede");
-            String nome = rs.getString("Nome");
-            String email = rs.getString("Email");
-            String descrizione = rs.getString("Descrizione");
-            String numero = rs.getString("N_tel");
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
-            azienda = new Azienda(idAzienda, nome, email,sede, descrizione, bitmap,numero, null);
+                byte[] imgData = dat.getBytes(1, (int) dat.length());
+
+                String idAzienda = rs.getString("ID");
+                String sede = rs.getString("Sede");
+                String nome = rs.getString("Nome");
+                String email = rs.getString("Email");
+                String descrizione = rs.getString("Descrizione");
+                String numero = rs.getString("N_tel");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+                azienda = new Azienda(idAzienda, nome, email, sede, descrizione, bitmap, numero, null);
+            }
+
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+
+            return azienda;
         }
-
-        newConnection.commit();
-        stt.close();
-
-        genericConnectionPool.releaseConnection(newConnection);
-
-        return azienda;
+        catch (SQLException e){
+            return null;
+        }
 
     }
 
