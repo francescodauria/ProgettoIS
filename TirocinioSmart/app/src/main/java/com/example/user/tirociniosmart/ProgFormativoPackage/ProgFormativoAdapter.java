@@ -56,7 +56,7 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         ImageView firmaStudente = v.findViewById(R.id.firmaStudenteRichiestaStudente);
         ImageView firmaTutorAziendale = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
         ImageView firmaTutorAccademico = v.findViewById(R.id.firmaTutorAccademicoRichiestaStudente);
-        ImageView firmaDirettore = v.findViewById(R.id.firmaTutorAziendaleRichiestaStudente);
+        ImageView firmaDirettore = v.findViewById(R.id.firmaDirettoreRichiestaStudente);
         ImageView logoAzienda = v.findViewById(R.id.logoAziendaRichiestaStudente);
         //    ImageView accettazioneSegreteria = v.findViewById(R.id.accettazioneSegreteriaRichiestaStudente);
         //    TextView  dataStipula = v.findViewById(R.id.dataStipulaRichiestaStudente);
@@ -89,6 +89,7 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         }
 
 
+
         if(progettoFormativo.getFirmaStudente()==null)
             firmaStudente.setBackgroundResource(R.drawable.croce);
         else
@@ -104,11 +105,18 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
         else
             firmaTutorAccademico.setBackgroundResource(R.drawable.spunta);
 
-        if(progettoFormativo.getFirmaDirettore()==null)
-            firmaDirettore.setBackgroundResource(R.drawable.croce);
-        else
-            firmaDirettore.setBackgroundResource(R.drawable.spunta);
+        
 
+        if(progettoFormativo.getFirmaDirettore()==null) {
+            firmaDirettore.setBackgroundResource(R.drawable.croce);
+            System.out.println(progettoFormativo.getFirmaDirettore() + " firma del direttore fuori");
+
+        }
+        else {
+            firmaDirettore.setBackgroundResource(R.drawable.spunta);
+            System.out.println(progettoFormativo.getFirmaDirettore() + " firma del direttore nell'else");
+
+        }
 
         tutorAzienda.setText("Pasquale Scafa");
         tutorAccademico.setText("Vittorio Fuccella");

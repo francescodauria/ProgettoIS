@@ -21,8 +21,8 @@
             android:background="@drawable/circlegreen"
             android:layout_marginRight="10dp"
             android:id="@+id/dataInizioRichiestaStudenteImageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="23dp"
+            android:layout_height="23dp" />
 
 
 
@@ -239,7 +239,6 @@
     <ImageView
         android:layout_marginRight="60dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/spunta"
         android:id="@+id/firmaStudenteRichiestaStudente"
         android:layout_width="50dp"
         android:layout_height="50dp" />
@@ -271,7 +270,6 @@
         <ImageView
             android:layout_marginRight="60dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/spunta"
             android:id="@+id/firmaTutorAziendaleRichiestaStudente"
             android:layout_width="50dp"
             android:layout_height="50dp" />
@@ -307,7 +305,6 @@
         <ImageView
             android:layout_marginRight="60dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/spunta"
             android:id="@+id/firmaTutorAccademicoRichiestaStudente"
             android:layout_width="50dp"
             android:layout_height="50dp" />
@@ -339,7 +336,6 @@
         <ImageView
             android:layout_marginRight="60dp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/spunta"
             android:id="@+id/firmaDirettoreRichiestaStudente"
             android:layout_width="50dp"
             android:layout_height="50dp" />
