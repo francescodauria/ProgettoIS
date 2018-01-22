@@ -43,24 +43,10 @@ import java.sql.SQLException;
  */
 public class LoginActivity extends AppCompatActivity  {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
+
     private MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();;
 
-    private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
-
-    // UI references.
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
