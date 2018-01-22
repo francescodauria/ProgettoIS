@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.ProgFormativoPackage.ObiettiviFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
@@ -88,7 +89,30 @@ public class TutorAzActivity extends AppCompatActivity
 
         if (id == R.id.richieste_tirocinio_TutorAziendale_convenzionato) {
             // Handle the camera action
-        } else if (id == R.id.richiesta_convenzione_TutorAziendale_non_convenzionato) {
+        } else if(id==R.id.obiettivi_TutorAziendale_convenzionato) {
+
+            Fragment f = fm.findFragmentByTag("visualizzaObiettivi");
+            if (f == null) {
+                f = new ObiettiviFragment();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "visualizzaObiettivi");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                f = new ObiettiviFragment();
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "visualizzaObiettivi");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
+
+        }else if (id == R.id.richiesta_convenzione_TutorAziendale_non_convenzionato) {
 
             Fragment f = fm.findFragmentByTag("richiediConvenzione");
             if (f == null) {

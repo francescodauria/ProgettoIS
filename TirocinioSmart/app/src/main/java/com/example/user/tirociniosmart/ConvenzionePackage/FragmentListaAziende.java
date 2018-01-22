@@ -56,7 +56,8 @@ public class FragmentListaAziende extends Fragment {
         view = inflater.inflate(R.layout.student_fragment_lista_aziende_layout, container, false);
         image = (ImageView) view.findViewById(R.id.elem_lista_logo);
 
-        mProgressView = view.findViewById(R.id.aziende_progress);
+        mProgressView = view.findViewById(R.id.obiettivi_progress);
+        showProgress(false);
 
         new LoadIconTask().execute(1);
 
@@ -114,22 +115,25 @@ public class FragmentListaAziende extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Azienda> lista) {
             showProgress(false);
-            if(internet) {
-                adapter = new AziendeAdapter(context, R.layout.student_custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
 
-                listView = (ListView) view.findViewById(R.id.mylistview);
-                listView.setAdapter(adapter);
+                if(lista!=null) {
 
-                for (Azienda a : lista) {
-                    adapter.add(a);
+                    adapter = new AziendeAdapter(context, R.layout.student_custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
 
-                }
+                    listView = (ListView) view.findViewById(R.id.mylistview);
+                    listView.setAdapter(adapter);
 
-            }
-            else {
-                Toast.makeText(getActivity(),"Attenzione: connessione non disponibile", Toast.LENGTH_LONG).show();
+                    for (Azienda a : lista) {
+                        adapter.add(a);
 
-            }
+                    }
+
+
+                } else
+                    Toast.makeText(getActivity(),"Attenzione: connessione non disponibile", Toast.LENGTH_LONG).show();
+
+
+
 
             //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }

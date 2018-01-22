@@ -29,8 +29,7 @@ import java.sql.SQLException;
 public class TutorAcActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fm;
-    public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-
+    private static MySQLConnectionPoolFreeSqlDB pool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
