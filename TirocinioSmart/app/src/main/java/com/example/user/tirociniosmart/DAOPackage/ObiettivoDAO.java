@@ -42,6 +42,7 @@ public class ObiettivoDAO extends GenericDAO {
             } else
                 return "Esiste già un obiettivo con questo nome";
         } catch (SQLException e) {
+            e.printStackTrace();
             return "Connessione al database non presente";
         }
     }
@@ -50,7 +51,7 @@ public class ObiettivoDAO extends GenericDAO {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
         System.out.println("Database connesso");
-        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Obiettivo WHERE Nome = ?");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Obiettivo_formativo WHERE Nome = ?");
         stt.setString(1,obiettivo.getNome());
         ResultSet rs=stt.executeQuery();
         if(rs.next())

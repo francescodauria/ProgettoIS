@@ -5,37 +5,26 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
-import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
 import com.example.user.tirociniosmart.DAOPackage.ObiettivoDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Obiettivo;
-import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
-import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -52,30 +41,60 @@ public class ObiettiviFragment extends Fragment {
     private Context context;
     private EditText nome;
     private EditText descrizione;
+    private Obiettivo obiettivo;
+    private ArrayList<Obiettivo> lista;
+
     @Override
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
         super.onAttach(activity);
-        context=activity;
+        context = activity;
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
-        view = inflater.inflate(R.layout.obiettivi_fragment, container, false);
-      //  image = (ImageView) view.findViewById(R.id.elem_lista_logo);
+        view = inflater.inflate(R.layout.tutor_az_obiettivi_fragment, container, false);
+        //  image = (ImageView) view.findViewById(R.id.elem_lista_logo);
 
         nome = view.findViewById(R.id.nomeObiettivo);
         descrizione = view.findViewById(R.id.descrizioneObiettivo);
 
         button = view.findViewById(R.id.bottoneObiettivo);
-      //  mProgressView = view.findViewById(R.id.aziende_progress);
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
+        mProgressView = view.findViewById(R.id.obiettivi_progress);
+        showProgress(false);
+        lista = new ArrayList<>();
 
-                new LoadIconTask().execute(1);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                View focusView = null;
+
+                if (TextUtils.isEmpty(nome.getText().toString())) {
+                    nome.setError("Il campo nome non può essere vuoto");
+                    focusView = nome;
+                    focusView.requestFocus();
+                } else if (TextUtils.isEmpty(descrizione.getText().toString())) {
+                    descrizione.setError("Il campo descrizione non può essere vuoto");
+                    focusView = descrizione;
+                    focusView.requestFocus();
+                } else
+                    new InsertTask().execute(1);
             }
         });
-     //   new LoadIconTask().execute(1);
+        listView = (ListView) view.findViewById(R.id.obiettiviListView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                obiettivo = (Obiettivo)listView.getItemAtPosition(i);
+                new RemoveTask().execute(1);
+
+
+            }
+        });
+
+
+        //   new LoadIconTask().execute(1);
 
         return view;
 
@@ -104,25 +123,26 @@ public class ObiettiviFragment extends Fragment {
         }
     }
 
-    class LoadIconTask extends AsyncTask<Integer, Integer, String> {
+    class InsertTask extends AsyncTask<Integer, Integer, String> {
 
         @Override
         protected void onPreExecute() {
 
+            showProgress(true);
         }
 
         @Override
         protected String doInBackground(Integer... img_ids) {
 
+
             ObiettivoDAO.setConnectionPool(TutorAzActivity.pool);
 
 
+            Azienda a = new Azienda("azienda1", null, null, null, null, null, null, null);
+            obiettivo = new Obiettivo(nome.getText().toString(), descrizione.getText().toString(), a);
 
-            Azienda a =new Azienda("azienda1",null,null,null,null,null,null,null);
-            Obiettivo obiettivo = new Obiettivo(nome.getText().toString(),descrizione.getText().toString(),a);
+            String s = ObiettivoDAO.insert(obiettivo);
 
-
-           String s = ObiettivoDAO.insert(obiettivo);
 
             return s;
         }
@@ -135,17 +155,68 @@ public class ObiettiviFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
+            if (!s.equals("Esiste già un obiettivo con questo nome")) {
 
+                adapter = new ObiettiviAdapter(context, R.layout.tutor_az_custom_adapter_obiettivi_layout, new ArrayList<Obiettivo>());
+                listView.setAdapter(adapter);
+                lista.add(obiettivo);
+                for (Obiettivo o : lista)
+                    adapter.add(o);
 
-            Toast.makeText(getActivity().getApplicationContext(), s,Toast.LENGTH_LONG).show();
+            }
+
+            Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_LONG).show();
 
 
             //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
-
     }
 
+
+    class RemoveTask extends AsyncTask<Integer, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+            showProgress(true);
+        }
+
+        @Override
+        protected String doInBackground(Integer... img_ids) {
+
+
+            ObiettivoDAO.setConnectionPool(TutorAzActivity.pool);
+
+            String s = ObiettivoDAO.remove(obiettivo);
+
+
+            return s;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            showProgress(false);
+            if (s.equals("Rimozione avvenuta correttamente")) {
+
+                lista.remove(obiettivo);
+
+                    adapter.remove(obiettivo);
+
+            }
+
+            Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_LONG).show();
+
+
+            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
+        }
+
+    }
 
 
 

@@ -56,8 +56,7 @@ public class FragmentListaAziende extends Fragment {
         view = inflater.inflate(R.layout.student_fragment_lista_aziende_layout, container, false);
         image = (ImageView) view.findViewById(R.id.elem_lista_logo);
 
-        mProgressView = view.findViewById(R.id.obiettivi_progress);
-        showProgress(false);
+        mProgressView = view.findViewById(R.id.aziende_progress);
 
         new LoadIconTask().execute(1);
 
