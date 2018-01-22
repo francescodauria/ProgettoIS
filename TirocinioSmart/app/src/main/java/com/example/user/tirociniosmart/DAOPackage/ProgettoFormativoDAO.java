@@ -90,14 +90,15 @@ public class ProgettoFormativoDAO extends GenericDAO {
             while(rs.next())
             {
                 String id=rs.getString(1);
-                
+
                 Blob firmaDirettore=rs.getBlob(2);
                 Bitmap firmaDir=null;
                 if(firmaDirettore!=null) {
                     byte[] imgData1 = firmaDirettore.getBytes(1, (int) firmaDirettore.length());
                     firmaDir = BitmapFactory.decodeByteArray(imgData1, 0, imgData1.length);
-                    System.out.println(firmaDirettore+ "firma del direttore");
                 }
+
+
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
                 if(firmaStudente!=null) {
@@ -134,7 +135,6 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaDirettore(firmaDir);
                 progetti.add(progetto);
-                Log.d("dentro al while", "prova");
 
             }
             newConnection.commit();

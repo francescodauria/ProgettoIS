@@ -108,18 +108,19 @@ public class VisualizzaStatoFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
-            if(lista==null) Toast.makeText(getActivity(),"Connessione al database non presente",Toast.LENGTH_LONG);
-            adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
+            if(lista==null) Toast.makeText(getActivity(),"Connessione al database non presente",Toast.LENGTH_LONG).show();
+            else {
+                adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
 
-            listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);
-            listView.setAdapter(adapter);
+                listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);
+                listView.setAdapter(adapter);
 
-            for (ProgFormativo pr : lista) {
-                adapter.add(pr);
+                for (ProgFormativo pr : lista) {
+                    adapter.add(pr);
+
+                }
 
             }
-
-
             //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
