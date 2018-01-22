@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 
@@ -140,7 +141,16 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
-                
+
+                Azienda a = tutorAz.getAzienda();
+
+
+                System.out.println(a.getEmail());
+                System.out.println(a.getNome());
+                System.out.println(a.getSede());
+                System.out.println(a.getDescrizione());
+                System.out.println(a.getId());
+                System.out.println();
 
 
                 Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);

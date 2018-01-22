@@ -131,9 +131,6 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
 
         }
 
-        tutorAzienda.setText("Pasquale Scafa");
-        tutorAccademico.setText("Vittorio Fuccella");
-        azienda.setText("ITSystem");
 
         stato.setText(statoString);
 
