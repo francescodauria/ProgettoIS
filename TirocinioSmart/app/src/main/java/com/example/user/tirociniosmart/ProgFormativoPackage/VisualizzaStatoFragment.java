@@ -18,9 +18,13 @@ import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
 import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
+import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.EntityPackage.TutorAc;
+import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 
@@ -91,6 +95,7 @@ public class VisualizzaStatoFragment extends Fragment {
 
         @Override
         protected ArrayList<ProgFormativo> doInBackground(Integer... img_ids) {
+
             ArrayList<ProgFormativo> progetti = new ArrayList<>();
 
             Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
@@ -98,6 +103,7 @@ public class VisualizzaStatoFragment extends Fragment {
 
             progetti = ProgettoFormativoDAO.findAllByStudente(s);
             return progetti;
+
         }
 
         @Override
@@ -108,6 +114,8 @@ public class VisualizzaStatoFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
+
+
             if(lista==null) Toast.makeText(getActivity(),"Connessione al database non presente",Toast.LENGTH_LONG).show();
             else {
                 adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
@@ -120,8 +128,9 @@ public class VisualizzaStatoFragment extends Fragment {
 
                 }
 
+
+
             }
-            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
 
