@@ -22,12 +22,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.user.tirociniosmart.DAOPackage.ConvenzioneDAO;
 import com.example.user.tirociniosmart.DAOPackage.DirettoreDAO;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.DAOPackage.SegreteriaDAO;
 import com.example.user.tirociniosmart.DAOPackage.StudenteDAO;
 import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
 import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
+import com.example.user.tirociniosmart.EntityPackage.Convenzione;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.Segreteria;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
@@ -231,6 +233,7 @@ public class LoginActivity extends AppCompatActivity  {
 
         private final String mEmail;
         private final String mPassword;
+        private boolean convenzione;
 
         public UserLoginTask(String email, String password) {
             mEmail = email;
@@ -256,6 +259,13 @@ public class LoginActivity extends AppCompatActivity  {
 
                 } else if (null != TutorAziendaleDAO.findByUtente(utente)) {
                     Utente tutor = TutorAziendaleDAO.findByUtente(utente);
+                    Convenzione c=new Convenzione(((TutorAz)tutor).getAzienda(), null,null,"ACCETTATO");
+                    ConvenzioneDAO.setConnectionPool(pool);
+                    if(!ConvenzioneDAO.checkConvenzione(c)) {
+                        convenzione=true;
+                    } else {
+                        convenzione=false;
+                    }
                     return tutor;
 
                 } else if (null != TutorAccademicoDAO.findByUtente(utente)) {
@@ -314,6 +324,7 @@ public class LoginActivity extends AppCompatActivity  {
                     TutorAz tutorAz =(TutorAz)utente;
 
                     i.putExtra("TUTORAZ",tutorAz.getCF());
+                    i.putExtra("CONVENZIONE",convenzione);
 
                 }
                 if(utente instanceof Segreteria)
