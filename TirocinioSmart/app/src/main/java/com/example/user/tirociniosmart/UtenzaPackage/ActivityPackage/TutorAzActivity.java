@@ -40,7 +40,7 @@ import java.util.ArrayList;
 
 public class TutorAzActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    FragmentManager fm;
+    private FragmentManager fm;
     private TutorAz tutorAz;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
 
@@ -53,7 +53,7 @@ public class TutorAzActivity extends AppCompatActivity
 
         fm = getFragmentManager();
         new LoadTutor().execute(1);
-
+        boolean convenzione = getIntent().getBooleanExtra("CONVENZIONE",true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -61,20 +61,20 @@ public class TutorAzActivity extends AppCompatActivity
         toggle.syncState();
         pool = new MySQLConnectionPoolFreeSqlDB();
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-/*        String username = getIntent().getStringExtra("username");
-        if(username.equals("conv"))*/
+        if(convenzione)
             navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
-/*        else if(username.equals("nonconv")) {
+        else{
             navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
             Fragment f = new RichiediConvenzioneFragment();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "statoRichiesta");
             ft.addToBackStack(null);
             ft.commit();
-        }*/
+        }
     }
 
     @Override
