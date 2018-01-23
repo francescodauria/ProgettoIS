@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
@@ -101,6 +102,34 @@ public class DirettoreDAO extends GenericDAO {
 
     public static String insert() {
         return "";
+    }
+
+    public static ArrayList<Direttore> getAllDirettori()  {
+        try {
+            ArrayList<Direttore> lista = new ArrayList<>();
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            stt = newConnection.prepareStatement("SELECT * FROM Direttore_Dipartimento ORDER BY Nome");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+            while (rs.next()) {
+                String matricola = rs.getString("Matricola");
+                String nome = rs.getString("Nome");
+                String cognome = rs.getString("Cognome");
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                Direttore d = new Direttore(username, password, "Direttore", matricola, nome, cognome);
+                lista.add(d);
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return lista;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
 

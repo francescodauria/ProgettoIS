@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
@@ -86,6 +87,31 @@ public class ObiettivoDAO extends GenericDAO {
         }
     }
 
+    public static ArrayList<Obiettivo> getAllObiettivi()  {
+        try {
+            ArrayList<Obiettivo> lista = new ArrayList<>();
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            stt = newConnection.prepareStatement("SELECT * FROM Obiettivo_formativo ORDER BY Nome");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+            while (rs.next()) {
+                String nome = rs.getString("Nome");
+                String descrizione = rs.getString("Descrizione");
+                String aziendaId = rs.getString("AziendaID");
+                Obiettivo o = new Obiettivo(nome, descrizione, AziendaDAO.findById(aziendaId));
+                lista.add(o);
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return lista;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
     public static String update() {
         return "";
