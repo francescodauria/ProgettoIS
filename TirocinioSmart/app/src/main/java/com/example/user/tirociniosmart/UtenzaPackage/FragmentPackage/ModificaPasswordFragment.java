@@ -50,6 +50,7 @@ public class ModificaPasswordFragment extends Fragment {
     private Utente utente;
     private View mProgressView;
     private Button registra;
+    String ruolo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
@@ -61,7 +62,15 @@ public class ModificaPasswordFragment extends Fragment {
         nuovaPassword = view.findViewById(R.id.newPassword);
         ripetiPassword = view.findViewById(R.id.ripetiPassword);
         vecchiaPassword = view.findViewById(R.id.oldPassword);
-        utente = StudentActivity.getStudente();
+
+        Bundle bundle = this.getArguments();
+        ruolo = bundle.getString("ruolo");
+        String username = bundle.getString("username");
+        String password = bundle.getString("password");
+
+        utente= new Utente(username,password);
+
+
         registra = view.findViewById(R.id.modificaPassword);
         registra.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -117,24 +126,23 @@ public class ModificaPasswordFragment extends Fragment {
         protected String doInBackground(Integer... img_ids) {
 
             String s = null;
-            if(utente instanceof Studente){
+            if(ruolo.equals("Studente")){
                 StudenteDAO.setConnectionPool(StudentActivity.pool);
                 s = StudenteDAO.cambioPassword(utente, nuovaPassword.getText().toString());
             }
-            else if(utente instanceof TutorAz) {
+            else if(ruolo.equals("TutorAz")) {
                 TutorAziendaleDAO.setConnectionPool(TutorAzActivity.pool);
                 s = TutorAziendaleDAO.cambioPassword(utente, nuovaPassword.getText().toString());
-
             }
-            else if(utente instanceof TutorAc) {
+            else if(ruolo.equals("TutorAc")) {
                 TutorAccademicoDAO.setConnectionPool(TutorAcActivity.pool);
                 s=TutorAccademicoDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }
-            else if(utente instanceof Direttore) {
+            else if(ruolo.equals("Direttore")) {
                 DirettoreDAO.setConnectionPool(DirettoreActivity.pool);
                 s=DirettoreDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }
-            else if(utente instanceof Segreteria) {
+            else if(ruolo.equals("Segreteria")) {
                 SegreteriaDAO.setConnectionPool(SegreteriaActivity.pool);
                 s=SegreteriaDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }

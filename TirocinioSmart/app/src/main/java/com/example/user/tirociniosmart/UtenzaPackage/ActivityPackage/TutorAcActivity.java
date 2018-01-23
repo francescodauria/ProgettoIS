@@ -83,7 +83,13 @@ public class TutorAcActivity extends AppCompatActivity
         } else if (id == R.id.account_TutorAccademico) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAc.getClass().getSimpleName());
+                bundle.putString("username",tutorAc.getUsername());
+                bundle.putString("password",tutorAc.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiTutorAccademico, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -94,7 +100,13 @@ public class TutorAcActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAc.getClass().getSimpleName());
+                bundle.putString("username",tutorAc.getUsername());
+                bundle.putString("password",tutorAc.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiTutorAccademico, f, "cambiaPassword");
                 ft.addToBackStack(null);
 

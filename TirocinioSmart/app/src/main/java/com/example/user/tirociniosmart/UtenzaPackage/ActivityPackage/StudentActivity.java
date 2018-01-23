@@ -131,8 +131,14 @@ public class StudentActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                System.out.println(studente.getClass().getSimpleName());
+                bundle.putString("ruolo",studente.getClass().getSimpleName());
+                bundle.putString("username",studente.getUsername());
+                bundle.putString("password",studente.getPassword());
 
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -143,7 +149,14 @@ public class StudentActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                System.out.println(studente.getClass().getSimpleName());
+                bundle.putString("ruolo",studente.getClass().getSimpleName());
+                bundle.putString("username",studente.getUsername());
+                bundle.putString("password",studente.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
 
                 ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
                 ft.addToBackStack(null);

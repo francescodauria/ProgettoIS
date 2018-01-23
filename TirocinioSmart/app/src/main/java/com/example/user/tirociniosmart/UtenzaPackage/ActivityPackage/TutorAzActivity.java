@@ -147,7 +147,13 @@ public class TutorAzActivity extends AppCompatActivity
         } else if (id == R.id.account_TutorAziendale_convenzionato) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAz.getClass().getSimpleName());
+                bundle.putString("username",tutorAz.getUsername());
+                bundle.putString("password",tutorAz.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -158,7 +164,13 @@ public class TutorAzActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAz.getClass().getSimpleName());
+                bundle.putString("username",tutorAz.getUsername());
+                bundle.putString("password",tutorAz.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
@@ -168,7 +180,13 @@ public class TutorAzActivity extends AppCompatActivity
         } else if (id == R.id.account_TutorAziendale_non_convenzionato) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAz.getClass().getSimpleName());
+                bundle.putString("username",tutorAz.getUsername());
+                bundle.putString("password",tutorAz.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -179,7 +197,13 @@ public class TutorAzActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",tutorAz.getClass().getSimpleName());
+                bundle.putString("username",tutorAz.getUsername());
+                bundle.putString("password",tutorAz.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "cambiaPassword");
                 ft.addToBackStack(null);
 

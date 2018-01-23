@@ -21,6 +21,7 @@ import android.view.MenuItem;
 
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.EntityPackage.Segreteria;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.InserisciStudFragment;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
@@ -31,7 +32,7 @@ public class SegreteriaActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-
+    private Segreteria segreteria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,7 @@ public class SegreteriaActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fm = getFragmentManager();
-        pool = new MySQLConnectionPoolFreeSqlDB();
-
+        segreteria = (Segreteria)getIntent().getSerializableExtra("SEGRETERIA");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -110,7 +110,13 @@ public class SegreteriaActivity extends AppCompatActivity
         } else if (id == R.id.account_Segreteria) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",segreteria.getClass().getSimpleName());
+                bundle.putString("username",segreteria.getUsername());
+                bundle.putString("password",segreteria.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -121,7 +127,14 @@ public class SegreteriaActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                System.out.println(segreteria.getClass().getSimpleName());
+                bundle.putString("ruolo",segreteria.getClass().getSimpleName());
+                bundle.putString("username",segreteria.getUsername());
+                bundle.putString("password",segreteria.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
                 ft.addToBackStack(null);
 

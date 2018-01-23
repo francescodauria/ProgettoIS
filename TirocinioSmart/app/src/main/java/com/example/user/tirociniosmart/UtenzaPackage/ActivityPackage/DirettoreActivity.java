@@ -31,7 +31,7 @@ public class DirettoreActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-
+    private Direttore direttore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +40,7 @@ public class DirettoreActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fm = getFragmentManager();
-
+        direttore = (Direttore)getIntent().getSerializableExtra("DIRETTORE");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,7 +80,13 @@ public class DirettoreActivity extends AppCompatActivity
         } else if (id == R.id.account_Direttore) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",direttore.getClass().getSimpleName());
+                bundle.putString("username",direttore.getUsername());
+                bundle.putString("password",direttore.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiDirettore, f, "cambiaPassword");
                 ft.addToBackStack(null);
@@ -91,7 +97,13 @@ public class DirettoreActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("ruolo",direttore.getClass().getSimpleName());
+                bundle.putString("username",direttore.getUsername());
+                bundle.putString("password",direttore.getPassword());
+
                 f = new ModificaPasswordFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiDirettore, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
