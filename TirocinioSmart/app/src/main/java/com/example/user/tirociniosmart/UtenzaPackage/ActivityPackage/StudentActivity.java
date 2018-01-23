@@ -113,7 +113,6 @@ public class StudentActivity extends AppCompatActivity
             Fragment f = fm.findFragmentByTag("listaAziende");
             if (f == null) {
                 f = new FragmentListaAziende();
-                FragmentListaAziende fe = new FragmentListaAziende();
 
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
@@ -132,6 +131,7 @@ public class StudentActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
+
                 f = new ModificaPasswordFragment();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
@@ -144,6 +144,7 @@ public class StudentActivity extends AppCompatActivity
                 ft.remove(f);
                 fm.popBackStack();
                 f = new ModificaPasswordFragment();
+
                 ft.add(R.id.contenitoreFrammentiStudente, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
@@ -164,6 +165,7 @@ public class StudentActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+
                 f = new CreaProgFormFragment();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "nuovaRichiesta");
                 ft.addToBackStack(null);
