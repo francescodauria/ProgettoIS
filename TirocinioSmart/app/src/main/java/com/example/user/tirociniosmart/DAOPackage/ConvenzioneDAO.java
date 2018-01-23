@@ -172,19 +172,17 @@ public class ConvenzioneDAO extends GenericDAO {
         stt.setString(1,convenzione.getAzienda().getId());
         stt.setString(2, "IN CORSO");
         ResultSet rs=stt.executeQuery();
-        if(rs.next())
-        {
+        if(rs.next()) {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
             return false;
-        }
-        else
-        {
+        } else {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
             return true;
         }
     }
+
 }
