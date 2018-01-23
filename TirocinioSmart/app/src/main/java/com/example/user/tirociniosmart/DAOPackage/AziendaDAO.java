@@ -48,7 +48,7 @@ public class AziendaDAO extends GenericDAO {
                 logo.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();
                 ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                stt.setBlob(5, bs);
+                stt.setBinaryStream(5, bs,bitmapdata.length);
                 stt.setString(6, azienda.getNumeroTel());
                 stt.setString(7, azienda.getEmail());
                 stt.executeUpdate();

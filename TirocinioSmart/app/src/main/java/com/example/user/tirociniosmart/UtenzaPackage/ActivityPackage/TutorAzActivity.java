@@ -65,8 +65,10 @@ public class TutorAzActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(convenzione)
+        if(convenzione) {
             navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
+
+        }
         else{
             navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
             Fragment f = new RichiediConvenzioneFragment();

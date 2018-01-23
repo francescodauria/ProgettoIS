@@ -103,7 +103,9 @@ public class ConvenzioneDAO extends GenericDAO {
 
             System.out.println("Database connesso");
 
-            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = "+stato+" WHERE ID="+idConvenzione);
+            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = ? WHERE ID=?");
+            stt.setString(1,stato);
+            stt.setString(2,idConvenzione);
             stt.executeUpdate();
 
             result = true;

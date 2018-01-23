@@ -32,7 +32,7 @@ public class StudentActivity extends AppCompatActivity
 
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
-    private static Studente studente;
+    private Studente studente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,9 +202,6 @@ public class StudentActivity extends AppCompatActivity
         return true;
     }
 
-    public static Studente getStudente(){
-        return studente;
-    }
 
     public void onStop(){
 
