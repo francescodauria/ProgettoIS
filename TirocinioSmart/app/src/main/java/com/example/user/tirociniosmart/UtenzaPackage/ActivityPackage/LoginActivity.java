@@ -311,7 +311,10 @@ public class LoginActivity extends AppCompatActivity  {
                 {
                     i=new Intent(getApplication(),TutorAzActivity.class);
 
-                    i.putExtra("TUTORAZ",(TutorAz)utente);
+                    TutorAz tutorAz =(TutorAz)utente;
+
+                    i.putExtra("TUTORAZ",tutorAz.getCF());
+
                 }
                 if(utente instanceof Segreteria)
                 {

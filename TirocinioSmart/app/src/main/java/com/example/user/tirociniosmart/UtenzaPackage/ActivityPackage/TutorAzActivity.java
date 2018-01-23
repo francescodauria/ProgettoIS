@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,20 +19,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
 import com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment;
+import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
+import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.ProgFormativoPackage.ObiettiviFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TutorAzActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FragmentManager fm;
+    private TutorAz tutorAz;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
 
     @Override
@@ -42,6 +52,7 @@ public class TutorAzActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fm = getFragmentManager();
+        new LoadTutor().execute(1);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,17 +64,17 @@ public class TutorAzActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String username = getIntent().getStringExtra("username");
-        if(username.equals("conv"))
+/*        String username = getIntent().getStringExtra("username");
+        if(username.equals("conv"))*/
             navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
-        else if(username.equals("nonconv")) {
+/*        else if(username.equals("nonconv")) {
             navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
             Fragment f = new RichiediConvenzioneFragment();
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "statoRichiesta");
             ft.addToBackStack(null);
             ft.commit();
-        }
+        }*/
     }
 
     @Override
@@ -206,6 +217,53 @@ public class TutorAzActivity extends AppCompatActivity
 
         super.onStop();
     }
+
+
+    class LoadTutor extends AsyncTask<Integer, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(Integer... img_ids) {
+
+
+            TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+            String cf= getIntent().getStringExtra("TUTORAZ");
+
+
+            tutorAz = TutorAziendaleDAO.findByCF(cf);
+
+
+            String s = null;
+            if(tutorAz==null)
+                s="Errore di connessione,caricamento dati tutor non riuscito";
+            return s;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+          //  showProgress(false);
+
+            if(s!=null){
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+
+    }
+
+
+
 
 }
 

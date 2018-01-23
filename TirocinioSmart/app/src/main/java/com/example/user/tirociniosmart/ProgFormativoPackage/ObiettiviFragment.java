@@ -3,8 +3,12 @@ package com.example.user.tirociniosmart.ProgFormativoPackage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,6 +68,7 @@ public class ObiettiviFragment extends Fragment {
         showProgress(false);
         lista = new ArrayList<>();
 
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 View focusView = null;
@@ -76,25 +81,64 @@ public class ObiettiviFragment extends Fragment {
                     descrizione.setError("Il campo descrizione non può essere vuoto");
                     focusView = descrizione;
                     focusView.requestFocus();
-                } else
-                    new InsertTask().execute(1);
+                } else {
+                    ConnectivityManager cm = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+                    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+                    if(netInfo!=null && netInfo.isConnected())
+                     new InsertTask().execute(1);
+
+                    else
+                        Toast.makeText(getActivity().getApplicationContext(), "Attenzione, connessione non disponibile", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
         listView = (ListView) view.findViewById(R.id.obiettiviListView);
-
+        adapter = new ObiettiviAdapter(context, R.layout.tutor_az_custom_adapter_obiettivi_layout, new ArrayList<Obiettivo>());
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 obiettivo = (Obiettivo)listView.getItemAtPosition(i);
-                new RemoveTask().execute(1);
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                ConnectivityManager cm = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+                                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+                                if(netInfo!=null && netInfo.isConnected())
+                                    new RemoveTask().execute(1);
+
+                                else
+                                    Toast.makeText(getActivity().getApplicationContext(), "Attenzione, connessione non disponibile", Toast.LENGTH_LONG).show();
+
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getActivity().getApplicationContext(), "L'elemento non è stato eliminato",Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+                };
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Sei davvero sicuro di voler eliminare l'obiettivo selezionato?");
+                builder.setPositiveButton("Si", dialogClickListener);
+                builder.setNegativeButton("No", dialogClickListener);
+                builder.show();
+
 
 
             }
         });
 
 
-        //   new LoadIconTask().execute(1);
+        new LoadTask().execute(1);
 
         return view;
 
@@ -143,7 +187,6 @@ public class ObiettiviFragment extends Fragment {
 
             String s = ObiettivoDAO.insert(obiettivo);
 
-
             return s;
         }
 
@@ -155,13 +198,9 @@ public class ObiettiviFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
-            if (!s.equals("Esiste già un obiettivo con questo nome")) {
-
-                adapter = new ObiettiviAdapter(context, R.layout.tutor_az_custom_adapter_obiettivi_layout, new ArrayList<Obiettivo>());
-                listView.setAdapter(adapter);
+            if (s.equals("Esiste già un obiettivo con questo nome") || !s.equals("Connessione al database non presente")) {
                 lista.add(obiettivo);
-                for (Obiettivo o : lista)
-                    adapter.add(o);
+                adapter.add(obiettivo);
 
             }
 
@@ -219,6 +258,55 @@ public class ObiettiviFragment extends Fragment {
     }
 
 
+    class LoadTask extends AsyncTask<Integer, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+            showProgress(true);
+        }
+
+        @Override
+        protected String doInBackground(Integer... img_ids) {
 
 
+            ObiettivoDAO.setConnectionPool(TutorAzActivity.pool);
+
+            lista = ObiettivoDAO.getAllObiettiviByAzienda("azienda1");
+
+
+            String s = null;
+            if(lista==null) {
+                s= "Attenzione: connessione non disponibile";
+            }
+
+            else if(lista.size()==0){
+                s= "Non vi è alcun obiettivo presente";
+            }
+            return s;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            showProgress(false);
+
+
+            if(s!=null)
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_LONG).show();
+
+            else{
+                for(Obiettivo o:lista){
+                    adapter.add(o);
+                }
+            }
+
+            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
+        }
+
+    }
 }

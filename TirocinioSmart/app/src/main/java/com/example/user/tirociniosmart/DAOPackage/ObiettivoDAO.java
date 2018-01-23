@@ -42,7 +42,7 @@ public class ObiettivoDAO extends GenericDAO {
                 return "Inserimento avvenuto correttamente";
             } else
                 return "Esiste già un obiettivo con questo nome";
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "Connessione al database non presente";
         }
@@ -87,14 +87,15 @@ public class ObiettivoDAO extends GenericDAO {
         }
     }
 
-    public static ArrayList<Obiettivo> getAllObiettivi()  {
+    public static ArrayList<Obiettivo> getAllObiettiviByAzienda(String id)  {
         try {
             ArrayList<Obiettivo> lista = new ArrayList<>();
             Connection newConnection = (Connection) genericConnectionPool.getConnection();
             newConnection.setAutoCommit(false);
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            stt = newConnection.prepareStatement("SELECT * FROM Obiettivo_formativo ORDER BY Nome");
+            stt = newConnection.prepareStatement("SELECT * FROM Obiettivo_formativo Where AziendaID = ? ORDER BY Nome ");
+            stt.setString(1,id);
             ResultSet rs = null;
             rs = stt.executeQuery();
             while (rs.next()) {
@@ -109,6 +110,7 @@ public class ObiettivoDAO extends GenericDAO {
             genericConnectionPool.releaseConnection(newConnection);
             return lista;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
