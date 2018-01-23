@@ -170,7 +170,7 @@ public class StudenteDAO extends GenericDAO {
         return studente;
     }
 
-    public String cambioPassword(Utente utente, String newPassword) throws SQLException {
+    public static String cambioPassword(Utente utente, String newPassword) {
         Connection newConnection = null;
         PreparedStatement stt = null;
         try {
@@ -182,15 +182,14 @@ public class StudenteDAO extends GenericDAO {
             stt.setString(1, newPassword);
             stt.setString(2, utente.getUsername());
             stt.setString(3, utente.getPassword());
+            stt.executeUpdate();
 
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
             return "Cambio password avvenuto correttamente";
         } catch (SQLException e) {
-            stt.close();
             e.printStackTrace();
-            genericConnectionPool.releaseConnection(newConnection);
             return "Connessione al database non presente";
         }
     }

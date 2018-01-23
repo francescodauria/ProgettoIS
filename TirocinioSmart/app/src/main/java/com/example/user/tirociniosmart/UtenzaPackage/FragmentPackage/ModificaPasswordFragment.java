@@ -1,7 +1,10 @@
 package com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -45,6 +48,7 @@ public class ModificaPasswordFragment extends Fragment {
     private EditText ripetiPassword;
     private EditText vecchiaPassword;
     private Utente utente;
+    private View mProgressView;
     private Button registra;
 
     @Override
@@ -52,6 +56,7 @@ public class ModificaPasswordFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_modifica_password, container, false);
 
+        mProgressView = view.findViewById(R.id.change_pass_progress);
 
         nuovaPassword = view.findViewById(R.id.newPassword);
         ripetiPassword = view.findViewById(R.id.ripetiPassword);
@@ -59,72 +64,85 @@ public class ModificaPasswordFragment extends Fragment {
         utente = StudentActivity.getStudente();
         registra = view.findViewById(R.id.modificaPassword);
         registra.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+            public void onClick(View v) {
 
                 View focusView = null;
 
-                if(TextUtils.isEmpty(nuovaPassword.getText().toString())) {
+                if (TextUtils.isEmpty(nuovaPassword.getText().toString())) {
                     nuovaPassword.setError("Il campo nuova password non può essere vuoto");
                     focusView = nuovaPassword;
                     focusView.requestFocus();
-                }
-                else if(TextUtils.isEmpty(ripetiPassword.getText().toString())) {
+                } else if (TextUtils.isEmpty(ripetiPassword.getText().toString())) {
                     ripetiPassword.setError("Il campo ripeti password non può essere vuoto");
                     focusView = ripetiPassword;
                     focusView.requestFocus();
-                }
-                else if(TextUtils.isEmpty(vecchiaPassword.getText().toString())) {
+                } else if (TextUtils.isEmpty(vecchiaPassword.getText().toString())) {
                     focusView = vecchiaPassword;
                     focusView.requestFocus();
                     vecchiaPassword.setError("Il campo password precedente non può essere vuoto");
+                } else if (nuovaPassword.getText().toString().length()<7) {
+                    focusView = nuovaPassword;
+                    focusView.requestFocus();
+                    nuovaPassword.setError("La nuova password deve essere almeno di 7 caratteri");
+                } else if (!nuovaPassword.getText().toString().equals(ripetiPassword.getText().toString())) {
+                    focusView = ripetiPassword;
+                    focusView.requestFocus();
+                    ripetiPassword.setError("Il campo ripeti password deve coincidere con nuova password");
+
+                } else if (!utente.getPassword().equals(vecchiaPassword.getText().toString())) {
+                    focusView = vecchiaPassword;
+                    focusView.requestFocus();
+                    vecchiaPassword.setError("La vecchia password inserita non è corretta");
+                } else {
+                    new ModificaTask().execute(1);
                 }
 
 
-                else{
-
-
-                }
             }
-
         });
-
 
 
         return view;
 
     }
 
-    class LoadIconTask extends AsyncTask<Integer, Integer, String> {
+    class ModificaTask extends AsyncTask<Integer, Integer, String> {
 
         @Override
         protected void onPreExecute() {
-
+            showProgress(true);
         }
 
         @Override
         protected String doInBackground(Integer... img_ids) {
 
+            String s = null;
             if(utente instanceof Studente){
                 StudenteDAO.setConnectionPool(StudentActivity.pool);
+                s = StudenteDAO.cambioPassword(utente, nuovaPassword.getText().toString());
             }
             else if(utente instanceof TutorAz) {
                 TutorAziendaleDAO.setConnectionPool(TutorAzActivity.pool);
+                s = TutorAziendaleDAO.cambioPassword(utente, nuovaPassword.getText().toString());
+
             }
             else if(utente instanceof TutorAc) {
                 TutorAccademicoDAO.setConnectionPool(TutorAcActivity.pool);
+                s=TutorAccademicoDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }
             else if(utente instanceof Direttore) {
                 DirettoreDAO.setConnectionPool(DirettoreActivity.pool);
+                s=DirettoreDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }
             else if(utente instanceof Segreteria) {
                 SegreteriaDAO.setConnectionPool(SegreteriaActivity.pool);
+                s=SegreteriaDAO.cambioPassword(utente,nuovaPassword.getText().toString());
             }
 
 
 
-            aziende = AziendaDAO.getAllAziende();
 
-            return aziende;
+            return s;
         }
 
         @Override
@@ -133,32 +151,41 @@ public class ModificaPasswordFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Azienda> lista) {
-            showProgress(false);
-
-            if(lista!=null) {
-
-                adapter = new AziendeAdapter(context, R.layout.student_custom_adapter_lista_aziende_layout, new ArrayList<Azienda>());
-
-                listView = (ListView) view.findViewById(R.id.mylistview);
-                listView.setAdapter(adapter);
-
-                for (Azienda a : lista) {
-                    adapter.add(a);
-
+        protected void onPostExecute(String s) {
+                showProgress(false);
+                if(s.equals("Cambio password avvenuto correttamente")){
+                    utente.setPassword(nuovaPassword.getText().toString());
                 }
-
-
-            } else
-                Toast.makeText(getActivity(),"Attenzione: connessione non disponibile", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),s, Toast.LENGTH_LONG).show();
 
 
 
 
-            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
 
+    }
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
 }
