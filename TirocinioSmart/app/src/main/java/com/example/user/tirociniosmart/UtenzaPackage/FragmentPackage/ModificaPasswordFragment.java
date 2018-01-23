@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
+import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.EntityPackage.Utente;
 import com.example.user.tirociniosmart.R;
 
 import java.sql.SQLException;
@@ -27,7 +29,7 @@ public class ModificaPasswordFragment extends Fragment {
     private EditText nuovaPassword;
     private EditText ripetiPassword;
     private EditText vecchiaPassword;
-
+    private Utente utente;
     private Button registra;
 
     @Override
@@ -71,5 +73,7 @@ public class ModificaPasswordFragment extends Fragment {
     }
 
 
-
+    public void setUtente(Studente utente) {
+        this.utente = utente;
+    }
 }
