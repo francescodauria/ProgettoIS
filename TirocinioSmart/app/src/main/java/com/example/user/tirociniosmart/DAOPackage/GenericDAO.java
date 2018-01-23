@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 public abstract class GenericDAO {
 
-    public String cambioPassword(Utente utente, String newPassword) throws SQLException {
+    public static String cambioPassword(Utente utente, String newPassword) throws SQLException {
         Connection newConnection = null;
         PreparedStatement stt = null;
         try {
@@ -63,6 +63,7 @@ public abstract class GenericDAO {
             return "Cambio password avvenuto correttamente";
         } catch (SQLException e) {
             stt.close();
+            e.printStackTrace();
             genericConnectionPool.releaseConnection(newConnection);
             return "Connessione al database non presente";
         }

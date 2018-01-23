@@ -189,6 +189,9 @@ public class StudentActivity extends AppCompatActivity
         return true;
     }
 
+    public static Studente getStudente(){
+        return studente;
+    }
 
     public void onStop(){
 

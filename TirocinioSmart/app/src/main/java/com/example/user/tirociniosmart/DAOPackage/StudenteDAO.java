@@ -170,7 +170,7 @@ public class StudenteDAO extends GenericDAO {
         return studente;
     }
 
-    public String cambioPassword(Utente utente, String newPassword) throws SQLException {
+    public static String cambioPassword(Utente utente, String newPassword) throws SQLException {
         return super.cambioPassword(utente, newPassword);
     }
 

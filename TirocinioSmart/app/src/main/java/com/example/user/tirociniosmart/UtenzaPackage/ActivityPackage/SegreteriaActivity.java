@@ -30,7 +30,8 @@ import java.sql.SQLException;
 public class SegreteriaActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fm;
-    private static MySQLConnectionPoolFreeSqlDB pool;
+    public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
