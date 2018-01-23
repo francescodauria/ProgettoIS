@@ -66,6 +66,7 @@ public class TutorAziendaleDAO extends GenericDAO {
 
     public static String insert(TutorAz tutor, String idAzienda) {
         Connection newConnection = null;
+        String s;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
             newConnection.setAutoCommit(false);
@@ -73,8 +74,8 @@ public class TutorAziendaleDAO extends GenericDAO {
             PreparedStatement stt = null;
             if(TutorAziendaleDAO.checkTutor(tutor))
             {
-                stt=newConnection.prepareStatement("INSERT INTO Tutor_Aziendale (CF,Nome,Cognome,Email,Password,Username,N_tel,AziendaID" +
-                        "VALUES (?,?,?,?,?,?,?,?");
+                stt=newConnection.prepareStatement("INSERT INTO Tutor_Aziendale (CF,Nome,Cognome,Email,Password,Username,N_tel,AziendaID)" +
+                        "VALUES (?,?,?,?,?,?,?,?)");
                 stt.setString(1,tutor.getCF());
                 stt.setString(2,tutor.getNome());
                 stt.setString(3,tutor.getCognome());
@@ -87,13 +88,16 @@ public class TutorAziendaleDAO extends GenericDAO {
                 newConnection.commit();
                 stt.close();
                 genericConnectionPool.releaseConnection(newConnection);
-                return "Inserimento del tutor avvenuto correttamente";
+                s="Inserimento del tutor avvenuto correttamente";
+                System.out.println(s);
+                return s;
             }
-            else return "Tutor già presente";
+            else s="Tutor già presente"; System.out.println(s);return s;
 
         }catch(SQLException e)
         {
-            return "Connessione al database non presente";
+            s="Connessione al database non presente";System.out.println(s);
+            e.printStackTrace();return s;
         }
     }
 

@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity  {
                     Utente tutor = TutorAziendaleDAO.findByUtente(utente);
                     Convenzione c=new Convenzione(((TutorAz)tutor).getAzienda(), null,null,"ACCETTATO");
                     ConvenzioneDAO.setConnectionPool(pool);
-                    if(!ConvenzioneDAO.checkConvenzione(c)) {
+                    if(!ConvenzioneDAO.checkConvenzione(c,"ACCETTATO")) {
                         convenzione=true;
                     } else {
                         convenzione=false;

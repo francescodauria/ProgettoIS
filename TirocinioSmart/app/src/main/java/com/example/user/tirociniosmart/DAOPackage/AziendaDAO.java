@@ -10,6 +10,7 @@ import com.example.user.tirociniosmart.EntityPackage.Obiettivo;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,6 +31,7 @@ public class AziendaDAO extends GenericDAO {
 
 
     public static String insert(Azienda azienda) throws SQLException {
+        String s;
         try {
             if (AziendaDAO.checkAzienda(azienda)) {
                 Connection newConnection = (Connection) genericConnectionPool.getConnection();
@@ -37,7 +39,7 @@ public class AziendaDAO extends GenericDAO {
                 newConnection.setAutoCommit(false);
 
                 System.out.println("Database connesso");
-                PreparedStatement stt = newConnection.prepareStatement("INSERT INTO Azienda (ID, Nome, Sede, Descrizione, Logo, N_tel, Email" +
+                PreparedStatement stt = newConnection.prepareStatement("INSERT INTO Azienda (ID, Nome, Sede, Descrizione, Logo, N_tel, Email)" +
                         "VALUES (?,?,?,?,?,?,?)");
                 stt.setString(1, azienda.getId());
                 stt.setString(2, azienda.getNome());
@@ -56,11 +58,13 @@ public class AziendaDAO extends GenericDAO {
                 stt.close();
 
                 genericConnectionPool.releaseConnection(newConnection);
-                return "Inserimento dell'azienda avvenuto con successo";
-            } else return "L'azienda è già presente";
+                s="Inserimento dell'azienda avvenuto con successo";
+                System.out.println(s);
+                return s;
+            } else s="L'azienda è già presente";System.out.println(s);return s;
         }catch (SQLException e)
         {
-            return "Connessione al database non presente";
+            s="Connessione al database non presente";e.printStackTrace();System.out.println(s);return s;
         }
     }
     public static boolean checkAzienda(Azienda azienda) throws SQLException

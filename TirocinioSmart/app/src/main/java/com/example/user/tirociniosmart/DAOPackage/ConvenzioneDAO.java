@@ -134,8 +134,7 @@ public class ConvenzioneDAO extends GenericDAO {
 
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            if(ConvenzioneDAO.checkConvenzione(convenzione))
-            {
+            if(ConvenzioneDAO.checkConvenzione(convenzione, "IN CORSO")) {
                 stt = newConnection.prepareStatement("INSERT INTO Convenzione (ID, AziendaID, Direttore_DipartimentoMatricola, Stato) " +
                         " VALUES (?,?,?,?)");
                 stt.setString(1, String.valueOf(convenzione.getId()));
@@ -150,8 +149,8 @@ public class ConvenzioneDAO extends GenericDAO {
                 genericConnectionPool.releaseConnection(newConnection);
 
                 return "Inserimento avvenuto correttamente";
-            }
-            else return "C'è già una convenzione in attesa di accettazione";
+            } else
+                return "C'è già una convenzione in attesa di accettazione";
         } catch (SQLException e) {
             return "Connessione al database non presente";
         }
@@ -166,13 +165,13 @@ public class ConvenzioneDAO extends GenericDAO {
     public static void search() {
     }
 
-    public static boolean checkConvenzione(Convenzione convenzione) throws SQLException {
+    public static boolean checkConvenzione(Convenzione convenzione, String stato) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
         System.out.println("Database connesso");
         PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE AziendaID = ? AND Stato = ?");
         stt.setString(1,convenzione.getAzienda().getId());
-        stt.setString(2, "IN CORSO");
+        stt.setString(2, stato);
         ResultSet rs=stt.executeQuery();
         if(rs.next()) {
             newConnection.commit();
