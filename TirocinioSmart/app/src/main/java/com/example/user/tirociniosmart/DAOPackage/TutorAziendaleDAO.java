@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
@@ -201,4 +202,37 @@ public class TutorAziendaleDAO extends GenericDAO {
         }
     }
 
+    public static ArrayList<TutorAz> getAllTutorAz()  {
+        try {
+            ArrayList<TutorAz> lista = new ArrayList<TutorAz>();
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale order by nome");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+            while (rs.next()) {
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                String nome = rs.getString("Nome");
+                String cognome = rs.getString("Cognome");
+                String cf = rs.getString("CF");
+                String email = rs.getString("Email");
+                String numeroTel = rs.getString("N_tel");
+                String aziendaId = rs.getString("AziendaID");
+                AziendaDAO.setConnectionPool(genericConnectionPool);
+                Azienda azienda = AziendaDAO.findById(aziendaId);
+                TutorAz tutorAz = new TutorAz(username, password, "Tutor Aziendale", nome, cognome, cf, email, numeroTel, azienda);
+                lista.add(tutorAz);
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return lista;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
