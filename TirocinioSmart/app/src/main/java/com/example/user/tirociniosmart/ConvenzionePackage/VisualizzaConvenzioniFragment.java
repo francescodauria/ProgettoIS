@@ -71,7 +71,8 @@ public class VisualizzaConvenzioniFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
-                              //  int position = Integer.parseInt(v.getTag().toString());
+
+                                //  int position = Integer.parseInt(v.getTag().toString());
 
                             //    Convenzione c = adapter.getItem(position);
 
