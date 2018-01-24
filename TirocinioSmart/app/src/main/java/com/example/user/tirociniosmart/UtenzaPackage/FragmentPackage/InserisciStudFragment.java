@@ -2,6 +2,7 @@ package com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +23,13 @@ import android.widget.Toast;
 import com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment;
 import com.example.user.tirociniosmart.R;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class InserisciStudFragment extends android.app.Fragment {
+public class InserisciStudFragment extends android.app.Fragment implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
 
     private Button insert;
     private View view;
@@ -43,7 +46,8 @@ public class InserisciStudFragment extends android.app.Fragment {
     EditText luogoNascita;
     EditText numeroTirocini;
     EditText codiceFiscale;
-    CalendarView dataNascita;
+    TextView dataNascita;
+    Date data_N;
 
 
     @Override
@@ -201,4 +205,26 @@ public class InserisciStudFragment extends android.app.Fragment {
 
     }
 
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        if(dataNascita.getTag().equals("click")) {
+            String data=""+i2+"-"+i1+"-"+i;
+            data_N=new Date(i,i1,i2);
+            dataNascita.setText(data);
+            dataNascita.setTag("");
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        TextView text=(TextView)view;
+        if(text.getId()==dataNascita.getId()) {
+            dataNascita.setTag("click");
+            System.out.println("Click dataNascita");
+        }
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, 2018, 1, 1);
+        dialog.show();
+    }
 }

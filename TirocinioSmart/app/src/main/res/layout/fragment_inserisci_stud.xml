@@ -314,22 +314,25 @@
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:textSize="20sp"
-                    android:hint="Data Nascita"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
-                    <CalendarView
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
                         android:text="Data nascita"
-                        android:id="@+id/dataNascitaStudente"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:datePickerMode="calendar"
-                        android:singleLine="true"/>
+                        android:layout_marginRight="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SELEZIONA DATA"
+                        android:textSize="25dp"
+                        android:id="@+id/dataNascitaStudente"
+                        android:onClick="click"/>
 
+                </LinearLayout>
 
 
                 <Button

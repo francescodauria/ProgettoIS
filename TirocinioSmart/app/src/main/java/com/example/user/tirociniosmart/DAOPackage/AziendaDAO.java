@@ -176,5 +176,36 @@ public class AziendaDAO extends GenericDAO {
         }
     }
 
+    public static ArrayList<Azienda> getAllAziendeConvenzionate()  {
+        try {
+            ArrayList<Azienda> lista = new ArrayList<Azienda>();
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            stt = newConnection.prepareStatement("SELECT * FROM Azienda INNER JOIN Convenzione ON Convenzione.AziendaID=Azienda.ID WHERE Convenzione.Stato'ACCETTATO'");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+            while (rs.next()) {
+                Blob dat = rs.getBlob("logo");
+                byte[] imgData = dat.getBytes(1, (int) dat.length());
+                String id = rs.getString("ID");
+                String sede = rs.getString("Sede");
+                String nome = rs.getString("Nome");
+                String email = rs.getString("Email");
+                String descrizione = rs.getString("Descrizione");
+                String numero = rs.getString("N_tel");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+                Azienda a = new Azienda(id, nome, email, sede, descrizione, bitmap, numero, null);
+                lista.add(a);
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return lista;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
 }
