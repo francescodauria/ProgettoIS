@@ -8,6 +8,7 @@ import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 
+import com.example.user.tirociniosmart.EntityPackage.Segreteria;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
 import com.example.user.tirociniosmart.EntityPackage.TutorAc;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
@@ -95,8 +96,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             stt.setString(1,studente.getMatricola());
             ArrayList<ProgFormativo> progetti=new ArrayList<>();
             ResultSet rs=stt.executeQuery();
-            while(rs.next())
-            {
+            while(rs.next()) {
 
                 String id=rs.getString(1);
 
@@ -173,10 +173,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
 
     }
+
     public static void search() {
     }
-    public static boolean checkProgetto(ProgFormativo progetto) throws SQLException
-    {
+
+    public static boolean checkProgetto(ProgFormativo progetto) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
         newConnection.setAutoCommit(false);
@@ -184,18 +185,149 @@ public class ProgettoFormativoDAO extends GenericDAO {
         System.out.println("Database connesso");
         PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE StudenteMatricola = ? AND Stato = 'IN CORSO");
         ResultSet rs=stt.executeQuery();
-        if(rs.next())
-        {
+        if(rs.next()) {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
             return false;
-        }
-        else {
+        } else {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
             return true;
         }
     }
+
+    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) throws SQLException {
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET FirmaTutorAziendale = ? WHERE ID = ?");
+            Bitmap firma = progFormativo.getGetFirmaTutorAz();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            firma.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            stt.setBinaryStream(1, bs,bitmapdata.length);
+            stt.setInt(2, progFormativo.getId());
+            stt.executeUpdate();
+
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return "Firma inserita da parte del tutor aziendale";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Connessione al database non presente";
+        }
+    }
+
+    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) throws SQLException {
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET FirmaTutorAccademico = ? WHERE ID = ?");
+            Bitmap firma = progFormativo.getFirmaTutorAcc();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            firma.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            stt.setBinaryStream(1, bs,bitmapdata.length);
+            stt.setInt(2, progFormativo.getId());
+            stt.executeUpdate();
+
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return "Firma inserita da parte del tutor accademico";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Connessione al database non presente";
+        }
+    }
+
+    public static String insertFirmaByDirettore(ProgFormativo progFormativo) throws SQLException {
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET FirmaDirettore = ? WHERE ID = ?");
+            Bitmap firma = progFormativo.getFirmaDirettore();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            firma.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+            ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+            stt.setBinaryStream(1, bs,bitmapdata.length);
+            stt.setInt(2, progFormativo.getId());
+            stt.executeUpdate();
+
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return "Firma inserita da parte del direttore";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Connessione al database non presente";
+        }
+
+    }
+
+    public static String acceptProgettoFormativoBySegreteria(ProgFormativo progFormativo) {
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Data_Stipula = ? and Stato = ? WHERE ID = ?");
+            stt.setDate(1, progFormativo.getDataStipula());
+            stt.setString(2, progFormativo.getStato());
+            stt.setInt(3, progFormativo.getId());
+            stt.executeUpdate();
+
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return "Progetto formativo accettato dalla segreteria";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Connessione al database non presente";
+        }
+    }
+
+    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) throws SQLException {
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Stato = ? WHERE ID = ?");
+            stt.setString(1, progFormativo.getStato());
+            stt.setInt(2, progFormativo.getId());
+            stt.executeUpdate();
+
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return "Progetto formativo rifiutato";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Connessione al database non presente";
+        }
+    }
+
 }
