@@ -43,7 +43,7 @@ public class ProgFormativo implements Serializable{
         this.tutorAc = tutorAc;
         this.tutorAz = tutorAz;
         this.dataStipula = dataStipula;
-        this.direttore=direttore;
+        this.direttore=dir;
     }
 
 

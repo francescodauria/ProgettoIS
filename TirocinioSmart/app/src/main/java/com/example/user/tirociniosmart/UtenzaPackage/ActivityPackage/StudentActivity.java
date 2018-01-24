@@ -165,7 +165,11 @@ public class StudentActivity extends AppCompatActivity
         }  else if (id == R.id.nav_send) {
             Fragment f = fm.findFragmentByTag("nuovaRichiesta");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("studente",studente);
+
                 f = new CreaProgFormFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "nuovaRichiesta");
                 ft.addToBackStack(null);
@@ -177,7 +181,11 @@ public class StudentActivity extends AppCompatActivity
                 ft.remove(f);
                 fm.popBackStack();
 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("studente",studente);
+
                 f = new CreaProgFormFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiStudente, f, "nuovaRichiesta");
                 ft.addToBackStack(null);
 
