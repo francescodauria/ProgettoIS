@@ -53,7 +53,6 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
     TextView dataNascita;
     Date data_N;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -198,7 +197,7 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
         @Override
         protected String doInBackground(Integer... img_ids) {
 
-            Studente studente = new Studente(username.getText().toString(),password.getText().toString(),"Studente",matricola.getText().toString(),nome.getText().toString(),cognome.getText().toString(),codiceFiscale.getText().toString(),mail.getText().toString(),indirizzo.getText().toString(),luogoNascita.getText().toString(),dataNascita.getText().toString(),Integer.parseInt(numeroTirocini.getText().toString()),numeroTirocini.getText().toString(),null);
+            Studente studente = new Studente(username.getText().toString(),password.getText().toString(),"Studente",matricola.getText().toString(),nome.getText().toString(),cognome.getText().toString(),codiceFiscale.getText().toString(),mail.getText().toString(),indirizzo.getText().toString(),luogoNascita.getText().toString(),data_N,Integer.parseInt(numeroTirocini.getText().toString()),numeroTirocini.getText().toString(),null);
 
             StudenteDAO.setConnectionPool(SegreteriaActivity.pool);
             String s =StudenteDAO.insert(studente);
@@ -223,7 +222,7 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            String data=""+i2+"-"+i1+"-"+i;
+            String data=""+i2+"/"+i1+"/"+i;
             data_N=new Date(i,i1,i2);
             dataNascita.setText(data);
         }

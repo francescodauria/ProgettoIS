@@ -47,7 +47,7 @@ public class StudenteDAO extends GenericDAO {
             String cf = rs.getString("CF");
             int n_tirocini = rs.getInt("#tirocini");
             String luogo_nascita = rs.getString("Luogo_Nascita");
-            String data_nascita = rs.getString("Data_Nascita");
+            Date data_nascita = rs.getDate("Data_Nascita");
             String numero = rs.getString("N_tel");
             String email = rs.getString("Email");
             studente = new Studente(username, password, "Studente",
@@ -75,9 +75,11 @@ public class StudenteDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
             if(StudenteDAO.checkStudente(studente)) {
-                stt = newConnection.prepareStatement("INSERT INTO Studente (Matricola, Nome, Cognome," +
+                stt = newConnection.prepareStatement("INSERT INTO Studente VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+/*                stt = newConnection.prepareStatement("INSERT INTO Studente (Matricola, Nome, Cognome," +
                         "Indirizzo, Username, Password, CF, #tirocini, Luogo_Nascita, Data_Nascita, N_Tel, Email)" +
-                        " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+                        " VALUES ('"+studente.getMatricola()+"','"+studente.getNome()+"','"+studente.getCognome()+"','"+studente.getIndirizzo()+"','"+studente.getUsername()+"','"+studente.getPassword()+"','"+studente.getCF()+"','"+studente.getNumeroTirocini()+"','"+studente.getLuogoNascita()+"','"+studente.getDataNascita()+"','"+studente.getNumeroTel()+"','"+studente.getEmail()+"')");*/
+
                 stt.setString(1,studente.getMatricola());
                 stt.setString(2,studente.getNome());
                 stt.setString(3,studente.getCognome());
@@ -87,7 +89,7 @@ public class StudenteDAO extends GenericDAO {
                 stt.setString(7,studente.getCF());
                 stt.setInt(8, studente.getNumeroTirocini());
                 stt.setString(9,studente.getLuogoNascita());
-                stt.setString(10,studente.getDataNascita());
+                stt.setDate(10,studente.getDataNascita());
                 stt.setString(11,studente.getNumeroTel());
                 stt.setString(12,studente.getEmail());
                 stt.executeUpdate();
@@ -101,6 +103,7 @@ public class StudenteDAO extends GenericDAO {
             } else
                 return "Esiste già uno studente con tale matricola";
         } catch (SQLException e) {
+            e.printStackTrace();
             return "Connessione al database non presente";
         }
 
@@ -146,7 +149,7 @@ public class StudenteDAO extends GenericDAO {
             String cf = rs.getString("CF");
             int n_tirocini = rs.getInt("#tirocini");
             String luogo_nascita = rs.getString("Luogo_Nascita");
-            String data_nascita = rs.getString("Data_Nascita");
+            Date data_nascita = rs.getDate("Data_Nascita");
             String numero = rs.getString("N_tel");
             String email = rs.getString("Email");
             studente = new Studente(username, password, "Studente",

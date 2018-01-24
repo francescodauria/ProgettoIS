@@ -47,6 +47,7 @@ import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.DirettoreActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -387,6 +388,7 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             System.out.println(dir);
             System.out.println(dir.getNome());
             System.out.println(dir.getMatricola());
+            s=null;
 
             s=ProgettoFormativoDAO.insert(new ProgFormativo("IN CORSO",null,150,obiettivo.getSelectedItem().toString(),data_I,data_F,null,bitmap,studente,dir, tutor,aziendale));
             return s;

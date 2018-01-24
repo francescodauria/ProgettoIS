@@ -46,6 +46,7 @@ public class AziendaDAO extends GenericDAO {
                 stt.setString(3, azienda.getSede());
                 stt.setString(4, azienda.getDescrizione());
                 Bitmap logo = azienda.getLogo();
+
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 logo.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                 byte[] bitmapdata = bos.toByteArray();

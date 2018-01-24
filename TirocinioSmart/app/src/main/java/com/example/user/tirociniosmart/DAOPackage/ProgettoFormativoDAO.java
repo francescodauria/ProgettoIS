@@ -47,16 +47,18 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 System.out.println("Database connesso");
                 PreparedStatement stt = null;
                 if (ProgettoFormativoDAO.checkProgetto(progetto)) {
-                    stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo ('FirmaStudente','Obiettivi','Stato','#Ore'" +
-                            ",'Data_inizio','Data_fine','StudenteMatricola','Tutor_AccademicoMatricola','Tutor_AziendaleCF','Direttore_DipartimentoMatricola'" +
-                            "VALUES (?,?,?,?,?,?,?,?,?,?");
+                    stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo (Obiettivi,  Stato,  #Ore,Data_inizio,  Data_fine,  StudenteMatricola,  Tutor_AccademicoMatricola,  Tutor_AziendaleCF,  Direttore_DipartimentoMatricola) VALUES (?,?,?,?,?,?,?,?,?)");
 
                     //System.out.println(progetto.getDirettore().getMatricola());
                     Bitmap firmaStudente = progetto.getFirmaStudente();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
                     byte[] bitmapdata = bos.toByteArray();
+
                     ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                    System.out.println(bitmapdata.length);
+
+                    System.out.println(bs);
                     stt.setBinaryStream(1, bs, bitmapdata.length);
                     stt.setString(2, progetto.getListaObiettivi());
                     stt.setString(3, progetto.getStato());
@@ -66,7 +68,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                     stt.setString(7, progetto.getStudente().getMatricola());
                     stt.setString(8, progetto.getTutorAc().getMatricola());
                     stt.setString(9, progetto.getTutorAz().getCF());
-                    stt.setString(10, "000001");
+                    stt.setString(10, progetto.getDirettore().getMatricola());
                     stt.executeUpdate();
                     newConnection.commit();
                     stt.close();

@@ -1,6 +1,7 @@
 package com.example.user.tirociniosmart.EntityPackage;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -17,13 +18,13 @@ public class Studente extends Utente implements Serializable{
     private String email;
     private String indirizzo;
     private String luogoNascita;
-    private String dataNascita;
+    private Date dataNascita;
     private int numeroTirocini;
     private String numeroTel;
     private ArrayList<ProgFormativo> listaProgettiFormativi;
 
 
-    public Studente(String username, String password, String ruolo, String matricola, String nome, String cognome, String CF, String email, String indirizzo, String luogoNascita, String dataNascita, int numeroTirocini, String numeroTel, ArrayList<ProgFormativo> listaProgettiFormativi) {
+    public Studente(String username, String password, String ruolo, String matricola, String nome, String cognome, String CF, String email, String indirizzo, String luogoNascita, Date dataNascita, int numeroTirocini, String numeroTel, ArrayList<ProgFormativo> listaProgettiFormativi) {
         super(username, password);
         this.ruolo = ruolo;
         this.matricola = matricola;
@@ -71,7 +72,7 @@ public class Studente extends Utente implements Serializable{
         return luogoNascita;
     }
 
-    public String getDataNascita() {
+    public Date getDataNascita() {
         return dataNascita;
     }
 
@@ -120,7 +121,7 @@ public class Studente extends Utente implements Serializable{
         this.luogoNascita = luogoNascita;
     }
 
-    public void setDataNascita(String dataNascita) {
+    public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;
     }
 
