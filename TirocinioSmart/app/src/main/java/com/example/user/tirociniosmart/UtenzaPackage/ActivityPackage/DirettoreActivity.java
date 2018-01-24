@@ -6,20 +6,16 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.example.user.tirociniosmart.ConvenzionePackage.VisualizzaConvenzioniFragment;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.R;
@@ -74,7 +70,34 @@ public class DirettoreActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.richieste_convenzione_direttore) {
-            // Handle the camera action
+            Fragment f = fm.findFragmentByTag("richiesteConvenzione");
+            if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("direttore", direttore);
+
+                f = new VisualizzaConvenzioniFragment();
+                f.setArguments(bundle);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiDirettore, f, "richiesteConvenzione");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("direttore",direttore);
+
+                f = new VisualizzaConvenzioniFragment();
+                f.setArguments(bundle);
+                ft.add(R.id.contenitoreFrammentiDirettore, f, "richiesteConvenzione");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
         } else if (id == R.id.richieste_tirocinio_direttore) {
 
         } else if (id == R.id.account_Direttore) {

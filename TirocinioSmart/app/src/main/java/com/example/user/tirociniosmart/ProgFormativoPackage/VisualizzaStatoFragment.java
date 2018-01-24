@@ -14,21 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.user.tirociniosmart.ConvenzionePackage.AziendeAdapter;
-import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
-import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.ProgettoFormativoDAO;
-import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
-import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
-import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.ProgFormativo;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
-import com.example.user.tirociniosmart.EntityPackage.TutorAc;
-import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**

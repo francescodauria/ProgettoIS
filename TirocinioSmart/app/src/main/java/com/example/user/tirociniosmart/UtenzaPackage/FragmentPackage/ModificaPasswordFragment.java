@@ -12,21 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
 import com.example.user.tirociniosmart.DAOPackage.DirettoreDAO;
-import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.DAOPackage.SegreteriaDAO;
 import com.example.user.tirociniosmart.DAOPackage.StudenteDAO;
 import com.example.user.tirociniosmart.DAOPackage.TutorAccademicoDAO;
 import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
-import com.example.user.tirociniosmart.EntityPackage.Direttore;
-import com.example.user.tirociniosmart.EntityPackage.Segreteria;
-import com.example.user.tirociniosmart.EntityPackage.Studente;
-import com.example.user.tirociniosmart.EntityPackage.TutorAc;
-import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.EntityPackage.Utente;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.DirettoreActivity;
@@ -34,8 +26,6 @@ import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.SegreteriaA
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAcActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
-
-import java.sql.SQLException;
 
 /**
  * Created by User on 18/01/2018.

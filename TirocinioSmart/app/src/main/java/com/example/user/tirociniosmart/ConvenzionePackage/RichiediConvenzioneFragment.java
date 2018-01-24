@@ -10,26 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
-import com.example.user.tirociniosmart.DAOPackage.AziendaDAO;
 import com.example.user.tirociniosmart.DAOPackage.ConvenzioneDAO;
-import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Convenzione;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.R;
-import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by User on 18/01/2018.
@@ -105,7 +95,7 @@ public class RichiediConvenzioneFragment extends Fragment {
         protected String doInBackground(Integer... img_ids) {
 
             Direttore dir = new Direttore("fferrucci","password","direttore", "000001","Filomena", "Ferrucci");
-            Azienda az = new Azienda("azienda2","ITSystem",null,null,null,null,null,null);
+            Azienda az = new Azienda("azienda1","ITSystem",null,null,null,null,null,null);
             Convenzione c = new Convenzione(az,null,dir, "IN CORSO");
 
             ConvenzioneDAO.setConnectionPool(TutorAzActivity.pool);
