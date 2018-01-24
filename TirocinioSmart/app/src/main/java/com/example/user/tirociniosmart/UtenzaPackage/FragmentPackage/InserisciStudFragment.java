@@ -74,7 +74,7 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
         codiceFiscale= view.findViewById(R.id.cfStudente);
         dataNascita = view.findViewById(R.id.dataNascitaStudente);
 
-
+        dataNascita.setOnClickListener(this);
         insert.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
@@ -140,10 +140,15 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
                     focusView = codiceFiscale;
                     focusView.requestFocus();
                 }
-                else {
-
+                else if(dataNascita.getText().toString().equalsIgnoreCase("Seleziona data"))
+                {
+                    Toast.makeText(getActivity().getApplicationContext(),"Attenzione, il campo data deve essere settato",Toast.LENGTH_LONG).show();
                 }
-                //    new LoadIconTask().execute(1);
+                else if(!password.getText().toString().equals(passwordRipetuta.getText().toString())){
+                    passwordRipetuta.setError("Attenzione, le password devono coincidere");
+                    focusView = passwordRipetuta;
+                    focusView.requestFocus();
+                }
             }
 
 
@@ -208,23 +213,14 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        if(dataNascita.getTag().equals("click")) {
             String data=""+i2+"-"+i1+"-"+i;
             data_N=new Date(i,i1,i2);
             dataNascita.setText(data);
-            dataNascita.setTag("");
         }
-
-    }
 
     @Override
     public void onClick(View view) {
-        TextView text=(TextView)view;
-        if(text.getId()==dataNascita.getId()) {
-            dataNascita.setTag("click");
-            System.out.println("Click dataNascita");
-        }
-        DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, 2018, 1, 1);
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, 1995, 1, 1);
         dialog.show();
     }
 }
