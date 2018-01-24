@@ -29,15 +29,15 @@ import java.util.ArrayList;
  * Created by User on 24/01/2018.
  */
 
-public class VisualizzaConvenzioniFragment extends Fragment {
+public class VisualizzaConvenzioniFragment extends Fragment implements View.OnClickListener {
 
     private View view;
-    private ConvenzioneAdapter adapter;
+    public static ConvenzioneAdapter adapter;
     private ListView listView;
     private View mProgressView;
     private Direttore direttore;
     private ArrayList<Convenzione> listaConvenzioni;
-    private Context context;
+    public static Context context;
     private Button rifiutaConvenzione;
     private Button accettaConvenzione;
     public void onAttach(Activity activity) {
@@ -64,40 +64,7 @@ public class VisualizzaConvenzioniFragment extends Fragment {
 
 
         System.out.println(accettaConvenzione);
-        accettaConvenzione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
 
-                                //  int position = Integer.parseInt(v.getTag().toString());
-
-                            //    Convenzione c = adapter.getItem(position);
-
-                             //   adapter.remove(c);
-                             //   listaConvenzioni.remove(c);
-                                Toast.makeText(getActivity().getApplicationContext(), "Elemento eliminato correttamente",Toast.LENGTH_LONG).show();
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                Toast.makeText(getActivity().getApplicationContext(), "Operazione annullata",Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                    }
-                };
-
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Vuoi davvero accettare la convenzione?");
-                builder.setPositiveButton("Si", dialogClickListener);
-                builder.setNegativeButton("No", dialogClickListener);
-                builder.show();
-
-                return;
-            }
-        });
         return view;
 
     }
@@ -123,6 +90,47 @@ public class VisualizzaConvenzioniFragment extends Fragment {
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         }
+    }
+
+    @Override
+    public void onClick(final View view) {
+        System.out.println("ON CLICK");
+        int position = Integer.parseInt(view.getTag().toString());
+        System.out.println(VisualizzaConvenzioniFragment.adapter.toString());
+        System.out.println(position);
+
+        Convenzione c = adapter.getItem(position);
+        System.out.println(c.getAzienda().getNome());
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        int position = Integer.parseInt(view.getTag().toString());
+
+                        //    Convenzione c = adapter.getItem(position);
+
+                        //   adapter.remove(c);
+                        //   listaConvenzioni.remove(c);
+                        Toast.makeText(context.getApplicationContext(), "Elemento eliminato correttamente",Toast.LENGTH_LONG).show();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        Toast.makeText(context.getApplicationContext(), "Operazione annullata",Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        };
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(VisualizzaConvenzioniFragment.context);
+        builder.setMessage("Vuoi davvero accettare la convenzione?");
+        builder.setPositiveButton("Si", dialogClickListener);
+        builder.setNegativeButton("No", dialogClickListener);
+        builder.show();
+
+        return;
+
     }
 
 

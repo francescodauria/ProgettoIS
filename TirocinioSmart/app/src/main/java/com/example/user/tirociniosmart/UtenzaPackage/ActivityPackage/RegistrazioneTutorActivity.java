@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -172,6 +173,7 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
 
         try {
             pool.closeAllConnection();
+            Log.d("CONNESSIONI", "Connessioni chiuse");
         } catch (SQLException e) {
             e.printStackTrace();
         }

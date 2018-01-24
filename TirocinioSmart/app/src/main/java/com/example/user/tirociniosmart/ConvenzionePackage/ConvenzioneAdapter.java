@@ -69,7 +69,7 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
         nome.setTag(position);
         email.setTag(position);
         descrizione.setTag(position);
-
+        buttonAccetta.setOnClickListener(new VisualizzaConvenzioniFragment());
 
 
         descrizione.setOnClickListener(new View.OnClickListener() {
