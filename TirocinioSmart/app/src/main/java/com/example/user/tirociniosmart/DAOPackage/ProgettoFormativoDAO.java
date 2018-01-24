@@ -39,41 +39,45 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
 
     public static String insert(ProgFormativo progetto) {
-        Connection newConnection = null;
-        try {
-            newConnection = (Connection) genericConnectionPool.getConnection();
-            newConnection.setAutoCommit(false);
-            System.out.println("Database connesso");
-            PreparedStatement stt = null;
-            if(ProgettoFormativoDAO.checkProgetto(progetto)) {
-                stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo ('FirmaStudente','Obiettivi','Stato','#Ore'" +
-                        ",'Data_inizio','Data_fine','StudenteMatricola','Tutor_AccademicoMatricola','Tutor_AziendaleCF','Direttore_DipartimentoMatricola'" +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?");
+        if(progetto.getStudente().getNumeroTirocini()>0) {
+            Connection newConnection = null;
+            try {
+                newConnection = (Connection) genericConnectionPool.getConnection();
+                newConnection.setAutoCommit(false);
+                System.out.println("Database connesso");
+                PreparedStatement stt = null;
+                if (ProgettoFormativoDAO.checkProgetto(progetto)) {
+                    stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo ('FirmaStudente','Obiettivi','Stato','#Ore'" +
+                            ",'Data_inizio','Data_fine','StudenteMatricola','Tutor_AccademicoMatricola','Tutor_AziendaleCF','Direttore_DipartimentoMatricola'" +
+                            "VALUES (?,?,?,?,?,?,?,?,?,?");
 
-                Bitmap firmaStudente = progetto.getFirmaStudente();
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                byte[] bitmapdata = bos.toByteArray();
-                ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-                stt.setBlob(1, bs);
-                stt.setString(2, progetto.getListaObiettivi());
-                stt.setString(3, progetto.getStato());
-                stt.setInt(4, progetto.getNumeroOre());
-                stt.setDate(5, progetto.getDataInizio());
-                stt.setDate(6, progetto.getDataFine());
-                stt.setString(7, progetto.getStudente().getMatricola());
-                stt.setString(8, progetto.getTutorAc().getMatricola());
-                stt.setString(9, progetto.getTutorAz().getCF());
-                stt.setString(10, progetto.getDirettore().getMatricola());
-                stt.executeUpdate();
-                newConnection.commit();
-                stt.close();
-                genericConnectionPool.releaseConnection(newConnection);
-                return "Inserimento avvenuto con successo";
+                    Bitmap firmaStudente = progetto.getFirmaStudente();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+                    ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+                    stt.setBlob(1, bs);
+                    stt.setString(2, progetto.getListaObiettivi());
+                    stt.setString(3, progetto.getStato());
+                    stt.setInt(4, progetto.getNumeroOre());
+                    stt.setDate(5, progetto.getDataInizio());
+                    stt.setDate(6, progetto.getDataFine());
+                    stt.setString(7, progetto.getStudente().getMatricola());
+                    stt.setString(8, progetto.getTutorAc().getMatricola());
+                    stt.setString(9, progetto.getTutorAz().getCF());
+                    stt.setString(10, progetto.getDirettore().getMatricola());
+                    stt.executeUpdate();
+                    newConnection.commit();
+                    stt.close();
+                    genericConnectionPool.releaseConnection(newConnection);
+                    return "Inserimento avvenuto con successo";
+                } else
+                    return "Inserimento non avvenuto poiché è già presente un progetto formativo";
+            } catch (SQLException e) {
+                return "Connessione al database non presente";
             }
-            else return "Inserimento non avvenuto poiché è già presente un progetto formativo";
-        } catch (SQLException e) {
-            return "Connessione al database non presente";
+        } else {
+            return "Non ci sono tirocini disponibili";
         }
     }
 
@@ -291,10 +295,15 @@ public class ProgettoFormativoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
-            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Data_Stipula = ? and Stato = ? WHERE ID = ?");
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Data_Stipula = ?, Stato = ? WHERE ID = ?");
             stt.setDate(1, progFormativo.getDataStipula());
             stt.setString(2, progFormativo.getStato());
             stt.setInt(3, progFormativo.getId());
+            stt.executeUpdate();
+
+            stt = newConnection.prepareStatement("UPDATE Studente SET #tirocini = ? WHERE Matricola = ?");
+            stt.setInt(1, progFormativo.getStudente().getNumeroTirocini() -1);
+            stt.setString(2, progFormativo.getStudente().getMatricola());
             stt.executeUpdate();
 
             newConnection.commit();
