@@ -53,10 +53,10 @@
                     android:id="@+id/spinnerAzienda"
                     android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="Azienda"
-
-                    >
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:spinnerMode="dialog">
                 </Spinner>
 
 
@@ -68,6 +68,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Obiettivi"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:spinnerMode="dialog"
 
                     >
                 </Spinner>
@@ -79,6 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Tutor Accademico"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:spinnerMode="dialog"
 
                     >
                 </Spinner>
@@ -102,27 +106,46 @@
 
 
                 </LinearLayout>
-                <TextView
-                    android:text="Data inizio"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <CalendarView
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="Data inizio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SELEZIONA DATA"
+                        android:textSize="25dp"
+                        android:id="@+id/data_inizio"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="Data fine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="18dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25dp"
+                        android:text="SELEZIONA DATA"
+                        android:id="@+id/data_fine"/>
+
+                </LinearLayout>
 
 
-                </CalendarView>
-
-                <TextView
-                    android:text="Data fine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <CalendarView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
 
-                </CalendarView>
+
 
 
 
