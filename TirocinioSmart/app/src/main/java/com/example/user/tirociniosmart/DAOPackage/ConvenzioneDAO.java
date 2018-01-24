@@ -42,13 +42,14 @@ public class ConvenzioneDAO extends GenericDAO {
             rs = stt.executeQuery();
 
             while (rs.next()) {
-                String idConvenzione = rs.getString("ID");
+                int idConvenzione = rs.getInt("ID");
                 Date dataStipula = rs.getDate("Data_Stipula");
                 String aziendaID = rs.getString("AziendaID");
                 String direttoreMatricola = rs.getString("Direttore_DipartimentoMatricola");
                 String stato = rs.getString("Stato");
                 AziendaDAO.setConnectionPool(genericConnectionPool);
                 Convenzione convenzione = new Convenzione(AziendaDAO.findById(aziendaID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
+                convenzione.setId(idConvenzione);
                 listaConvenzioni.add(convenzione);
             }
 
@@ -100,10 +101,10 @@ public class ConvenzioneDAO extends GenericDAO {
         return convenzione;
     }
 
-    public static boolean cambiaStato(Convenzione convenzione) throws SQLException {
+    public static String cambiaStato(Convenzione convenzione){
         Connection newConnection = null;
         PreparedStatement stt = null;
-        boolean result = false;
+        String result = null;
 
         try {
 
@@ -113,24 +114,21 @@ public class ConvenzioneDAO extends GenericDAO {
 
             System.out.println("Database connesso");
 
-            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = ? and Data_Stipula =? WHERE ID=?");
+            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = ?, Data_Stipula =? WHERE ID=?");
             stt.setString(1,convenzione.getStato());
             stt.setDate(2,convenzione.getDataStipula());
             stt.setInt(3,convenzione.getId());
             stt.executeUpdate();
-
-            result = true;
+            stt.close();
+            newConnection.commit();
+            genericConnectionPool.releaseConnection(newConnection);
+            result = "L'operazione è stata eseguita correttamente";
+           return result;
 
         } catch (SQLException e) {
 
-            result = false;
-
-        } finally {
-            newConnection.commit();
-            stt.close();
-
-            genericConnectionPool.releaseConnection(newConnection);
-
+            e.printStackTrace();
+            result = "Attenzione, errore di connessione al database";
             return result;
         }
 

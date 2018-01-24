@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +22,15 @@ import android.widget.Toast;
 import com.example.user.tirociniosmart.DAOPackage.ConvenzioneDAO;
 import com.example.user.tirociniosmart.EntityPackage.Convenzione;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.ProgFormativoPackage.ObiettiviFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.DirettoreActivity;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by User on 24/01/2018.
@@ -36,7 +43,7 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
     private ListView listView;
     private View mProgressView;
     private Direttore direttore;
-    private ArrayList<Convenzione> listaConvenzioni;
+    private static ArrayList<Convenzione> listaConvenzioni;
     public static Context context;
     private Button rifiutaConvenzione;
     private Button accettaConvenzione;
@@ -51,10 +58,10 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
         mProgressView = view.findViewById(R.id.richieste_convenzioni_progress);
 
         listView = view.findViewById(R.id.richiesteConvenzioniLista);
-
-        new LoadConvenzioni().execute(1);
         Bundle bundle = this.getArguments();
         direttore = (Direttore)bundle.getSerializable("direttore");
+
+        new LoadConvenzioni().execute(1);
         adapter = new ConvenzioneAdapter(context, R.layout.direttore_custom_adapter_convenzioni_layout, new ArrayList<Convenzione>());
 
 
@@ -94,25 +101,45 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
 
     @Override
     public void onClick(final View view) {
-        System.out.println("ON CLICK");
         int position = Integer.parseInt(view.getTag().toString());
-        System.out.println(VisualizzaConvenzioniFragment.adapter.toString());
-        System.out.println(position);
+
 
         Convenzione c = adapter.getItem(position);
-        System.out.println(c.getAzienda().getNome());
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
 
-                        int position = Integer.parseInt(view.getTag().toString());
+                        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+                        NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
-                        //    Convenzione c = adapter.getItem(position);
+                        if(netInfo!=null && netInfo.isConnected()){
+                            int position = Integer.parseInt(view.getTag().toString());
 
-                        //   adapter.remove(c);
-                        //   listaConvenzioni.remove(c);
-                        Toast.makeText(context.getApplicationContext(), "Elemento eliminato correttamente",Toast.LENGTH_LONG).show();
+                            Convenzione c = adapter.getItem(position);
+
+                            Calendar now = Calendar.getInstance();
+
+                            Date date = new Date((now.get((Calendar.YEAR))-1900),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+
+                            Button button = (Button)view;
+                            if(button.getText().toString().equalsIgnoreCase("ACCETTA")) {
+                                c.setDataStipula(date);
+                                c.setStato("ACCETTATO");
+                            }
+                            else if(button.getText().toString().equalsIgnoreCase("RIFIUTA")){
+                                c.setStato("RIFIUTATO");
+
+                            }
+                            new CambiaStato().execute(c);
+                        }
+
+                        else
+                        {
+                            Toast.makeText(context.getApplicationContext(), "Attenzione, connessione ad internet assente",Toast.LENGTH_LONG).show();
+
+                        }
+
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         Toast.makeText(context.getApplicationContext(), "Operazione annullata",Toast.LENGTH_LONG).show();
@@ -150,7 +177,10 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
 
             listaConvenzioni = ConvenzioneDAO.findByDirettore(direttore.getMatricola());
 
-
+            for(Convenzione c:listaConvenzioni) {
+                System.out.println("Id azienda " + c.getAzienda().getId());
+                System.out.println("Id convenzione " + c.getId());
+            }
             return listaConvenzioni;
         }
 
@@ -180,5 +210,51 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
 
 
     }
+
+
+    class CambiaStato extends AsyncTask<Convenzione, Convenzione, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(Convenzione... c) {
+
+
+            Convenzione convenzione = c[0];
+            String stato;
+            ConvenzioneDAO.setConnectionPool(DirettoreActivity.pool);
+
+            stato = ConvenzioneDAO.cambiaStato(convenzione);
+
+            if(stato.equals("L'operazione è stata eseguita correttamente"))
+                publishProgress(c[0]);
+            return stato;
+        }
+
+        @Override
+        protected void onProgressUpdate(Convenzione... c) {
+
+            VisualizzaConvenzioniFragment.listaConvenzioni.remove(c[0]);
+            VisualizzaConvenzioniFragment.adapter.remove(c[0]);
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+
+            Toast.makeText(context.getApplicationContext(),s, Toast.LENGTH_LONG).show();
+
+        }
+
+
+    }
+
+
+
+
 
 }
