@@ -30,7 +30,7 @@
             android:layout_height="140dp" />
 
         <ProgressBar
-            android:id="@+id/change_pass_progress"
+            android:id="@+id/new_request_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

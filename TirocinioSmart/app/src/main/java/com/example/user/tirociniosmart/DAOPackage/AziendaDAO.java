@@ -183,7 +183,7 @@ public class AziendaDAO extends GenericDAO {
             newConnection.setAutoCommit(false);
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            stt = newConnection.prepareStatement("SELECT * FROM Azienda INNER JOIN Convenzione ON Convenzione.AziendaID=Azienda.ID WHERE Convenzione.Stato'ACCETTATO'");
+            stt = newConnection.prepareStatement("SELECT * FROM Azienda INNER JOIN Convenzione ON Convenzione.AziendaID=Azienda.ID WHERE Convenzione.Stato='ACCETTATO'");
             ResultSet rs = null;
             rs = stt.executeQuery();
             while (rs.next()) {
@@ -204,6 +204,7 @@ public class AziendaDAO extends GenericDAO {
             genericConnectionPool.releaseConnection(newConnection);
             return lista;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
