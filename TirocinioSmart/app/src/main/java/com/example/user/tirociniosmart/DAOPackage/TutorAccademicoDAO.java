@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by User on 17/01/2018.
@@ -183,6 +184,35 @@ public class TutorAccademicoDAO extends GenericDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";
+        }
+    }
+
+    public static ArrayList<TutorAc> getAllTutorAc()  {
+        try {
+            ArrayList<TutorAc> lista = new ArrayList<TutorAc>();
+            Connection newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
+            stt = newConnection.prepareStatement("SELECT * FROM Tutor_Accademico order by nome");
+            ResultSet rs = null;
+            rs = stt.executeQuery();
+            while (rs.next()) {
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                String nome = rs.getString("Nome");
+                String cognome = rs.getString("Cognome");
+                String matricola = rs.getString("Matricola");
+                TutorAc tutorAc = new TutorAc(username, password, "Tutor Accademico", matricola, nome, cognome);
+                lista.add(tutorAc);
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return lista;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
