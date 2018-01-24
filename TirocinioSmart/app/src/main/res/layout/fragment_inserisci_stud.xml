@@ -316,21 +316,26 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:textAlignment="center"
+                        android:textColor="#000000"
                         android:text="Data nascita"
+                        android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"/>
                     <TextView
+                        android:textAlignment="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="SELEZIONA DATA"
-                        android:textSize="25dp"
+                        android:textSize="20dp"
                         android:id="@+id/dataNascitaStudente"
-                        android:onClick="click"/>
+                       />
 
                 </LinearLayout>
 
