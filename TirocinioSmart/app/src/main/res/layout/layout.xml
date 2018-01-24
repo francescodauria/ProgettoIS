@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item>
+        <layer-list>
+            <item>
+                <shape>
+                    <gradient
+                        android:startColor="#CCCCCC"
+                        android:endColor="#CCCCCC"
+                        android:angle="270" />
+                    <padding
+                        android:left="3dp"
+                        android:top="3dp"
+                        android:right="3dp"
+                        android:bottom="3dp" />
+
+                </shape>
+            </item>
+            <item>
+
+                    android:gravity="top|right" />
+            </item>
+        </layer-list>
+    </item>
+</selector>
