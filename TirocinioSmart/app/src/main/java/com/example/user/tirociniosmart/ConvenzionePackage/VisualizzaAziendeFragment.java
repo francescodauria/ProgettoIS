@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Created by User on 21/10/2017.
  */
 
-public class FragmentListaAziende extends Fragment {
+public class VisualizzaAziendeFragment extends Fragment {
     private ListView listView;
     private View mProgressView;
 

@@ -13,14 +13,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Studente;
 import com.example.user.tirociniosmart.R;
-import com.example.user.tirociniosmart.ConvenzionePackage.FragmentListaAziende;
+import com.example.user.tirociniosmart.ConvenzionePackage.VisualizzaAziendeFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.CreaProgFormFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
@@ -112,7 +110,7 @@ public class StudentActivity extends AppCompatActivity
         } else if (id == R.id.list_agency) {
             Fragment f = fm.findFragmentByTag("listaAziende");
             if (f == null) {
-                f = new FragmentListaAziende();
+                f = new VisualizzaAziendeFragment();
 
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
@@ -122,7 +120,7 @@ public class StudentActivity extends AppCompatActivity
                 FragmentTransaction ft = fm.beginTransaction();
 
                 ft.remove(f);
-                f = new FragmentListaAziende();
+                f = new VisualizzaAziendeFragment();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "listaAziende");
                 ft.commit();
             }

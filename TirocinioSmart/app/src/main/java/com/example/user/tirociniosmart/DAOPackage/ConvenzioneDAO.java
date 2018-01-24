@@ -20,39 +20,50 @@ public class ConvenzioneDAO extends GenericDAO {
         genericConnectionPool = connectionPool;
     }
 
-    public static ArrayList<Convenzione> findByDirettore(String id) throws SQLException {
+    public static ArrayList<Convenzione> findByDirettore(String id) {
 
         ArrayList<Convenzione> listaConvenzioni = new ArrayList<>();
 
-        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
 
-        newConnection.setAutoCommit(false);
+            newConnection.setAutoCommit(false);
 
-        System.out.println("Database connesso");
-        PreparedStatement stt = null;
+            System.out.println("Database connesso");
+            PreparedStatement stt = null;
 
-        stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE stato='IN CORSO' and id="+id);
+            stt = newConnection.prepareStatement("SELECT * FROM Convenzione WHERE Stato=? and Direttore_DipartimentoMatricola= ?");
+            stt.setString(1, "IN CORSO");
+            stt.setString(2, id);
 
-        ResultSet rs = null;
+            ResultSet rs = null;
 
-        rs = stt.executeQuery();
+            rs = stt.executeQuery();
 
-        while (rs.next()) {
-            String idConvenzione = rs.getString("ID");
-            Date dataStipula = Date.valueOf(rs.getString("Data_Stipula"));
-            String aziendaID = rs.getString("AziendaID");
-            String direttoreMatricola = rs.getString("Direttore_DipartimentoMatricola");
-            String stato = rs.getString("Stato");
-            Convenzione convenzione = new Convenzione(AziendaDAO.findById(aziendaID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
-            listaConvenzioni.add(convenzione);
+            while (rs.next()) {
+                String idConvenzione = rs.getString("ID");
+                Date dataStipula = rs.getDate("Data_Stipula");
+                String aziendaID = rs.getString("AziendaID");
+                String direttoreMatricola = rs.getString("Direttore_DipartimentoMatricola");
+                String stato = rs.getString("Stato");
+                AziendaDAO.setConnectionPool(genericConnectionPool);
+                Convenzione convenzione = new Convenzione(AziendaDAO.findById(aziendaID), dataStipula, DirettoreDAO.findByMatricola(direttoreMatricola), stato);
+                listaConvenzioni.add(convenzione);
+            }
+
+            newConnection.commit();
+            stt.close();
+
+            genericConnectionPool.releaseConnection(newConnection);
+            return listaConvenzioni;
+
         }
+            catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+             }
 
-        newConnection.commit();
-        stt.close();
-
-        genericConnectionPool.releaseConnection(newConnection);
-
-        return listaConvenzioni;
     }
 
     public static Convenzione findConvenzioneTutor(String aziendaID) throws SQLException {
@@ -89,8 +100,7 @@ public class ConvenzioneDAO extends GenericDAO {
         return convenzione;
     }
 
-    public static boolean cambiaStato(String stato, String idConvenzione) throws SQLException {
-        Convenzione convenzione = null;
+    public static boolean cambiaStato(Convenzione convenzione) throws SQLException {
         Connection newConnection = null;
         PreparedStatement stt = null;
         boolean result = false;
@@ -103,9 +113,10 @@ public class ConvenzioneDAO extends GenericDAO {
 
             System.out.println("Database connesso");
 
-            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = ? WHERE ID=?");
-            stt.setString(1,stato);
-            stt.setString(2,idConvenzione);
+            stt = newConnection.prepareStatement("UPDATE Convenzione SET Stato = ? and Data_Stipula =? WHERE ID=?");
+            stt.setString(1,convenzione.getStato());
+            stt.setDate(2,convenzione.getDataStipula());
+            stt.setInt(3,convenzione.getId());
             stt.executeUpdate();
 
             result = true;

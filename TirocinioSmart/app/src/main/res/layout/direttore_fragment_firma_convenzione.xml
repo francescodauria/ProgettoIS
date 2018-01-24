@@ -31,7 +31,7 @@
                 android:textStyle="italic"
                 android:textSize="30sp"
 
-                android:text="Elenco aziende convenzionate"
+                android:text="Elenco richieste convenzione"
                 android:paddingTop="5dp"
                 android:paddingBottom="20dp"
 
@@ -40,19 +40,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ProgressBar
-                    android:id="@+id/aziende_progress"
+                    android:id="@+id/richieste_convenzioni_progress"
                     style="?android:attr/progressBarStyleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     />
-            <ListView
-                android:id="@+id/mylistview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </ListView>
+                <ListView
+                    android:dividerHeight="20.0sp"
+                    android:id="@+id/richiesteConvenzioniLista"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </ListView>
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>
-
