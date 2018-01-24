@@ -21,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.ConvenzionePackage.RichiediConvenzioneFragment;
+import com.example.user.tirociniosmart.DAOPackage.StudenteDAO;
+import com.example.user.tirociniosmart.EntityPackage.Studente;
+import com.example.user.tirociniosmart.ProgFormativoPackage.ObiettiviFragment;
 import com.example.user.tirociniosmart.R;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.SegreteriaActivity;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -149,6 +153,8 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
                     focusView = passwordRipetuta;
                     focusView.requestFocus();
                 }
+                else
+                    new InsertStudente().execute(1);
             }
 
 
@@ -181,7 +187,7 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
     }
 
 
-    class LoadIconTask extends AsyncTask<Integer, Integer, String > {
+    class InsertStudente extends AsyncTask<Integer, Integer, String > {
 
         @Override
         protected void onPreExecute() {
@@ -192,7 +198,11 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
         @Override
         protected String doInBackground(Integer... img_ids) {
 
-            return null;
+            Studente studente = new Studente(username.getText().toString(),password.getText().toString(),"Studente",matricola.getText().toString(),nome.getText().toString(),cognome.getText().toString(),codiceFiscale.getText().toString(),mail.getText().toString(),indirizzo.getText().toString(),luogoNascita.getText().toString(),dataNascita.getText().toString(),Integer.parseInt(numeroTirocini.getText().toString()),numeroTirocini.getText().toString(),null);
+
+            StudenteDAO.setConnectionPool(SegreteriaActivity.pool);
+            String s =StudenteDAO.insert(studente);
+            return s;
         }
 
         @Override
