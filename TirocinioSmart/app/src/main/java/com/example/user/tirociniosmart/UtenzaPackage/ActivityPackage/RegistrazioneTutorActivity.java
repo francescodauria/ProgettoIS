@@ -191,7 +191,7 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... img_ids) {
 
-            String s;
+            String s="";
             Drawable logo1=logo.getDrawable();
             Bitmap bitmap = ((BitmapDrawable)logo1).getBitmap();
 
@@ -200,12 +200,10 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             AziendaDAO.setConnectionPool(pool);
             TutorAziendaleDAO.setConnectionPool(pool);
             try{
-                AziendaDAO.insert(a);
-                TutorAziendaleDAO.insert(tutor,a.getId());
-                s="Inserimento azienda e tutor avvenuto correttamente";
+                s=AziendaDAO.insert(a);
+                s=TutorAziendaleDAO.insert(tutor,a.getId());
 
             } catch (SQLException e) {
-                s="Inserimento azienda e tutor non avvenuto correttamente";
                 e.printStackTrace();
 
             }
