@@ -21,11 +21,21 @@ import java.util.List;
  */
 
 public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
-
     private int resource;
     private LayoutInflater inflater;
     private Context context;
     private Convenzione c;
+    private ImageView firmaView;
+
+    private static OnItemClickListener listener;
+    public interface OnItemClickListener{
+        void onItemClick(View itemView, int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener=listener;
+    }
+
+
     public ConvenzioneAdapter(Context context, int resourceId, List<Convenzione> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -69,8 +79,21 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
         nome.setTag(position);
         email.setTag(position);
         descrizione.setTag(position);
-        buttonAccetta.setOnClickListener(new VisualizzaConvenzioniFragment());
-        buttonRifiuta.setOnClickListener(new VisualizzaConvenzioniFragment());
+
+
+        buttonAccetta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
+
+        buttonRifiuta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
 
         descrizione.setOnClickListener(new View.OnClickListener() {
 

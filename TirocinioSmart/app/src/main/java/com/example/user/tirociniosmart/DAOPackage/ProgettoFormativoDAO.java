@@ -214,7 +214,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -239,6 +239,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
+                progetto.setId(id);
                 progetto.setGetFirmaTutorAz(null);
                 progetto.setFirmaTutorAcc(null);
                 progetto.setFirmaDirettore(null);
@@ -347,7 +348,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -385,6 +386,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 progetto.setFirmaStudente(firmaStud);
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
+                progetto.setId(id);
                 progetto.setFirmaDirettore(null);
                 progetti.add(progetto);
 
