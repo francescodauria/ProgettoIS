@@ -100,6 +100,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
     public static String update() {
         return "";
     }
+
     public static ArrayList<ProgFormativo> findAllByStudente(Studente studente) {
         Log.d("fuori al while", "prova");
 
@@ -189,6 +190,210 @@ public class ProgettoFormativoDAO extends GenericDAO {
             genericConnectionPool.releaseConnection(newConnection);
             return progetti;
         } catch (SQLException e) {
+            return null;
+        }
+
+    }
+
+    public static ArrayList<ProgFormativo> findAllByTutorAziendale(TutorAz tutorAz) {
+        Log.d("fuori al while", "prova");
+
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            TutorAccademicoDAO.setConnectionPool(genericConnectionPool);
+            TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AziendaleCF = ? and Stato = ?");
+            stt.setString(1,tutorAz.getCF());
+            stt.setString(2,"IN CORSO");
+            ArrayList<ProgFormativo> progetti=new ArrayList<>();
+            ResultSet rs=stt.executeQuery();
+            while(rs.next()) {
+
+                String id=rs.getString(1);
+
+                Blob firmaStudente = rs.getBlob(3);
+                Bitmap firmaStud =null;
+                byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
+                firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
+
+                String obiettivi=rs.getString(6);
+                String stato=rs.getString(7);
+                String motivazione=rs.getString(8);
+                int ore=rs.getInt(9);
+                Date data_inizio=rs.getDate(10);
+                Date data_fine=rs.getDate(11);
+                Date data_stipula=rs.getDate(12);
+
+                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
+                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+                Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+
+                Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
+
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
+                progetto.setFirmaStudente(firmaStud);
+                progetto.setGetFirmaTutorAz(null);
+                progetto.setFirmaTutorAcc(null);
+                progetto.setFirmaDirettore(null);
+                progetti.add(progetto);
+
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return progetti;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static ArrayList<ProgFormativo> findAllByTutorAccademico(TutorAc tutorAc) {
+        Log.d("fuori al while", "prova");
+
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            TutorAccademicoDAO.setConnectionPool(genericConnectionPool);
+            TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AccademicoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL");
+            //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
+            stt.setString(1,tutorAc.getMatricola());
+            stt.setString(2,"IN CORSO");
+
+            ArrayList<ProgFormativo> progetti=new ArrayList<>();
+            ResultSet rs=stt.executeQuery();
+            while(rs.next()) {
+
+                String id=rs.getString(1);
+
+                Blob firmaStudente = rs.getBlob(3);
+                Bitmap firmaStud =null;
+                byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
+                firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
+                Blob firmaTutorAziendale=rs.getBlob(4);
+                Bitmap firmaTutor =null;
+                if(firmaTutorAziendale!=null) {
+                    byte[] imgData3 = firmaTutorAziendale.getBytes(1, (int) firmaTutorAziendale.length());
+                    firmaTutor = BitmapFactory.decodeByteArray(imgData3, 0, imgData3.length);
+                }
+
+                String obiettivi=rs.getString(6);
+                String stato=rs.getString(7);
+                String motivazione=rs.getString(8);
+                int ore=rs.getInt(9);
+                Date data_inizio=rs.getDate(10);
+                Date data_fine=rs.getDate(11);
+                Date data_stipula=rs.getDate(12);
+
+                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
+                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+                Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
+                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
+
+                Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
+
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
+                progetto.setFirmaStudente(firmaStud);
+                progetto.setGetFirmaTutorAz(firmaTutor);
+                progetto.setFirmaTutorAcc(null);
+                progetto.setFirmaDirettore(null);
+                progetti.add(progetto);
+
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return progetti;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static ArrayList<ProgFormativo> findAllByDirettore(Direttore direttore) {
+        Log.d("fuori al while", "prova");
+
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            TutorAccademicoDAO.setConnectionPool(genericConnectionPool);
+            TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Direttore_DipartimentoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL and FirmaTutorAccademico = IS NOT NULL");
+            //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
+            stt.setString(1,direttore.getMatricola());
+            stt.setString(2,"IN CORSO");
+
+            ArrayList<ProgFormativo> progetti=new ArrayList<>();
+            ResultSet rs=stt.executeQuery();
+            while(rs.next()) {
+
+                String id=rs.getString(1);
+
+                Blob firmaStudente = rs.getBlob(3);
+                Bitmap firmaStud =null;
+                byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
+                firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
+                Blob firmaTutorAziendale=rs.getBlob(4);
+                Bitmap firmaTutor =null;
+                if(firmaTutorAziendale!=null) {
+                    byte[] imgData3 = firmaTutorAziendale.getBytes(1, (int) firmaTutorAziendale.length());
+                    firmaTutor = BitmapFactory.decodeByteArray(imgData3, 0, imgData3.length);
+                }
+                Blob firmaTutorAccademico=rs.getBlob(5);
+                Bitmap firmaTutorAc = null;
+                if(firmaTutorAccademico!=null) {
+                    byte[] imgData4 = firmaTutorAccademico.getBytes(1, (int) firmaTutorAccademico.length());
+                    firmaTutorAc = BitmapFactory.decodeByteArray(imgData4, 0, imgData4.length);
+                }
+
+                String obiettivi=rs.getString(6);
+                String stato=rs.getString(7);
+                String motivazione=rs.getString(8);
+                int ore=rs.getInt(9);
+                Date data_inizio=rs.getDate(10);
+                Date data_fine=rs.getDate(11);
+                Date data_stipula=rs.getDate(12);
+
+                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
+                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+                Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
+                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(16));
+
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
+                progetto.setFirmaStudente(firmaStud);
+                progetto.setGetFirmaTutorAz(firmaTutor);
+                progetto.setFirmaTutorAcc(firmaTutorAc);
+                progetto.setFirmaDirettore(null);
+                progetti.add(progetto);
+
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return progetti;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
 
