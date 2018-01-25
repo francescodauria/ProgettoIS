@@ -196,7 +196,7 @@
                         android:fontFamily="sans-serif-condensed"
                         android:textStyle="italic"
                         android:textSize="20sp"
-                        android:id="@+id/StudenteRichiestaTutorAc"
+                        android:id="@+id/studenteRichiestaTutorAc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -244,6 +244,7 @@
         android:paddingLeft="10dp"
         android:background="@drawable/border_black_button"
         android:layout_gravity="center"
+        android:id="@+id/infoTutorAc"
         android:text="Maggiori informazioni"
         android:layout_width="wrap_content"
         android:layout_height="30dp" />
@@ -268,7 +269,6 @@
             android:text="Inserisci firma"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
 
             />
 

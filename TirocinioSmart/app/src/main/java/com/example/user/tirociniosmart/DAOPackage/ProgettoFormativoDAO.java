@@ -207,7 +207,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AziendaleCF = ? and Stato = ?");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AziendaleCF = ? and Stato = ? and FirmaTutorAziendale IS NULL");
             stt.setString(1,tutorAz.getCF());
             stt.setString(2,"IN CORSO");
             ArrayList<ProgFormativo> progetti=new ArrayList<>();
@@ -268,7 +268,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AccademicoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AccademicoMatricola = ? and Stato = ? and FirmaTutorAziendale IS NOT NULL and FirmaTutorAccademico IS NULL");
             //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
             stt.setString(1,tutorAc.getMatricola());
             stt.setString(2,"IN CORSO");
@@ -337,7 +337,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Direttore_DipartimentoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL and FirmaTutorAccademico = IS NOT NULL");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Direttore_DipartimentoMatricola = ? and Stato = ? and FirmaTutorAziendale  IS NOT NULL and FirmaTutorAccademico IS NOT NULL and FirmaDirettore IS NULL");
             //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
             stt.setString(1,direttore.getMatricola());
             stt.setString(2,"IN CORSO");
