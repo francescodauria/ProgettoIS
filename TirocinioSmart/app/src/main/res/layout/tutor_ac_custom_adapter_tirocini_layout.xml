@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutTirociniTutorAc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/student_refused_state"
+    >
+
+
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlegreen"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataInizioRichiestaTutorAcImageView"
+            android:layout_width="23dp"
+            android:layout_height="23dp" />
+
+
+
+        <TextView
+
+            android:id="@+id/dataInizioRichiestaTutorAcTextView"
+            android:layout_toRightOf="@+id/dataInizioRichiestaTutorAcImageView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data inizio:" />
+
+        <TextView
+
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/dataInizioRichiestaTutorAcTextView"
+            android:id="@+id/dataInizioRichiestaStudente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlered"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataFineRichiestaTutorAcImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+
+        <TextView
+            android:id="@+id/datafineRichiestaTutorAcTextView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_toRightOf="@+id/dataFineRichiestaTutorAcImageView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data fine:" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/datafineRichiestaTutorAcTextView"
+            android:id="@+id/datafineRichiestaTutorAc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logoAziendaRichiestaTutorAc"
+                android:layout_marginTop="16dp"
+                android:layout_height="160dp"
+                android:layout_width="160dp"
+                />
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="55dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Azienda:"
+
+                        />
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:id="@+id/nomaAziendaRichiestaTutorAc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutor az:" />
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:id="@+id/tutorAziendaleRichiestaTutorAc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutor accademico:"
+
+            />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:id="@+id/tutorAccademicoRichiestaTutorAc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Studente:"
+
+            />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:id="@+id/StudenteRichiestaTutorAc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -222,7 +222,7 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            String data=""+i2+"/"+i1+"/"+i;
+            String data=""+i2+"/"+(i1+1)+"/"+i;
             data_N=new Date(i,i1,i2);
             dataNascita.setText(data);
         }

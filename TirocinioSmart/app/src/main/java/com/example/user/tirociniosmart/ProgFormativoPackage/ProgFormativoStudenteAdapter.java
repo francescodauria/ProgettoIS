@@ -33,14 +33,14 @@ import java.util.List;
 /**
  * Created by User on 21/01/2018.
  */
-public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
+public class ProgFormativoStudenteAdapter extends ArrayAdapter<ProgFormativo> {
 
     private int resource;
     private LayoutInflater inflater;
     private Context context;
     private ProgFormativo progettoFormativo;
 
-    public ProgFormativoAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
+    public ProgFormativoStudenteAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
         inflater = LayoutInflater.from(context);
@@ -83,8 +83,8 @@ public class ProgFormativoAdapter extends ArrayAdapter<ProgFormativo> {
 
         logoAzienda.setImageBitmap(progettoFormativo.getTutorAz().getAzienda().getLogo());
 
-        dataInizio.setText(progettoFormativo.getDataInizio().getDate()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+(progettoFormativo.getDataInizio().getYear()+1900));
-        dataFine.setText(progettoFormativo.getDataFine().getDate()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+(progettoFormativo.getDataFine().getYear()+1900));
+        dataInizio.setText(progettoFormativo.getDataInizio().getDate()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+(progettoFormativo.getDataInizio().getYear()));
+        dataFine.setText(progettoFormativo.getDataFine().getDate()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+(progettoFormativo.getDataFine().getYear()));
 
 
 

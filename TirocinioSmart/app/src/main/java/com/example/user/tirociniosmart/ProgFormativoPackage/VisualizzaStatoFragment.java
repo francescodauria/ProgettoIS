@@ -30,10 +30,10 @@ public class VisualizzaStatoFragment extends Fragment {
     private ListView listView;
 
     private View mProgressView;
-    private ProgFormativoAdapter adapter;
+    private ProgFormativoStudenteAdapter adapter;
     private Context context;
     private View view;
-
+    private Studente studente;
     @Override
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
@@ -46,6 +46,8 @@ public class VisualizzaStatoFragment extends Fragment {
         View v = inflater.inflate(R.layout.student_fragment_stato_richiesta_layout, container, false);
         view = v;
 
+        Bundle b = getArguments();
+        studente= (Studente)b.getSerializable("studente");
         mProgressView = view.findViewById(R.id.tirocini_studente_progress);
         new LoadIconTask().execute(1);
 
@@ -89,10 +91,9 @@ public class VisualizzaStatoFragment extends Fragment {
 
             ArrayList<ProgFormativo> progetti = new ArrayList<>();
 
-            Studente s = new Studente(null, null, null, "0512103671", null, null, null, null, null, null, null, 0, null, null);
             ProgettoFormativoDAO.setConnectionPool(StudentActivity.pool);
 
-            progetti = ProgettoFormativoDAO.findAllByStudente(s);
+            progetti = ProgettoFormativoDAO.findAllByStudente(studente);
             return progetti;
 
         }
@@ -109,7 +110,7 @@ public class VisualizzaStatoFragment extends Fragment {
 
             if(lista==null) Toast.makeText(getActivity(),"Connessione al database non presente",Toast.LENGTH_LONG).show();
             else {
-                adapter = new ProgFormativoAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
+                adapter = new ProgFormativoStudenteAdapter(context, R.layout.student_custom_adapter_lista_richieste_layout, new ArrayList<ProgFormativo>());
 
                 listView = (ListView) view.findViewById(R.id.listViewTirociniStudente);
                 listView.setAdapter(adapter);

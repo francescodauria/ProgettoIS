@@ -40,6 +40,7 @@ public class StudentActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         studente=(Studente)getIntent().getSerializableExtra("STUDENTE");
+        System.out.println(studente.getNome());
         //   String password = getIntent().getStringExtra("password");
         //   String email = getIntent().getStringExtra("email");
         //   Toast.makeText(getApplicationContext(),"ciao " + prova, Toast.LENGTH_LONG).show();
@@ -57,8 +58,11 @@ public class StudentActivity extends AppCompatActivity
 
 
         Fragment f = new VisualizzaStatoFragment();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("studente",studente);
+        f.setArguments(bundle);
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
         ft.addToBackStack(null);
         ft.commit();
 
@@ -93,14 +97,21 @@ public class StudentActivity extends AppCompatActivity
             Fragment f = fm.findFragmentByTag("statoRichiesta");
 
             if (f == null) {
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("studente",studente);
                 f = new VisualizzaStatoFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
                 ft.commit();
             } else {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.remove(f);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("studente",studente);
                 f = new VisualizzaStatoFragment();
+                f.setArguments(bundle);
 
                 ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
                 ft.commit();

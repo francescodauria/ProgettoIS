@@ -25,6 +25,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static java.sql.Types.NULL;
+
 /**
  * Created by User on 17/01/2018.
  */
@@ -47,9 +49,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 System.out.println("Database connesso");
                 PreparedStatement stt = null;
                 if (ProgettoFormativoDAO.checkProgetto(progetto)) {
-                    stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo (Obiettivi,  Stato,  #Ore,Data_inizio,  Data_fine,  StudenteMatricola,  Tutor_AccademicoMatricola,  Tutor_AziendaleCF,  Direttore_DipartimentoMatricola) VALUES (?,?,?,?,?,?,?,?,?)");
-
-                    //System.out.println(progetto.getDirettore().getMatricola());
+                    stt = newConnection.prepareStatement("INSERT INTO Progetto_Formativo VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                     Bitmap firmaStudente = progetto.getFirmaStudente();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     firmaStudente.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
@@ -59,16 +59,28 @@ public class ProgettoFormativoDAO extends GenericDAO {
                     System.out.println(bitmapdata.length);
 
                     System.out.println(bs);
-                    stt.setBinaryStream(1, bs, bitmapdata.length);
-                    stt.setString(2, progetto.getListaObiettivi());
-                    stt.setString(3, progetto.getStato());
-                    stt.setInt(4, progetto.getNumeroOre());
-                    stt.setDate(5, progetto.getDataInizio());
-                    stt.setDate(6, progetto.getDataFine());
-                    stt.setString(7, progetto.getStudente().getMatricola());
-                    stt.setString(8, progetto.getTutorAc().getMatricola());
-                    stt.setString(9, progetto.getTutorAz().getCF());
-                    stt.setString(10, progetto.getDirettore().getMatricola());
+                    Blob b1= null;
+                    Blob b3= null;
+                    Blob b4= null;
+
+                    stt.setInt(1,NULL);
+                    stt.setBlob(2,b1);
+                    stt.setBinaryStream(3, bs, bitmapdata.length);
+
+                    stt.setBlob(4,b3);
+                    stt.setBlob(5,b4);
+                    stt.setString(6, progetto.getListaObiettivi());
+
+                    stt.setString(7, progetto.getStato());
+                    stt.setString(8,null);
+                    stt.setInt(9, progetto.getNumeroOre());
+                    stt.setDate(10, progetto.getDataInizio());
+                    stt.setDate(11, progetto.getDataFine());
+                    stt.setDate(12, null);
+                    stt.setString(13, progetto.getStudente().getMatricola());
+                    stt.setString(14, progetto.getTutorAc().getMatricola());
+                    stt.setString(15, progetto.getTutorAz().getCF());
+                    stt.setString(16, progetto.getDirettore().getMatricola());
                     stt.executeUpdate();
                     newConnection.commit();
                     stt.close();

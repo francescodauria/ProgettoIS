@@ -321,9 +321,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:drawableLeft="@drawable/nascita_xml_image"
                         android:textAlignment="center"
                         android:textColor="#000000"
-                        android:text="Data nascita"
+                        android:text="   Data nascita"
                         android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

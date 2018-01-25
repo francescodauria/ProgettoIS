@@ -129,7 +129,20 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Insert().execute(1);
+                if(data_inizio.getText().toString().equalsIgnoreCase("Seleziona data"))
+                    Toast.makeText(context.getApplicationContext(),"Attenzione, selezionare data inizio tirocinio",Toast.LENGTH_LONG).show();
+
+                else if(data_inizio.getText().toString().equalsIgnoreCase("Seleziona data"))
+                    Toast.makeText(context.getApplicationContext(),"Attenzione, selezionare data fine tirocinio",Toast.LENGTH_LONG).show();
+
+                else if(imageFirma.getDrawable()==null)
+                    Toast.makeText(context.getApplicationContext(),"Attenzione, non è stata inserita alcuna firma",Toast.LENGTH_LONG).show();
+
+                else if (data_F.before(data_I))
+                    Toast.makeText(context.getApplicationContext(),"Attenzione, la data di fine precede la data di inizio tirocinio",Toast.LENGTH_LONG).show();
+
+                else
+                    new Insert().execute(1);
             }
         });
         return view;
@@ -162,14 +175,14 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         if(data_inizio.getTag().equals("click"))
         {
-            String data=""+i2+"-"+i1+"-"+i;
+            String data=""+i2+"/"+(i1+1)+"/"+i;
             data_I=new Date(i,i1,i2);
             data_inizio.setText(data);
             data_inizio.setTag("");
         }
         else if (data_fine.getTag().equals("click"))
         {
-            String data=""+i2+"-"+i1+"-"+i;
+            String data=""+i2+"/"+(i1+1)+"/"+i;
             data_F=new Date(i,i1,i2);
             data_fine.setText(data);
             data_fine.setTag("");
