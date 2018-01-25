@@ -59,7 +59,6 @@ public class TutorAzActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        pool = new MySQLConnectionPoolFreeSqlDB();
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
