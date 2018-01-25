@@ -132,17 +132,10 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
                 if(data_inizio.getText().toString().equalsIgnoreCase("Seleziona data"))
                     Toast.makeText(context.getApplicationContext(),"Attenzione, selezionare data inizio tirocinio",Toast.LENGTH_LONG).show();
 
-                else if(data_inizio.getText().toString().equalsIgnoreCase("Seleziona data"))
-                    Toast.makeText(context.getApplicationContext(),"Attenzione, selezionare data fine tirocinio",Toast.LENGTH_LONG).show();
 
-                else if(imageFirma.getDrawable()==null)
+                if(imageFirma.getDrawable()==null)
                     Toast.makeText(context.getApplicationContext(),"Attenzione, non è stata inserita alcuna firma",Toast.LENGTH_LONG).show();
-
-                else if (data_F.before(data_I))
-                    Toast.makeText(context.getApplicationContext(),"Attenzione, la data di fine precede la data di inizio tirocinio",Toast.LENGTH_LONG).show();
-
-                else
-                    new Insert().execute(1);
+                new Insert().execute(1);
             }
         });
         return view;

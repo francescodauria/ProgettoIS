@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,14 +40,21 @@ import java.util.List;
 /**
  * Created by User on 21/01/2018.
  */
-public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  implements View.OnClickListener {
+public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
 
     private int resource;
     private LayoutInflater inflater;
     private Context context;
-    private static ProgFormativo progettoFormativo;
-    private static ImageView firmaView;
+    private ProgFormativo progettoFormativo;
+    private ImageView firmaView;
 
+    private static OnItemClickListener listener;
+    public interface OnItemClickListener{
+        void onItemClick(View itemView, int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener=listener;
+    }
 
     public ProgFormativoTutorAcAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
@@ -72,10 +80,10 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  im
         TextView studente = v.findViewById(R.id.studenteRichiestaTutorAc);
         Button informazioni = v.findViewById(R.id.infoTutorAc);
         Button firma=(Button) v.findViewById(R.id.insertFirmaTutorAc);
-        firma.setOnClickListener(this);
-        firma.setTag(position);
         firmaView =(ImageView) v.findViewById(R.id.firmaTutorAc);
 
+        Button accetta = v.findViewById(R.id.accettaTutorAc);
+        Button rifiuta = v.findViewById(R.id.rifiutaTutorAc);
 
         dataInizio.setText(progettoFormativo.getDataInizio().getDate()+"/"+progettoFormativo.getDataInizio().getMonth()+1+"/"+(progettoFormativo.getDataInizio().getYear()));
         dataFine.setText(progettoFormativo.getDataFine().getDate()+"/"+progettoFormativo.getDataFine().getMonth()+1+"/"+(progettoFormativo.getDataFine().getYear()));
@@ -87,6 +95,26 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  im
         tutorAzienda.setText(progettoFormativo.getTutorAz().getNome()+ " "+progettoFormativo.getTutorAz().getCognome() );
 
         logoAzienda.setImageBitmap(progettoFormativo.getTutorAz().getAzienda().getLogo());
+
+        accetta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
+        rifiuta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
+        firma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v,position);
+            }
+        });
+
 
 
         informazioni.setOnClickListener(new View.OnClickListener() {
@@ -118,18 +146,12 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  im
     }
 
 
-    @Override
-    public void onClick(View view) {
-        Intent intent=new Intent(view.getContext(),FirmaActivity.class);
-        ((Activity)view.getContext()).startActivityForResult(intent,1);
+    public void setFirma(int position,Bitmap bitmap){
+        getItem(position).setFirmaTutorAcc(bitmap);
+        firmaView.setImageBitmap(bitmap);
+
     }
 
-    public static void settaFirma(Intent data) {
-        byte[] bitmapdata = data.getByteArrayExtra("bitmapdata");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-        firmaView.setImageBitmap(bitmap);
-        progettoFormativo.setFirmaStudente(bitmap);
-    }
 
 
 }

@@ -277,7 +277,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -311,6 +311,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaTutorAcc(null);
                 progetto.setFirmaDirettore(null);
+                progetto.setId(id);
                 progetti.add(progetto);
 
             }
@@ -453,7 +454,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -461,6 +462,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
+            System.out.println(progFormativo.getId());
             stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET FirmaTutorAccademico = ? WHERE ID = ?");
             Bitmap firma = progFormativo.getFirmaTutorAcc();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -481,7 +483,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByDirettore(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByDirettore(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -534,7 +536,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) throws SQLException {
+    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();

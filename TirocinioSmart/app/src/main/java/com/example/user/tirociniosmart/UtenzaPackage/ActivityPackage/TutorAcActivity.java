@@ -167,21 +167,6 @@ public class TutorAcActivity extends AppCompatActivity
 
         super.onStop();
     }
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                byte[] bitmapdata = data.getByteArrayExtra("bitmapdata");
-                Toast.makeText(this, "Firma salvata correttamente", Toast.LENGTH_SHORT).show();
-                ProgFormativoTutorAcAdapter.settaFirma(data);
-
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Attenzione: firma non salvata", Toast.LENGTH_SHORT).show();
-
-            }
-        }
-
-    }
 }
 
