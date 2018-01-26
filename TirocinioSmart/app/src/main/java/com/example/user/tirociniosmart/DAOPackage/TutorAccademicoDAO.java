@@ -16,10 +16,19 @@ import java.util.ArrayList;
 public class TutorAccademicoDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param matricola
+     * @return
+     */
     public static TutorAc findByMatricola(String matricola)  {
         TutorAc tutorAc = null;
 
@@ -60,10 +69,13 @@ public class TutorAccademicoDAO extends GenericDAO {
                          return null;
 
         }
-        }
+    }
 
-
-
+    /**
+     *
+     * @param tutor
+     * @return
+     */
     public static String insert(TutorAc tutor) {
         Connection newConnection = null;
         try {
@@ -93,12 +105,26 @@ public class TutorAccademicoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
+
+    /**
+     *
+     * @param tutor
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkTutor(TutorAc tutor) throws SQLException {
         Connection newConnection = null;
         newConnection = (Connection) genericConnectionPool.getConnection();
@@ -123,6 +149,12 @@ public class TutorAccademicoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param utente
+     * @return
+     * @throws SQLException
+     */
     public static TutorAc findByUtente(Utente utente) throws SQLException {
         TutorAc tutorAc = null;
 
@@ -164,6 +196,12 @@ public class TutorAccademicoDAO extends GenericDAO {
         return tutorAc;
     }
 
+    /**
+     *
+     * @param utente
+     * @param newPassword
+     * @return
+     */
     public static String cambioPassword(Utente utente, String newPassword) {
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -187,6 +225,10 @@ public class TutorAccademicoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<TutorAc> getAllTutorAc()  {
         try {
             ArrayList<TutorAc> lista = new ArrayList<TutorAc>();

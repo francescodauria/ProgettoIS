@@ -17,10 +17,19 @@ import java.util.ArrayList;
 public class TutorAziendaleDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param codFiscale
+     * @return
+     */
     public static TutorAz findByCF(String codFiscale)  {
         TutorAz tutorAz = null;
 
@@ -65,6 +74,12 @@ public class TutorAziendaleDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param tutor
+     * @param idAzienda
+     * @return
+     */
     public static String insert(TutorAz tutor, String idAzienda) {
         Connection newConnection = null;
         String s;
@@ -102,13 +117,26 @@ public class TutorAziendaleDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 
+    /**
+     *
+     * @param tutor
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkTutor(TutorAz tutor) throws SQLException
     {
         Connection newConnection = null;
@@ -133,6 +161,12 @@ public class TutorAziendaleDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param utente
+     * @return
+     * @throws SQLException
+     */
     public static TutorAz findByUtente(Utente utente) throws SQLException {
         TutorAz tutorAz = null;
 
@@ -179,6 +213,12 @@ public class TutorAziendaleDAO extends GenericDAO {
         return tutorAz;
     }
 
+    /**
+     *
+     * @param utente
+     * @param newPassword
+     * @return
+     */
     public static String cambioPassword(Utente utente, String newPassword)  {
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -202,6 +242,11 @@ public class TutorAziendaleDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param azienda
+     * @return
+     */
     public static TutorAz getTutorAzByAzienda(Azienda azienda)  {
         TutorAz tutorAz = null;
 

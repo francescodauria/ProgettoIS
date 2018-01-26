@@ -15,10 +15,19 @@ import java.util.ArrayList;
 public class ObiettivoDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param obiettivo
+     * @return
+     */
     public static String insert(Obiettivo obiettivo) {
         Connection newConnection = null;
         try {
@@ -48,6 +57,12 @@ public class ObiettivoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param obiettivo
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkObiettivo(Obiettivo obiettivo) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
@@ -61,6 +76,11 @@ public class ObiettivoDAO extends GenericDAO {
             return true;
     }
 
+    /**
+     *
+     * @param obiettivo
+     * @return
+     */
     public static String remove(Obiettivo obiettivo) {
         Connection newConnection = null;
         try {
@@ -87,6 +107,11 @@ public class ObiettivoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static ArrayList<Obiettivo> getAllObiettiviByAzienda(String id)  {
         try {
             ArrayList<Obiettivo> lista = new ArrayList<>();
@@ -114,10 +139,17 @@ public class ObiettivoDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 

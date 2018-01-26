@@ -16,10 +16,19 @@ import java.util.ArrayList;
 public class ConvenzioneDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static ArrayList<Convenzione> findByDirettore(String id) {
 
         ArrayList<Convenzione> listaConvenzioni = new ArrayList<>();
@@ -67,6 +76,12 @@ public class ConvenzioneDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param aziendaID
+     * @return
+     * @throws SQLException
+     */
     public static Convenzione findConvenzioneTutor(String aziendaID) throws SQLException {
 
         Convenzione convenzione = null;
@@ -101,6 +116,11 @@ public class ConvenzioneDAO extends GenericDAO {
         return convenzione;
     }
 
+    /**
+     *
+     * @param convenzione
+     * @return
+     */
     public static String cambiaStato(Convenzione convenzione){
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -134,6 +154,12 @@ public class ConvenzioneDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param convenzione
+     * @return
+     * @throws SQLException
+     */
     public static String insert(Convenzione convenzione) throws SQLException {
 
         Connection newConnection = null;
@@ -167,13 +193,27 @@ public class ConvenzioneDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 
+    /**
+     *
+     * @param convenzione
+     * @param stato
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkConvenzione(Convenzione convenzione, String stato) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
