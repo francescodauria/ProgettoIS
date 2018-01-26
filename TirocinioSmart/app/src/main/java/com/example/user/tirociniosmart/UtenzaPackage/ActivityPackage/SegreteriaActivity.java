@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.Segreteria;
+import com.example.user.tirociniosmart.ProgFormativoPackage.ProgFormSegreteriaFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.InserisciStudFragment;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
@@ -106,7 +107,32 @@ public class SegreteriaActivity extends AppCompatActivity
 
 
         } else if (id == R.id.richieste_tirocinio_segreteria) {
+            Fragment f = fm.findFragmentByTag("richiesteTirocinioSegreteria");
+            if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("segreteria",segreteria);
+                f = new ProgFormSegreteriaFragment();
+                f.setArguments(bundle);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
+                ft.addToBackStack(null);
 
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("segreteria",segreteria);
+                f = new ProgFormSegreteriaFragment();
+                f.setArguments(bundle);
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
         } else if (id == R.id.account_Segreteria) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {

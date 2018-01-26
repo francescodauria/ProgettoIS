@@ -1,6 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/progetti_formativi_utenti"
+    >
 
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlegreen"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataInizioRichiestaSegreteriaImageView"
+            android:layout_width="23dp"
+            android:layout_height="23dp" />
+
+
+
+        <TextView
+
+            android:id="@+id/dataInizioRichiestaSegreteriaTextView"
+            android:layout_toRightOf="@+id/dataInizioRichiestaSegreteriaImageView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data inizio:" />
+
+        <TextView
+
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/dataInizioRichiestaSegreteriaTextView"
+            android:id="@+id/dataInizioRichiestaStudente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:background="@drawable/circlered"
+            android:layout_marginRight="10dp"
+            android:id="@+id/dataFineRichiestaSegreteriaImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+
+        <TextView
+            android:id="@+id/datafineRichiestaSegreteriaTextView"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_toRightOf="@+id/dataFineRichiestaSegreteriaImageView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data fine:" />
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/datafineRichiestaSegreteriaTextView"
+            android:id="@+id/datafineRichiestaSegreteria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logoAziendaRichiestaSegreteria"
+                android:layout_marginTop="16dp"
+                android:layout_height="120dp"
+                android:layout_width="120dp"
+                />
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Azienda:"
+
+                        />
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:id="@+id/nomaAziendaRichiestaSegreteria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutor az:" />
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:id="@+id/tutorAziendaleRichiestaSegreteria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Studente:"
+
+                        />
+
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textStyle="italic"
+                        android:textSize="20sp"
+                        android:id="@+id/studenteRichiestaSegreteria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textColor="#000000"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutor accademico:"
+
+            />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:id="@+id/tutorAccademicoRichiestaSegreteria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/border_black_button"
+        android:layout_gravity="center"
+        android:id="@+id/infoSegreteria"
+        android:text="Maggiori informazioni"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
+
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/accettaSegreteria"
+            android:layout_margin="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/border_black_button"
+            android:text="Accetta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        />
+
+        <Button
+            android:id="@+id/rifiutaSegreteria"
+            android:layout_margin="20dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/border_black_button"
+            android:text="Rifiuta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        />
+
+
+    </LinearLayout>
+</LinearLayout>
