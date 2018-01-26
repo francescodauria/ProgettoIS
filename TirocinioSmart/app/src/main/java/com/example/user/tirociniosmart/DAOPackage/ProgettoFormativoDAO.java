@@ -399,8 +399,6 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
-                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
-
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
