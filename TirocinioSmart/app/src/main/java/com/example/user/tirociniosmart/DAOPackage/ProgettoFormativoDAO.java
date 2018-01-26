@@ -36,11 +36,19 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
-
+    /**
+     *
+     * @param progetto
+     * @return
+     */
     public static String insert(ProgFormativo progetto) {
         if (progetto.getStudente().getNumeroTirocini() > 0) {
             Connection newConnection = null;
@@ -98,10 +106,19 @@ public class ProgettoFormativoDAO extends GenericDAO {
         else return "Non ci sono tirocini disponibili";
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     * @param studente
+     * @return
+     */
     public static ArrayList<ProgFormativo> findAllByStudente(Studente studente) {
         Log.d("fuori al while", "prova");
 
@@ -163,18 +180,6 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
-
-                Azienda a = tutorAz.getAzienda();
-
-
-                System.out.println(a.getEmail());
-                System.out.println(a.getNome());
-                System.out.println(a.getSede());
-                System.out.println(a.getDescrizione());
-                System.out.println(a.getId());
-                System.out.println();
-
-
                 Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
 
 
@@ -196,6 +201,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param tutorAz
+     * @return
+     */
     public static ArrayList<ProgFormativo> findAllByTutorAziendale(TutorAz tutorAz) {
         Log.d("fuori al while", "prova");
 
@@ -234,8 +244,6 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
-
-
                 Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
@@ -258,6 +266,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param tutorAc
+     * @return
+     */
     public static ArrayList<ProgFormativo> findAllByTutorAccademico(TutorAc tutorAc) {
         Log.d("fuori al while", "prova");
 
@@ -305,7 +318,6 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
-
                 Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
@@ -328,6 +340,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param direttore
+     * @return
+     */
     public static ArrayList<ProgFormativo> findAllByDirettore(Direttore direttore) {
         Log.d("fuori al while", "prova");
 
@@ -380,9 +397,8 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
-                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
-
+                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
@@ -404,9 +420,103 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     }
 
+    /**
+     * 
+     * @param segreteria
+     * @return
+     */
+    public static ArrayList<ProgFormativo> findAllBySegreteria(Segreteria segreteria) {
+        Log.d("fuori al while", "prova");
+
+        Connection newConnection = null;
+        try {
+            newConnection = (Connection) genericConnectionPool.getConnection();
+            newConnection.setAutoCommit(false);
+
+            TutorAccademicoDAO.setConnectionPool(genericConnectionPool);
+            TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
+
+            System.out.println("Database connesso");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Stato = ? and FirmaDirettore = IS NOT NULL");
+            //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
+            stt.setString(1,"IN CORSO");
+
+            ArrayList<ProgFormativo> progetti=new ArrayList<>();
+            ResultSet rs=stt.executeQuery();
+            while(rs.next()) {
+
+                String id=rs.getString(1);
+
+                Blob firmaStudente = rs.getBlob(3);
+                Bitmap firmaStud =null;
+                byte[] imgData2 = firmaStudente.getBytes(1, (int) firmaStudente.length());
+                firmaStud = BitmapFactory.decodeByteArray(imgData2, 0, imgData2.length);
+                Blob firmaTutorAziendale=rs.getBlob(4);
+                Bitmap firmaTutor =null;
+                if(firmaTutorAziendale!=null) {
+                    byte[] imgData3 = firmaTutorAziendale.getBytes(1, (int) firmaTutorAziendale.length());
+                    firmaTutor = BitmapFactory.decodeByteArray(imgData3, 0, imgData3.length);
+                }
+                Blob firmaTutorAccademico=rs.getBlob(5);
+                Bitmap firmaTutorAc = null;
+                if(firmaTutorAccademico!=null) {
+                    byte[] imgData4 = firmaTutorAccademico.getBytes(1, (int) firmaTutorAccademico.length());
+                    firmaTutorAc = BitmapFactory.decodeByteArray(imgData4, 0, imgData4.length);
+                }
+                Blob firmaDirettore=rs.getBlob(2);
+                Bitmap firmaDir=null;
+                if(firmaDirettore!=null) {
+                    byte[] imgData1 = firmaDirettore.getBytes(1, (int) firmaDirettore.length());
+                    firmaDir = BitmapFactory.decodeByteArray(imgData1, 0, imgData1.length);
+                }
+
+                String obiettivi=rs.getString(6);
+                String stato=rs.getString(7);
+                String motivazione=rs.getString(8);
+                int ore=rs.getInt(9);
+                Date data_inizio=rs.getDate(10);
+                Date data_fine=rs.getDate(11);
+                Date data_stipula=rs.getDate(12);
+
+                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
+                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+
+                Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
+                Direttore direttore = DirettoreDAO.findByMatricola(rs.getString(16));
+                TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+
+                ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
+                progetto.setFirmaStudente(firmaStud);
+                progetto.setGetFirmaTutorAz(firmaTutor);
+                progetto.setFirmaTutorAcc(firmaTutorAc);
+                progetto.setFirmaDirettore(null);
+                progetti.add(progetto);
+
+            }
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return progetti;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
+     *
+     */
     public static void search() {
     }
 
+    /**
+     *
+     * @param progetto
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkProgetto(ProgFormativo progetto) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
@@ -430,7 +540,13 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) {
+    /**
+     *
+     * @param progFormativo
+     * @return
+     * @throws SQLException
+     */
+    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) throws SQLException {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -458,7 +574,13 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) {
+    /**
+     *
+     * @param progFormativo
+     * @return
+     * @throws SQLException
+     */
+    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) throws SQLException {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -487,7 +609,13 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByDirettore(ProgFormativo progFormativo) {
+    /**
+     *
+     * @param progFormativo
+     * @return
+     * @throws SQLException
+     */
+    public static String insertFirmaByDirettore(ProgFormativo progFormativo) throws SQLException {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -516,6 +644,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param progFormativo
+     * @return
+     */
     public static String acceptProgettoFormativoBySegreteria(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
@@ -540,7 +673,13 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) {
+    /**
+     *
+     * @param progFormativo
+     * @return
+     * @throws SQLException
+     */
+    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) throws SQLException {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();

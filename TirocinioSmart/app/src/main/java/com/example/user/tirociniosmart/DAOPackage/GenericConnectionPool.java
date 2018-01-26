@@ -10,7 +10,11 @@ import java.util.List;
  */
 
 public interface GenericConnectionPool {
-
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public Connection createDBConnection() throws SQLException;
         public Connection getConnection() throws SQLException ;
         public void releaseConnection(Connection connection) throws SQLException ;

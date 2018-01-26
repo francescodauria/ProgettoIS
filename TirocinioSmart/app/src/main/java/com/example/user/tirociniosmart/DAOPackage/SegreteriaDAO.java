@@ -15,10 +15,20 @@ import java.sql.SQLException;
 public class SegreteriaDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param utente
+     * @return
+     * @throws SQLException
+     */
     public static Segreteria findByUtente(Utente utente) throws SQLException {
         Segreteria segreteria = null;
 
@@ -57,6 +67,12 @@ public class SegreteriaDAO extends GenericDAO {
         return segreteria;
     }
 
+    /**
+     *
+     * @param utente
+     * @param newPassword
+     * @return
+     */
     public static String cambioPassword(Utente utente, String newPassword) {
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -80,14 +96,25 @@ public class SegreteriaDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String insert() {
         return "";
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 

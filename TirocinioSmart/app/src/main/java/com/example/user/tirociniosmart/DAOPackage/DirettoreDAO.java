@@ -21,10 +21,20 @@ public class DirettoreDAO extends GenericDAO {
 
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param matricola
+     * @return
+     * @throws SQLException
+     */
     public static Direttore findByMatricola(String matricola) throws SQLException {
         Direttore direttore = null;
 
@@ -59,6 +69,12 @@ public class DirettoreDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param utente
+     * @return
+     * @throws SQLException
+     */
     public static Direttore findByUtente(Utente utente) throws SQLException {
         Direttore direttore = null;
 
@@ -100,10 +116,18 @@ public class DirettoreDAO extends GenericDAO {
         return direttore;
     }
 
+    /**
+     *
+     * @return
+     */
     public static String insert() {
         return "";
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Direttore> getAllDirettori()  {
         try {
             ArrayList<Direttore> lista = new ArrayList<>();
@@ -132,6 +156,12 @@ public class DirettoreDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @param utente
+     * @param newPassword
+     * @return
+     */
     public static String cambioPassword(Utente utente, String newPassword) {
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -155,10 +185,17 @@ public class DirettoreDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 

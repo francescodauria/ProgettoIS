@@ -17,12 +17,23 @@ import java.util.ArrayList;
 
 public class StudenteDAO extends GenericDAO {
 
+
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
+    /**
+     *
+     * @param matricola
+     * @return
+     * @throws SQLException
+     */
     public static Studente findByMatricola(String matricola) throws SQLException {
         Studente studente = null;
 
@@ -65,6 +76,11 @@ public class StudenteDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param studente
+     * @return
+     */
     public static String insert(Studente studente) {
 
         Connection newConnection = null;
@@ -109,6 +125,12 @@ public class StudenteDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @param studente
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkStudente(Studente studente) throws SQLException {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
         newConnection.setAutoCommit(false);
@@ -120,6 +142,12 @@ public class StudenteDAO extends GenericDAO {
         else return true;
     }
 
+    /**
+     *
+     * @param utente
+     * @return
+     * @throws SQLException
+     */
     public static Studente findByUtente(Utente utente) throws SQLException {
         Studente studente = null;
 
@@ -173,6 +201,12 @@ public class StudenteDAO extends GenericDAO {
         return studente;
     }
 
+    /**
+     *
+     * @param utente
+     * @param newPassword
+     * @return
+     */
     public static String cambioPassword(Utente utente, String newPassword) {
         Connection newConnection = null;
         PreparedStatement stt = null;
@@ -197,11 +231,17 @@ public class StudenteDAO extends GenericDAO {
         }
     }
 
-
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 

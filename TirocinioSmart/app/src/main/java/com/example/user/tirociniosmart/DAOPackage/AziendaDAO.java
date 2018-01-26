@@ -25,11 +25,20 @@ import java.util.ArrayList;
 public class AziendaDAO extends GenericDAO {
     private static GenericConnectionPool genericConnectionPool;
 
+    /**
+     *
+     * @param connectionPool
+     */
     public static void setConnectionPool(GenericConnectionPool connectionPool){
         genericConnectionPool = connectionPool;
     }
 
-
+    /**
+     *
+     * @param azienda
+     * @return
+     * @throws SQLException
+     */
     public static String insert(Azienda azienda) throws SQLException {
         String s;
         try {
@@ -68,6 +77,13 @@ public class AziendaDAO extends GenericDAO {
             s="Connessione al database non presente";e.printStackTrace();System.out.println(s);return s;
         }
     }
+
+    /**
+     *
+     * @param azienda
+     * @return
+     * @throws SQLException
+     */
     public static boolean checkAzienda(Azienda azienda) throws SQLException
     {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
@@ -92,13 +108,27 @@ public class AziendaDAO extends GenericDAO {
             return true;
         }
     }
+
+    /**
+     *
+     * @return
+     */
     public static String update() {
         return "";
     }
 
+    /**
+     *
+     */
     public static void search() {
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public static Azienda findById(String id) throws SQLException {
         Azienda azienda = null;
 
@@ -145,6 +175,10 @@ public class AziendaDAO extends GenericDAO {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Azienda> getAllAziende()  {
         try {
             ArrayList<Azienda> lista = new ArrayList<Azienda>();
@@ -177,6 +211,10 @@ public class AziendaDAO extends GenericDAO {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<Azienda> getAllAziendeConvenzionate()  {
         try {
             ArrayList<Azienda> lista = new ArrayList<Azienda>();
