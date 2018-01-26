@@ -21,6 +21,7 @@ public class FirmaActivity extends Activity {
     View view;
     SignaturePad signaturePad;
     Button saveButton, clearButton;
+    int position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,8 @@ public class FirmaActivity extends Activity {
 
            saveButton = (Button)findViewById(R.id.saveButton);
           clearButton = (Button)findViewById(R.id.clearButton);
+
+          position = getIntent().getIntExtra("position",1);
 
           saveButton.setEnabled(false);
           clearButton.setEnabled(false);
@@ -64,6 +67,7 @@ public class FirmaActivity extends Activity {
                 //write code for saving the signature here
                 Intent returnIntent = new Intent(FirmaActivity.this, StudentActivity.class);
                 returnIntent.putExtra("bitmapdata",bitmapdata);
+                returnIntent.putExtra("position",position);
 
 
                 setResult(Activity.RESULT_OK,returnIntent);
@@ -82,4 +86,6 @@ public class FirmaActivity extends Activity {
 
 
     }
+
+
 }

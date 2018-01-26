@@ -36,15 +36,15 @@ import java.util.GregorianCalendar;
  * Created by User on 24/01/2018.
  */
 
-public class VisualizzaConvenzioniFragment extends Fragment implements View.OnClickListener {
+public class VisualizzaConvenzioniFragment extends Fragment {
 
     private View view;
-    public static ConvenzioneAdapter adapter;
+    public ConvenzioneAdapter adapter;
     private ListView listView;
     private View mProgressView;
     private Direttore direttore;
-    private static ArrayList<Convenzione> listaConvenzioni;
-    public static Context context;
+    private ArrayList<Convenzione> listaConvenzioni;
+    public Context context;
     private Button rifiutaConvenzione;
     private Button accettaConvenzione;
     public void onAttach(Activity activity) {
@@ -61,25 +61,67 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
         Bundle bundle = this.getArguments();
         direttore = (Direttore)bundle.getSerializable("direttore");
 
-        new LoadConvenzioni().execute(1);
         adapter = new ConvenzioneAdapter(context, R.layout.direttore_custom_adapter_convenzioni_layout, new ArrayList<Convenzione>());
 
+        adapter.setOnItemClickListener(new ConvenzioneAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(final View itemView, final int position) {
+                //     System.out.println(position);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
 
-        View viewAdapter = inflater.inflate(R.layout.direttore_custom_adapter_convenzioni_layout, container, false);
+                                ConnectivityManager cm = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+                                NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
-        accettaConvenzione = viewAdapter.findViewById(R.id.accettaConvenzione);
+                                if(netInfo!=null && netInfo.isConnected()){
 
+                                    Convenzione c = adapter.getItem(position);
 
-        System.out.println(accettaConvenzione);
+                                    Calendar now = Calendar.getInstance();
+
+                                    Date date = new Date((now.get((Calendar.YEAR))-1900),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+
+                                    if(itemView.getId() == R.id.accettaConvenzione) {
+                                        c.setDataStipula(date);
+                                        c.setStato("ACCETTATO");
+                                    }
+                                    else if(itemView.getId() == R.id.rifiutaConvenzione){
+                                        c.setStato("RIFIUTATO");
+
+                                    }
+                                    new CambiaStato().execute(c);
+                                }
+
+                                else
+                                {
+                                    Toast.makeText(context.getApplicationContext(), "Attenzione, connessione ad internet assente",Toast.LENGTH_LONG).show();
+
+                                }
+
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(context.getApplicationContext(), "Operazione annullata",Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Vuoi davvero effettuare l'operazione?");
+                builder.setPositiveButton("Si", dialogClickListener);
+                builder.setNegativeButton("No", dialogClickListener);
+                builder.show();
+            }
+        });
+        new LoadConvenzioni().execute(1);
 
         return view;
 
     }
 
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -99,66 +141,10 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
         }
     }
 
-    @Override
-    public void onClick(final View view) {
-        int position = Integer.parseInt(view.getTag().toString());
-
-
-        Convenzione c = adapter.getItem(position);
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-
-                        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
-                        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-
-                        if(netInfo!=null && netInfo.isConnected()){
-                            int position = Integer.parseInt(view.getTag().toString());
-
-                            Convenzione c = adapter.getItem(position);
-
-                            Calendar now = Calendar.getInstance();
-
-                            Date date = new Date((now.get((Calendar.YEAR))-1900),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
-
-                            Button button = (Button)view;
-                            if(button.getText().toString().equalsIgnoreCase("ACCETTA")) {
-                                c.setDataStipula(date);
-                                c.setStato("ACCETTATO");
-                            }
-                            else if(button.getText().toString().equalsIgnoreCase("RIFIUTA")){
-                                c.setStato("RIFIUTATO");
-
-                            }
-                            new CambiaStato().execute(c);
-                        }
-
-                        else
-                        {
-                            Toast.makeText(context.getApplicationContext(), "Attenzione, connessione ad internet assente",Toast.LENGTH_LONG).show();
-
-                        }
-
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        Toast.makeText(context.getApplicationContext(), "Operazione annullata",Toast.LENGTH_LONG).show();
-                        break;
-                }
-            }
-        };
 
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(VisualizzaConvenzioniFragment.context);
-        builder.setMessage("Vuoi davvero accettare la convenzione?");
-        builder.setPositiveButton("Si", dialogClickListener);
-        builder.setNegativeButton("No", dialogClickListener);
-        builder.show();
 
-        return;
-
-    }
 
 
     class LoadConvenzioni extends AsyncTask<Integer, Integer, ArrayList<Convenzione>> {
@@ -237,8 +223,8 @@ public class VisualizzaConvenzioniFragment extends Fragment implements View.OnCl
         @Override
         protected void onProgressUpdate(Convenzione... c) {
 
-            VisualizzaConvenzioniFragment.listaConvenzioni.remove(c[0]);
-            VisualizzaConvenzioniFragment.adapter.remove(c[0]);
+            listaConvenzioni.remove(c[0]);
+            adapter.remove(c[0]);
 
         }
 

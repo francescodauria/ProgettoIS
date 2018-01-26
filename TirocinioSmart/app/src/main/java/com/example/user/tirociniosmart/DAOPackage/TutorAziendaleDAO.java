@@ -70,6 +70,7 @@ public class TutorAziendaleDAO extends GenericDAO {
 
             return tutorAz;
         } catch(SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }

@@ -13,6 +13,7 @@ import com.example.user.tirociniosmart.EntityPackage.Studente;
 import com.example.user.tirociniosmart.EntityPackage.TutorAc;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
 
 import java.io.ByteArrayInputStream;
@@ -217,14 +218,14 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AziendaleCF = ? and Stato = ?");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AziendaleCF = ? and Stato = ? and FirmaTutorAziendale IS NULL");
             stt.setString(1,tutorAz.getCF());
             stt.setString(2,"IN CORSO");
             ArrayList<ProgFormativo> progetti=new ArrayList<>();
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -239,8 +240,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Date data_fine=rs.getDate(11);
                 Date data_stipula=rs.getDate(12);
 
-                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
-                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+                TutorAccademicoDAO.setConnectionPool(TutorAzActivity.pool);
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
@@ -248,6 +248,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
+                progetto.setId(id);
                 progetto.setGetFirmaTutorAz(null);
                 progetto.setFirmaTutorAcc(null);
                 progetto.setFirmaDirettore(null);
@@ -282,7 +283,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AccademicoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Tutor_AccademicoMatricola = ? and Stato = ? and FirmaTutorAziendale IS NOT NULL and FirmaTutorAccademico IS NULL");
             //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
             stt.setString(1,tutorAc.getMatricola());
             stt.setString(2,"IN CORSO");
@@ -291,7 +292,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -324,6 +325,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaTutorAcc(null);
                 progetto.setFirmaDirettore(null);
+                progetto.setId(id);
                 progetti.add(progetto);
 
             }
@@ -355,7 +357,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Direttore_DipartimentoMatricola = ? and Stato = ? and FirmaTutorAziendale = IS NOT NULL and FirmaTutorAccademico = IS NOT NULL");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Direttore_DipartimentoMatricola = ? and Stato = ? and FirmaTutorAziendale  IS NOT NULL and FirmaTutorAccademico IS NOT NULL and FirmaDirettore IS NULL");
             //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
             stt.setString(1,direttore.getMatricola());
             stt.setString(2,"IN CORSO");
@@ -364,7 +366,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -397,11 +399,14 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
+                progetto.setId(id);
                 progetto.setFirmaDirettore(null);
                 progetti.add(progetto);
 
@@ -585,6 +590,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
+            System.out.println(progFormativo.getId());
             stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET FirmaTutorAccademico = ? WHERE ID = ?");
             Bitmap firma = progFormativo.getFirmaTutorAcc();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -598,7 +604,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
-            return "Firma inserita da parte del tutor accademico";
+            return "Accettazione progetto formativo avvenuta correttamente";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";
@@ -632,7 +638,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
-            return "Firma inserita da parte del direttore";
+            return "Accettazione progetto formativo avvenuta correttamente";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";

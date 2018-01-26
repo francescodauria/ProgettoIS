@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.example.user.tirociniosmart.ConvenzionePackage.VisualizzaConvenzioniFragment;
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
+import com.example.user.tirociniosmart.ProgFormativoPackage.FirmaProgFormDirettoreFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
 
@@ -99,6 +100,34 @@ public class DirettoreActivity extends AppCompatActivity
 
             }
         } else if (id == R.id.richieste_tirocinio_direttore) {
+            Fragment f = fm.findFragmentByTag("richiesteTirocinioDirettore");
+            if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("direttore",direttore);
+
+                f = new FirmaProgFormDirettoreFragment();
+                f.setArguments(bundle);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiDirettore, f, "richiesteTirocinioDirettore");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("direttore",direttore);
+
+                f = new FirmaProgFormDirettoreFragment();
+                f.setArguments(bundle);
+                ft.add(R.id.contenitoreFrammentiDirettore, f, "richiesteTirocinioDirettore");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
 
         } else if (id == R.id.account_Direttore) {
             Fragment f = fm.findFragmentByTag("cambiaPassword");
