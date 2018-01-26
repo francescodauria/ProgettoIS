@@ -51,9 +51,9 @@ public class TutorAzActivity extends AppCompatActivity
         setContentView(R.layout.tutor_az_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        new LoadTutor().execute(1);
 
         fm = getFragmentManager();
-        new LoadTutor().execute(1);
         boolean convenzione = getIntent().getBooleanExtra("CONVENZIONE",true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,14 +64,29 @@ public class TutorAzActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(tutorAz);
         if(convenzione) {
             navigationView.inflateMenu(R.menu.tutor_az_convenzionata_activity_body_navigation_view);
-
+            Fragment f = new ObiettiviFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("idazienda",tutorAz.getAzienda().getId());
+            f.setArguments(bundle);
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "visualizzaObiettivi");
+            ft.addToBackStack(null);
+            ft.commit();
         }
         else{
             navigationView.inflateMenu(R.menu.tutor_az_non_convenzionata_activity_body_navigation_view);
             Fragment f = new RichiediConvenzioneFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("idazienda",tutorAz.getAzienda().getId());
+            f.setArguments(bundle);
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "statoRichiesta");
             ft.addToBackStack(null);
@@ -132,7 +147,10 @@ public class TutorAzActivity extends AppCompatActivity
 
             Fragment f = fm.findFragmentByTag("visualizzaObiettivi");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("idazienda",tutorAz.getAzienda().getId());
                 f = new ObiettiviFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "visualizzaObiettivi");
                 ft.addToBackStack(null);
@@ -143,7 +161,10 @@ public class TutorAzActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("idazienda",tutorAz.getAzienda().getId());
                 f = new ObiettiviFragment();
+                f.setArguments(bundle);
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "visualizzaObiettivi");
                 ft.addToBackStack(null);
 
@@ -155,7 +176,11 @@ public class TutorAzActivity extends AppCompatActivity
 
             Fragment f = fm.findFragmentByTag("richiediConvenzione");
             if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("idazienda",tutorAz.getAzienda().getId());
+
                 f = new RichiediConvenzioneFragment();
+                f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiediConvenzione");
                 ft.addToBackStack(null);
@@ -166,8 +191,11 @@ public class TutorAzActivity extends AppCompatActivity
 
                 ft.remove(f);
                 fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("idazienda",tutorAz.getAzienda().getId());
+
                 f = new RichiediConvenzioneFragment();
-                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiediConvenzione");
+                f.setArguments(bundle);                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiediConvenzione");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -282,10 +310,11 @@ public class TutorAzActivity extends AppCompatActivity
         protected String doInBackground(Integer... img_ids) {
 
 
-            TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+            TutorAziendaleDAO.setConnectionPool(TutorAzActivity.pool);
 
             String cf= getIntent().getStringExtra("TUTORAZ");
 
+            System.out.println(cf);
 
             tutorAz = TutorAziendaleDAO.findByCF(cf);
 

@@ -47,6 +47,7 @@ public class ObiettiviFragment extends Fragment {
     private EditText descrizione;
     private Obiettivo obiettivo;
     private ArrayList<Obiettivo> lista;
+    private String idAzienda;
 
     @Override
     public void onAttach(Activity activity) {
@@ -62,7 +63,8 @@ public class ObiettiviFragment extends Fragment {
 
         nome = view.findViewById(R.id.nomeObiettivo);
         descrizione = view.findViewById(R.id.descrizioneObiettivo);
-
+        Bundle b = getArguments();
+        idAzienda= b.getString("idazienda");
         button = view.findViewById(R.id.bottoneObiettivo);
         mProgressView = view.findViewById(R.id.obiettivi_progress);
         showProgress(false);
@@ -182,7 +184,7 @@ public class ObiettiviFragment extends Fragment {
             ObiettivoDAO.setConnectionPool(TutorAzActivity.pool);
 
 
-            Azienda a = new Azienda("azienda1", null, null, null, null, null, null, null);
+            Azienda a = new Azienda(idAzienda, null, null, null, null, null, null, null);
             obiettivo = new Obiettivo(nome.getText().toString(), descrizione.getText().toString(), a);
 
             String s = ObiettivoDAO.insert(obiettivo);
@@ -272,7 +274,7 @@ public class ObiettiviFragment extends Fragment {
 
             ObiettivoDAO.setConnectionPool(TutorAzActivity.pool);
 
-            lista = ObiettivoDAO.getAllObiettiviByAzienda("azienda1");
+            lista = ObiettivoDAO.getAllObiettiviByAzienda(idAzienda);
 
 
             String s = null;
@@ -305,7 +307,6 @@ public class ObiettiviFragment extends Fragment {
                 }
             }
 
-            //    image.setImageBitmap(BitmapFactory.decodeByteArray(result, 0, result.length));
         }
 
     }

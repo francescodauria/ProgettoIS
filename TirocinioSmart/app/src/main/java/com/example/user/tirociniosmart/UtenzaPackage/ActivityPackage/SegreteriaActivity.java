@@ -107,14 +107,14 @@ public class SegreteriaActivity extends AppCompatActivity
 
 
         } else if (id == R.id.richieste_tirocinio_segreteria) {
-            Fragment f = fm.findFragmentByTag("richiesteTirocinioSegreteria");
+            Fragment f = fm.findFragmentByTag("cambiaPassword");
             if (f == null) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("segreteria",segreteria);
                 f = new ProgFormSegreteriaFragment();
                 f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -124,10 +124,14 @@ public class SegreteriaActivity extends AppCompatActivity
                 ft.remove(f);
                 fm.popBackStack();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("segreteria",segreteria);
-                f = new ProgFormSegreteriaFragment();
+                System.out.println(segreteria.getClass().getSimpleName());
+                bundle.putString("ruolo",segreteria.getClass().getSimpleName());
+                bundle.putString("username",segreteria.getUsername());
+                bundle.putString("password",segreteria.getPassword());
+
+                f = new ModificaPasswordFragment();
                 f.setArguments(bundle);
-                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
                 ft.addToBackStack(null);
 
                 ft.commit();

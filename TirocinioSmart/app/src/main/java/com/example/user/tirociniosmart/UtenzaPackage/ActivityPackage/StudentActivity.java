@@ -41,9 +41,7 @@ public class StudentActivity extends AppCompatActivity
 
         studente=(Studente)getIntent().getSerializableExtra("STUDENTE");
         System.out.println(studente.getNome());
-        //   String password = getIntent().getStringExtra("password");
-        //   String email = getIntent().getStringExtra("email");
-        //   Toast.makeText(getApplicationContext(),"ciao " + prova, Toast.LENGTH_LONG).show();
+
 
         fm = getFragmentManager();
 

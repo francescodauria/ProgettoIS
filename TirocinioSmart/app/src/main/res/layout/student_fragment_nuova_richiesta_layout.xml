@@ -177,7 +177,6 @@
 
                 <Button
                     android:background="@drawable/border_black_button"
-                    android:drawableRight="@drawable/invio_xml_image"
                     android:paddingRight="60dp"
                     android:paddingLeft="30dp"
                     android:id="@+id/richiestaTirocinio"

@@ -3,6 +3,7 @@ package com.example.user.tirociniosmart.ConvenzionePackage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
+import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.user.tirociniosmart.DAOPackage.ConvenzioneDAO;
+import com.example.user.tirociniosmart.DAOPackage.DirettoreDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Convenzione;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
@@ -20,6 +22,7 @@ import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by User on 18/01/2018.
@@ -94,9 +97,13 @@ public class RichiediConvenzioneFragment extends Fragment {
         @Override
         protected String doInBackground(Integer... img_ids) {
 
-            Direttore dir = new Direttore("fferrucci","password","direttore", "000001","Filomena", "Ferrucci");
-            Azienda az = new Azienda("azienda1","ITSystem",null,null,null,null,null,null);
-            Convenzione c = new Convenzione(az,null,dir, "IN CORSO");
+            DirettoreDAO.setConnectionPool(TutorAzActivity.pool);
+            ArrayList<Direttore> dir = DirettoreDAO.getAllDirettori();
+            Bundle b = getArguments();
+            String idAzienda= b.getString("idazienda");
+
+            Azienda az = new Azienda(idAzienda,null,null,null,null,null,null,null);
+            Convenzione c = new Convenzione(az,null,dir.get(0), "IN CORSO");
 
             ConvenzioneDAO.setConnectionPool(TutorAzActivity.pool);
             String s = null;

@@ -101,7 +101,7 @@ public class VisualizzaAziendeFragment extends Fragment {
 
             AziendaDAO.setConnectionPool(StudentActivity.pool);
 
-                aziende = AziendaDAO.getAllAziende();
+                aziende = AziendaDAO.getAllAziendeConvenzionate();
 
             return aziende;
         }
