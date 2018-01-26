@@ -35,18 +35,19 @@ import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActi
 import org.w3c.dom.Text;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by User on 21/01/2018.
  */
-public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
+public class ProgFormativoFirmaAdapter extends ArrayAdapter<ProgFormativo>  {
 
     private int resource;
     private LayoutInflater inflater;
     private Context context;
     private ProgFormativo progettoFormativo;
-    private ImageView firmaView;
+
 
     private static OnItemClickListener listener;
     public interface OnItemClickListener{
@@ -56,7 +57,7 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
         this.listener=listener;
     }
 
-    public ProgFormativoTutorAcAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
+    public ProgFormativoFirmaAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
         inflater = LayoutInflater.from(context);
@@ -79,8 +80,9 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
         ImageView logoAzienda = v.findViewById(R.id.logoAziendaRichiestaTutorAc);
         TextView studente = v.findViewById(R.id.studenteRichiestaTutorAc);
         Button informazioni = v.findViewById(R.id.infoTutorAc);
-        Button firma=(Button) v.findViewById(R.id.insertFirmaTutorAc);
-        firmaView =(ImageView) v.findViewById(R.id.firmaTutorAc);
+        Button firma= v.findViewById(R.id.insertFirmaTutorAc);
+        ImageView firmaView =v.findViewById(R.id.firmaTutorAc);
+        LinearLayout linearLayout = v.findViewById(R.id.linearLayoutFirma);
 
         Button accetta = v.findViewById(R.id.accettaTutorAc);
         Button rifiuta = v.findViewById(R.id.rifiutaTutorAc);
@@ -108,7 +110,7 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
                 listener.onItemClick(v,position);
             }
         });
-        firma.setOnClickListener(new View.OnClickListener() {
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onItemClick(v,position);
@@ -146,9 +148,10 @@ public class ProgFormativoTutorAcAdapter extends ArrayAdapter<ProgFormativo>  {
     }
 
 
-    public void setFirma(int position,Bitmap bitmap){
-        getItem(position).setFirmaTutorAcc(bitmap);
-        firmaView.setImageBitmap(bitmap);
+    public void setFirma(int position,View v,Bitmap bitmap){
+        System.out.println(v);
+        ImageView imageView = (ImageView)v;
+        imageView.setImageBitmap(bitmap);
 
     }
 

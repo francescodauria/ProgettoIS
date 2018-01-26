@@ -30,6 +30,7 @@ import com.example.user.tirociniosmart.DAOPackage.TutorAziendaleDAO;
 import com.example.user.tirociniosmart.EntityPackage.Azienda;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
+import com.example.user.tirociniosmart.ProgFormativoPackage.FirmaProgFormTutorAzFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.ObiettiviFragment;
 import com.example.user.tirociniosmart.ProgFormativoPackage.VisualizzaStatoFragment;
 import com.example.user.tirociniosmart.R;
@@ -100,7 +101,33 @@ public class TutorAzActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.richieste_tirocinio_TutorAziendale_convenzionato) {
-            // Handle the camera action
+            Fragment f = fm.findFragmentByTag("richiesteTirocinioTutorAz");
+            if (f == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("cftutoraz",tutorAz.getCF());
+                f = new FirmaProgFormTutorAzFragment();
+                f.setArguments(bundle);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiesteTirocinioTutorAz");
+                ft.addToBackStack(null);
+
+                ft.commit();
+            } else {
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ft.remove(f);
+                fm.popBackStack();
+                Bundle bundle = new Bundle();
+                bundle.putString("cftutoraz",tutorAz.getCF());
+                f = new FirmaProgFormTutorAzFragment();
+                f.setArguments(bundle);
+                ft.add(R.id.contenitoreFrammentiTutorAziendale, f, "richiesteTirocinioTutorAz");
+                ft.addToBackStack(null);
+
+                ft.commit();
+
+            }
+
         } else if(id==R.id.obiettivi_TutorAziendale_convenzionato) {
 
             Fragment f = fm.findFragmentByTag("visualizzaObiettivi");

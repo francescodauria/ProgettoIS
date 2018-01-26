@@ -13,6 +13,7 @@ import com.example.user.tirociniosmart.EntityPackage.Studente;
 import com.example.user.tirociniosmart.EntityPackage.TutorAc;
 import com.example.user.tirociniosmart.EntityPackage.TutorAz;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.StudentActivity;
+import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActivity;
 
 
 import java.io.ByteArrayInputStream;
@@ -229,11 +230,11 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 Date data_fine=rs.getDate(11);
                 Date data_stipula=rs.getDate(12);
 
-                TutorAccademicoDAO.setConnectionPool(StudentActivity.pool);
-                TutorAziendaleDAO.setConnectionPool(StudentActivity.pool);
+                TutorAccademicoDAO.setConnectionPool(TutorAzActivity.pool);
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+
 
                 Direttore direttore = new Direttore(null,null,null,rs.getString(16),null,null);
 
@@ -380,7 +381,8 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 Studente studente = StudenteDAO.findByMatricola(rs.getString(13));
                 TutorAz tutorAz = TutorAziendaleDAO.findByCF(rs.getString(15));
-                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(16));
+                TutorAc tutorAc = TutorAccademicoDAO.findByMatricola(rs.getString(14));
+
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
@@ -428,7 +430,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
         }
     }
 
-    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -478,7 +480,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
-            return "Firma inserita da parte del tutor accademico";
+            return "Accettazione progetto formativo avvenuta correttamente";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";
@@ -506,7 +508,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
-            return "Firma inserita da parte del direttore";
+            return "Accettazione progetto formativo avvenuta correttamente";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";

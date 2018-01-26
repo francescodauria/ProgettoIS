@@ -108,7 +108,7 @@ public class VisualizzaConvenzioniFragment extends Fragment {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Vuoi davvero accettare la convenzione?");
+                builder.setMessage("Vuoi davvero effettuare l'operazione?");
                 builder.setPositiveButton("Si", dialogClickListener);
                 builder.setNegativeButton("No", dialogClickListener);
                 builder.show();

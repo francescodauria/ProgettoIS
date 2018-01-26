@@ -100,7 +100,7 @@ public class ProgFormativoStudenteAdapter extends ArrayAdapter<ProgFormativo> {
         }
 
         else if(statoString.equalsIgnoreCase("Rifiutato")){
-            layout.setBackgroundResource(R.drawable.student_accepted_state);
+            layout.setBackgroundResource(R.drawable.student_refused_state);
         }
 
 

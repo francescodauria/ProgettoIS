@@ -3,19 +3,22 @@ package com.example.user.tirociniosmart.ProgFormativoPackage;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.fingerprint.FingerprintManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,53 +40,90 @@ public class FirmaProgFormTutorAcFragment extends Fragment {
     private ProgressBar progressBar;
     private static Context context;
     private View view;
-    private ProgFormativoTutorAcAdapter adapter;
+    private ProgFormativoFirmaAdapter adapter;
     private ListView listView;
     private TutorAc tutorAc;
-    private Button button;
-
+    private LinearLayout linear;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         context = getActivity();
         view = inflater.inflate(R.layout.tutor_ac_fragment_firma_tirocinio_layout, container, false);
-
-        View v = inflater.inflate(R.layout.tutor_ac_custom_adapter_tirocini_layout, container, false);
 
 
         progressBar = view.findViewById(R.id.tirocini_tutor_ac_progress);
         listView = view.findViewById(R.id.listViewTirociniTutorAc);
         Bundle b = getArguments();
         tutorAc = (TutorAc) b.getSerializable("tutorac");
-        button = v.findViewById(R.id.insertFirmaTutorAc);
 
-        adapter = new ProgFormativoTutorAcAdapter(context, R.layout.tutor_ac_custom_adapter_tirocini_layout, new ArrayList<ProgFormativo>());
-        adapter.setOnItemClickListener(new ProgFormativoTutorAcAdapter.OnItemClickListener() {
+
+
+
+
+        adapter = new ProgFormativoFirmaAdapter(context, R.layout.tutor_ac_custom_adapter_tirocini_layout, new ArrayList<ProgFormativo>());
+        adapter.setOnItemClickListener(new ProgFormativoFirmaAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View itemView, int position) {
+            public void onItemClick(final View itemView, final int position) {
                 //     System.out.println(position);
-                if (itemView.getId() == R.id.accettaTutorAc) {
-                    ProgFormativo progetto = adapter.getItem(position);
-                    progetto.setStato("RIFIUTATO");
+                System.out.println(itemView.getId());
 
-                    if(progetto.getFirmaTutorAcc()==null){
-                        Toast.makeText(getActivity().getApplicationContext(),"Attenzione, non è stata inserita alcuna firma",Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    new AccettaProgettoTask().execute(progetto);
+                if (itemView.getId() == R.id.linearLayoutFirma) {
+                    System.out.println("entrato nell'if");
 
-                } else if (itemView.getId() == R.id.insertFirmaTutorAc) {
+
+                    linear = (LinearLayout)itemView;
+                    System.out.println("Sto stampando nell'if" +linear);
+
                     System.out.println("firma button");
                     Intent intent = new Intent(getActivity(), FirmaActivity.class);
                     intent.putExtra("position", position);
                     startActivityForResult(intent, 1);
-                } else if (itemView.getId() == R.id.rifiutaTutorAc) {
-                    ProgFormativo progetto = adapter.getItem(position);
-                    progetto.setStato("RIFIUTATO");
-                    new RifiutaProgettoTask().execute(progetto);
+                } else {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
 
+                                    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+                                    NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
+                                    if (netInfo != null && netInfo.isConnected()) {
+                                        if (itemView.getId() == R.id.accettaTutorAc) {
+                                            ProgFormativo progetto = adapter.getItem(position);
+
+                                            if(progetto.getFirmaTutorAcc()==null){
+                                                Toast.makeText(getActivity().getApplicationContext(),"Attenzione, non è stata inserita alcuna firma",Toast.LENGTH_LONG).show();
+                                            }
+                                            else {
+                                                progetto.setStato("ACCETTATO");
+                                                new AccettaProgettoTask().execute(progetto);
+                                            }
+                                        } else if (itemView.getId() == R.id.rifiutaTutorAc) {
+                                            ProgFormativo progetto = adapter.getItem(position);
+                                            adapter.remove(progetto);
+                                            progetto.setStato("RIFIUTATO");
+                                            new RifiutaProgettoTask().execute(progetto);
+
+                                        }
+                                    } else {
+                                        Toast.makeText(context.getApplicationContext(), "Attenzione, connessione ad internet assente", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    Toast.makeText(context.getApplicationContext(), "Operazione annullata", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Vuoi davvero effettuare l'operazione?");
+                    builder.setPositiveButton("Si", dialogClickListener);
+                    builder.setNegativeButton("No", dialogClickListener);
+                    builder.show();
                 }
             }
         });
+        listView = (ListView) view.findViewById(R.id.listViewTirociniTutorAc);
+        listView.setAdapter(adapter);
         new LoadIconTask().execute(1);
         return view;
 
@@ -98,8 +138,9 @@ public class FirmaProgFormTutorAcFragment extends Fragment {
                 int position = data.getIntExtra("position", 1);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
 
-                adapter.getItem(position);
-                adapter.setFirma(position, bitmap);
+                adapter.getItem(position).setFirmaTutorAcc(bitmap);
+
+                adapter.setFirma(position,linear.getChildAt(1), bitmap);
 
                 Toast.makeText(getActivity(), "Firma salvata correttamente", Toast.LENGTH_SHORT).show();
 
@@ -149,8 +190,6 @@ public class FirmaProgFormTutorAcFragment extends Fragment {
                 Toast.makeText(getActivity(), "Non sono presenti richieste di tirocinio", Toast.LENGTH_LONG).show();
             else {
 
-                listView = (ListView) view.findViewById(R.id.listViewTirociniTutorAc);
-                listView.setAdapter(adapter);
 
                 for (ProgFormativo pr : lista) {
                     adapter.add(pr);
