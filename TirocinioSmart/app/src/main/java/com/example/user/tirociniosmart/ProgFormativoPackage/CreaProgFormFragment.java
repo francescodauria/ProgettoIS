@@ -79,6 +79,14 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
     private TutorAz aziendale;
     private Azienda az;
     private Studente studente;
+
+    /**
+     *
+      * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         context=getActivity();
         view = inflater.inflate(R.layout.student_fragment_nuova_richiesta_layout, container, false);
@@ -149,6 +157,12 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
@@ -171,6 +185,13 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     *
+     * @param datePicker
+     * @param i
+     * @param i1
+     * @param i2
+     */
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         if(data_inizio.getTag().equals("click"))
@@ -190,6 +211,10 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
         else ;
     }
 
+    /**
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         TextView text=(TextView)view;
@@ -207,12 +232,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
         dialog.show();
     }
     class LoadAziende extends AsyncTask<Integer, Integer, ArrayList<Azienda> >{
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<Azienda> doInBackground(Integer... img_ids) {
             ArrayList<Azienda> az = new ArrayList<>();
@@ -226,11 +258,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             return aziende;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<Azienda> lista) {
             ArrayList<String> az=new ArrayList<>();
@@ -251,12 +291,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
 
     }
     class LoadTutor extends AsyncTask<Integer, Integer, ArrayList<TutorAc> >{
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<TutorAc> doInBackground(Integer... img_ids) {
             ArrayList<TutorAc> tutor = new ArrayList<>();
@@ -270,11 +317,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             return tutor;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<TutorAc> lista) {
             ArrayList<String> az=new ArrayList<>();
@@ -294,6 +349,11 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
 
 
     }
+
+    /**
+     *
+      * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -317,12 +377,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
         }
     }
     class LoadObiettivi extends AsyncTask<Integer, Integer, ArrayList<Obiettivo> >{
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<Obiettivo> doInBackground(Integer... img_ids) {
             ArrayList<Obiettivo> ob = new ArrayList<>();
@@ -344,11 +411,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             return obiettivi;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<Obiettivo> lista) {
             ArrayList<String> az=new ArrayList<>();
@@ -369,12 +444,19 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
 
     }
     class Insert extends AsyncTask<Integer, Integer, String >{
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
             String s="";
@@ -407,8 +489,10 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             return s;
         }
 
-
-
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();

@@ -22,6 +22,11 @@ public class FirmaActivity extends Activity {
     SignaturePad signaturePad;
     Button saveButton, clearButton;
     int position;
+
+    /**
+     *
+      * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,17 +43,26 @@ public class FirmaActivity extends Activity {
 
         //change screen orientation to landscape mode
         signaturePad.setOnSignedListener(new SignaturePad.OnSignedListener() {
+            /**
+             *
+              */
             @Override
             public void onStartSigning() {
 
             }
 
+            /**
+             *
+             */
             @Override
             public void onSigned() {
                 saveButton.setEnabled(true);
                 clearButton.setEnabled(true);
             }
 
+            /**
+             *
+             */
             @Override
             public void onClear() {
                 saveButton.setEnabled(false);
@@ -57,6 +71,10 @@ public class FirmaActivity extends Activity {
         });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+              * @param v
+             */
             @Override
             public void onClick(View v) {
 

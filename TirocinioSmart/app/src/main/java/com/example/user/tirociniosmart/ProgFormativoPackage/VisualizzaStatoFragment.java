@@ -28,12 +28,16 @@ import java.util.ArrayList;
 
 public class VisualizzaStatoFragment extends Fragment {
     private ListView listView;
-
     private View mProgressView;
     private ProgFormativoStudenteAdapter adapter;
     private Context context;
     private View view;
     private Studente studente;
+
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
@@ -41,6 +45,13 @@ public class VisualizzaStatoFragment extends Fragment {
         context = activity;
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         View v = inflater.inflate(R.layout.student_fragment_stato_richiesta_layout, container, false);
@@ -55,7 +66,10 @@ public class VisualizzaStatoFragment extends Fragment {
 
     }
 
-
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -80,12 +94,19 @@ public class VisualizzaStatoFragment extends Fragment {
     }
 
     class LoadIconTask extends AsyncTask<Integer, Integer, ArrayList<ProgFormativo>> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<ProgFormativo> doInBackground(Integer... img_ids) {
 
@@ -98,11 +119,19 @@ public class VisualizzaStatoFragment extends Fragment {
 
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
@@ -124,7 +153,6 @@ public class VisualizzaStatoFragment extends Fragment {
 
             }
         }
-
 
     }
 }

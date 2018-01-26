@@ -47,17 +47,25 @@ public class ProgFormativoSegreteriaAdapter extends ArrayAdapter<ProgFormativo> 
     private LayoutInflater inflater;
     private Context context;
     private ProgFormativo progettoFormativo;
-
-
     private static ProgFormativoSegreteriaAdapter.OnItemClickListener listener;
     public interface OnItemClickListener{
         void onItemClick(View itemView, int position);
     }
+
+    /**
+     *
+      * @param listener
+     */
     public void setOnItemClickListener(ProgFormativoSegreteriaAdapter.OnItemClickListener listener){
         this.listener=listener;
     }
 
-
+    /**
+     *
+     * @param context
+     * @param resourceId
+     * @param objects
+     */
     public ProgFormativoSegreteriaAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -65,6 +73,13 @@ public class ProgFormativoSegreteriaAdapter extends ArrayAdapter<ProgFormativo> 
         this.context = context;
     }
 
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
             Log.d("DEBUG","Inflating view");
@@ -138,8 +153,5 @@ public class ProgFormativoSegreteriaAdapter extends ArrayAdapter<ProgFormativo> 
 
         return v;
     }
-
-
-
 
 }

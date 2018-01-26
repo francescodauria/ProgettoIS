@@ -30,6 +30,13 @@ public class ObiettiviAdapter extends ArrayAdapter<Obiettivo> {
     private LayoutInflater inflater;
     private Context context;
     private Obiettivo obiettivo;
+
+    /**
+     *
+      * @param context
+     * @param resourceId
+     * @param objects
+     */
     public ObiettiviAdapter(Context context, int resourceId, List<Obiettivo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -38,7 +45,13 @@ public class ObiettiviAdapter extends ArrayAdapter<Obiettivo> {
     }
 
 
-
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
