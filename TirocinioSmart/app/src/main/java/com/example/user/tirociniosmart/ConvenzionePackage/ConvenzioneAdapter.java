@@ -26,16 +26,26 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
     private Context context;
     private Convenzione c;
     private ImageView firmaView;
-
     private static OnItemClickListener listener;
+
     public interface OnItemClickListener{
         void onItemClick(View itemView, int position);
     }
+
+    /**
+     *
+      * @param listener
+     */
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener=listener;
     }
 
-
+    /**
+     *
+     * @param context
+     * @param resourceId
+     * @param objects
+     */
     public ConvenzioneAdapter(Context context, int resourceId, List<Convenzione> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -43,8 +53,13 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
         this.context=context;
     }
 
-
-
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
@@ -53,7 +68,6 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
         }
 
         c= getItem(position);
-
 
         TextView nome;
         Button descrizione;
@@ -79,7 +93,6 @@ public class ConvenzioneAdapter extends ArrayAdapter<Convenzione> {
         nome.setTag(position);
         email.setTag(position);
         descrizione.setTag(position);
-
 
         buttonAccetta.setOnClickListener(new View.OnClickListener() {
             @Override

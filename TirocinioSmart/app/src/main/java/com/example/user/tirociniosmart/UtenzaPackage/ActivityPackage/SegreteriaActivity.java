@@ -29,12 +29,15 @@ import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPas
 
 import java.sql.SQLException;
 
-public class SegreteriaActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class SegreteriaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
     private Segreteria segreteria;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +64,9 @@ public class SegreteriaActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         setRequestedOrientation(
@@ -73,9 +79,11 @@ public class SegreteriaActivity extends AppCompatActivity
         }
     }
 
-
-
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -180,7 +188,9 @@ public class SegreteriaActivity extends AppCompatActivity
         return true;
     }
 
-
+    /**
+     *
+     */
     public void onStop(){
 
         try {

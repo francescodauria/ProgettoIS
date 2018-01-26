@@ -45,6 +45,10 @@ public class TutorAzActivity extends AppCompatActivity
     private TutorAz tutorAz;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,9 @@ public class TutorAzActivity extends AppCompatActivity
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         setRequestedOrientation(
@@ -92,8 +99,11 @@ public class TutorAzActivity extends AppCompatActivity
     }
 
 
-
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -259,6 +269,9 @@ public class TutorAzActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *
+     */
     public void onStop(){
 
         try {
@@ -272,12 +285,19 @@ public class TutorAzActivity extends AppCompatActivity
 
 
     class LoadTutor extends AsyncTask<Integer, Integer, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -296,11 +316,19 @@ public class TutorAzActivity extends AppCompatActivity
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
           //  showProgress(false);
@@ -313,9 +341,6 @@ public class TutorAzActivity extends AppCompatActivity
 
 
     }
-
-
-
 
 }
 

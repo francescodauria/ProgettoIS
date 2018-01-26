@@ -32,6 +32,10 @@ public class StudentActivity extends AppCompatActivity
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
     private Studente studente;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +69,11 @@ public class StudentActivity extends AppCompatActivity
         ft.add(R.id.contenitoreFrammentiStudente, f, "statoRichiesta");
         ft.addToBackStack(null);
         ft.commit();
-
-
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         setRequestedOrientation(
@@ -84,7 +89,11 @@ public class StudentActivity extends AppCompatActivity
 
     }
 
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -211,15 +220,14 @@ public class StudentActivity extends AppCompatActivity
 
             }
 
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-
+    /**
+     *
+     */
     public void onStop(){
 
         try {

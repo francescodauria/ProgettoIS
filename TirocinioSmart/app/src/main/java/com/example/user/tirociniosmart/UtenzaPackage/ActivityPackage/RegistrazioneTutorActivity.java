@@ -50,6 +50,10 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
     private EditText numero_azienda;
     private EditText email_azienda;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +77,10 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param view
+     */
     public void effettuaRegistrazione(View view) {
         View focusView = null;
 
@@ -134,15 +142,24 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             new RegistrazioneAziendaTask().execute(1);
         }
 
-
     }
 
+    /**
+     *
+     * @param view
+     */
     public void caricaLogo(View view) {
 
         startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
 
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -167,7 +184,9 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     *
+     */
     @Override
     public void onStop(){
 
@@ -181,15 +200,21 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
     class RegistrazioneAziendaTask extends AsyncTask<Integer, Integer, String > {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
 
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -212,15 +237,21 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
-
-
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
         }
 

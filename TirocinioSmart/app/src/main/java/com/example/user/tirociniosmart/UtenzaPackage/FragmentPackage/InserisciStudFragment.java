@@ -53,6 +53,13 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
     TextView dataNascita;
     Date data_N;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -162,6 +169,11 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
 
         return view;
     }
+
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -187,13 +199,20 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
 
 
     class InsertStudente extends AsyncTask<Integer, Integer, String > {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -204,22 +223,35 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
-
             Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
         }
 
 
     }
 
-
+    /**
+     *
+     * @param datePicker
+     * @param i
+     * @param i1
+     * @param i2
+     */
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
             String data=""+i2+"/"+(i1+1)+"/"+i;
@@ -227,6 +259,10 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
             dataNascita.setText(data);
         }
 
+    /**
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, 1995, 1, 1);
