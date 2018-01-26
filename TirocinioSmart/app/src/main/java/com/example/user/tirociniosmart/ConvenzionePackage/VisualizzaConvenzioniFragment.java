@@ -47,10 +47,23 @@ public class VisualizzaConvenzioniFragment extends Fragment {
     public Context context;
     private Button rifiutaConvenzione;
     private Button accettaConvenzione;
+
+    /**
+     *
+     * @param activity
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         context=activity;
     }
+
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         view = inflater.inflate(R.layout.direttore_fragment_firma_convenzione, container, false);
@@ -120,6 +133,10 @@ public class VisualizzaConvenzioniFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -148,12 +165,19 @@ public class VisualizzaConvenzioniFragment extends Fragment {
 
 
     class LoadConvenzioni extends AsyncTask<Integer, Integer, ArrayList<Convenzione>> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<Convenzione> doInBackground(Integer... img_ids) {
             ArrayList<Convenzione> aziende = new ArrayList<>();
@@ -170,11 +194,19 @@ public class VisualizzaConvenzioniFragment extends Fragment {
             return listaConvenzioni;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<Convenzione> lista) {
             showProgress(false);
@@ -199,12 +231,19 @@ public class VisualizzaConvenzioniFragment extends Fragment {
 
 
     class CambiaStato extends AsyncTask<Convenzione, Convenzione, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
         }
 
+        /**
+         *
+         * @param c
+         * @return
+         */
         @Override
         protected String doInBackground(Convenzione... c) {
 
@@ -220,6 +259,10 @@ public class VisualizzaConvenzioniFragment extends Fragment {
             return stato;
         }
 
+        /**
+         *
+         * @param c
+         */
         @Override
         protected void onProgressUpdate(Convenzione... c) {
 
@@ -228,19 +271,15 @@ public class VisualizzaConvenzioniFragment extends Fragment {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
-
-
             Toast.makeText(context.getApplicationContext(),s, Toast.LENGTH_LONG).show();
-
         }
 
-
     }
-
-
-
-
 
 }

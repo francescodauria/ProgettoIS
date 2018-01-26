@@ -26,6 +26,13 @@ public class AziendeAdapter extends ArrayAdapter<Azienda> {
     private LayoutInflater inflater;
     private Context context;
     private Azienda a;
+
+    /**
+     *
+      * @param context
+     * @param resourceId
+     * @param objects
+     */
     public AziendeAdapter(Context context, int resourceId, List<Azienda> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -34,7 +41,13 @@ public class AziendeAdapter extends ArrayAdapter<Azienda> {
     }
 
 
-
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {

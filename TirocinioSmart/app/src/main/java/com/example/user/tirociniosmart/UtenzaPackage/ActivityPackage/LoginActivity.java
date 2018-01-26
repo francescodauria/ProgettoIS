@@ -45,15 +45,17 @@ import java.sql.SQLException;
  */
 public class LoginActivity extends AppCompatActivity  {
 
-
     private MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();;
-
     private UserLoginTask mAuthTask = null;
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,21 +149,11 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     *
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 6;
@@ -172,23 +164,10 @@ public class LoginActivity extends AppCompatActivity  {
      */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     *
+     * @param show
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
@@ -222,13 +201,19 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     *
+     * @param view
+     */
     public void registerAzienda(View view) {
 
             Intent intent = new Intent(LoginActivity.this, RegistrazioneTutorActivity.class);
             startActivity(intent);
     }
 
-
+    /**
+     *
+     */
     public class UserLoginTask extends AsyncTask<Void, Void, Utente> {
 
         private final String mEmail;
@@ -294,10 +279,10 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
 
-
-
-
-
+        /**
+         *
+         * @param utente
+         */
         @Override
         protected void onPostExecute(Utente utente) {
             mAuthTask = null;
@@ -358,9 +343,9 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
 
-
-
-
+        /**
+         *
+         */
         @Override
         protected void onCancelled() {
             mAuthTask = null;
@@ -369,7 +354,9 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
 
-
+    /**
+     *
+     */
     public void onStop(){
 
         try {

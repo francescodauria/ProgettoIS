@@ -31,11 +31,15 @@ import java.util.ArrayList;
 public class RichiediConvenzioneFragment extends Fragment {
     private View view;
     private View mProgressView;
-
-
-
     private Button richiestaConvenzione;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
@@ -61,6 +65,10 @@ public class RichiediConvenzioneFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -87,13 +95,20 @@ public class RichiediConvenzioneFragment extends Fragment {
 
 
     class LoadIconTask extends AsyncTask<Integer, Integer, String >{
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -115,24 +130,25 @@ public class RichiediConvenzioneFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
-
             Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
         }
 
-
     }
-
-
-
-
-
 
 }

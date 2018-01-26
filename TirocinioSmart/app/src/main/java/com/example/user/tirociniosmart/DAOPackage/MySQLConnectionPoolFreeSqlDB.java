@@ -26,7 +26,11 @@ public class MySQLConnectionPoolFreeSqlDB implements  GenericConnectionPool {
     }
 
 
-
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Connection createDBConnection() throws SQLException {
         Connection newConnection = null;
@@ -48,6 +52,11 @@ public class MySQLConnectionPoolFreeSqlDB implements  GenericConnectionPool {
 
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public synchronized Connection getConnection() throws SQLException {
         Connection connection;
@@ -72,6 +81,10 @@ public class MySQLConnectionPoolFreeSqlDB implements  GenericConnectionPool {
 
     }
 
+    /**
+     *
+     * @param connection
+     */
     @Override
     public void releaseConnection(Connection connection) {
         if (connection != null)
@@ -79,6 +92,10 @@ public class MySQLConnectionPoolFreeSqlDB implements  GenericConnectionPool {
 
     }
 
+    /**
+     *
+     * @throws SQLException
+     */
     public void closeAllConnection() throws SQLException {
         for(Connection con:freeDbConnections) {
             con.close();

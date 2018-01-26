@@ -14,8 +14,7 @@ public class MySQLConnectionPoolHelioHost implements GenericConnectionPool {
 
 
     private static List<Connection> freeDbConnections;
-    static
-    {
+    static {
         freeDbConnections = new LinkedList<Connection>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -25,7 +24,11 @@ public class MySQLConnectionPoolHelioHost implements GenericConnectionPool {
     }
 
 
-
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Connection createDBConnection() throws SQLException {
         Connection newConnection = null;
@@ -47,6 +50,11 @@ public class MySQLConnectionPoolHelioHost implements GenericConnectionPool {
 
     }
 
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     @Override
     public synchronized Connection getConnection() throws SQLException {
         Connection connection;
@@ -71,6 +79,10 @@ public class MySQLConnectionPoolHelioHost implements GenericConnectionPool {
 
     }
 
+    /**
+     *
+     * @param connection
+     */
     @Override
     public void releaseConnection(Connection connection) {
         if (connection != null)

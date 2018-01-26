@@ -33,7 +33,6 @@ import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAzActi
 
 public class ModificaPasswordFragment extends Fragment {
     private View view;
-
     private EditText nuovaPassword;
     private EditText ripetiPassword;
     private EditText vecchiaPassword;
@@ -42,6 +41,13 @@ public class ModificaPasswordFragment extends Fragment {
     private Button registra;
     String ruolo;
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
@@ -106,12 +112,19 @@ public class ModificaPasswordFragment extends Fragment {
     }
 
     class ModificaTask extends AsyncTask<Integer, Integer, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -143,11 +156,19 @@ public class ModificaPasswordFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
                 showProgress(false);
@@ -163,6 +184,11 @@ public class ModificaPasswordFragment extends Fragment {
 
 
     }
+
+    /**
+     *
+      * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in

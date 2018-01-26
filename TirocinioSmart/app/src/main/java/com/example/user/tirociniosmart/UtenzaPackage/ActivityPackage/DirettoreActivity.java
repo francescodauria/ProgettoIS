@@ -29,6 +29,11 @@ public class DirettoreActivity extends AppCompatActivity
     private FragmentManager fm;
     public static MySQLConnectionPoolFreeSqlDB pool = new MySQLConnectionPoolFreeSqlDB();
     private Direttore direttore;
+
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +54,9 @@ public class DirettoreActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     *
+     */
     @Override
     public void onBackPressed() {
         setRequestedOrientation(
@@ -62,8 +70,11 @@ public class DirettoreActivity extends AppCompatActivity
     }
 
 
-
-
+    /**
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -175,6 +186,9 @@ public class DirettoreActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     *
+     */
     public void onStop(){
 
         try {
