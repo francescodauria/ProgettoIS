@@ -47,16 +47,25 @@ public class ProgFormativoFirmaAdapter extends ArrayAdapter<ProgFormativo>  {
     private LayoutInflater inflater;
     private Context context;
     private ProgFormativo progettoFormativo;
-
-
     private static OnItemClickListener listener;
     public interface OnItemClickListener{
         void onItemClick(View itemView, int position);
     }
+
+    /**
+     *
+     * @param listener
+     */
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener=listener;
     }
 
+    /**
+     *
+     * @param context
+     * @param resourceId
+     * @param objects
+     */
     public ProgFormativoFirmaAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -64,6 +73,13 @@ public class ProgFormativoFirmaAdapter extends ArrayAdapter<ProgFormativo>  {
         this.context = context;
     }
 
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
             Log.d("DEBUG","Inflating view");
@@ -147,7 +163,12 @@ public class ProgFormativoFirmaAdapter extends ArrayAdapter<ProgFormativo>  {
         return v;
     }
 
-
+    /**
+     *
+     * @param position
+     * @param v
+     * @param bitmap
+     */
     public void setFirma(int position,View v,Bitmap bitmap){
         System.out.println(v);
         ImageView imageView = (ImageView)v;

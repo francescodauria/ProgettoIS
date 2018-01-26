@@ -48,6 +48,14 @@ public class ProgFormSegreteriaFragment extends Fragment {
     private ListView listView;
     private Segreteria segreteria;
     private LinearLayout linear;
+
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
         context = getActivity();
         view = inflater.inflate(R.layout.tutor_ac_fragment_firma_tirocinio_layout, container, false);
@@ -122,13 +130,20 @@ public class ProgFormSegreteriaFragment extends Fragment {
 
 
     class LoadIconTask extends AsyncTask<Integer, Integer, ArrayList<ProgFormativo>> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected ArrayList<ProgFormativo> doInBackground(Integer... img_ids) {
 
@@ -141,11 +156,19 @@ public class ProgFormSegreteriaFragment extends Fragment {
 
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param lista
+         */
         @Override
         protected void onPostExecute(ArrayList<ProgFormativo> lista) {
             showProgress(false);
@@ -167,11 +190,19 @@ public class ProgFormSegreteriaFragment extends Fragment {
         }
     }
     class CambiaStatoProgettoTask extends AsyncTask<ProgFormativo, Integer, String> {
+        /**
+         *
+          */
         @Override
         protected void onPreExecute() {
             showProgress(true);
         }
 
+        /**
+         *
+         * @param progFormativo
+         * @return
+         */
         @Override
         protected String doInBackground(ProgFormativo... progFormativo) {
             ProgettoFormativoDAO.setConnectionPool(SegreteriaActivity.pool);
@@ -186,10 +217,18 @@ public class ProgFormSegreteriaFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
@@ -198,8 +237,10 @@ public class ProgFormSegreteriaFragment extends Fragment {
     }
 
 
-
-
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -222,8 +263,5 @@ public class ProgFormSegreteriaFragment extends Fragment {
             progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
-
-
-
 
 }

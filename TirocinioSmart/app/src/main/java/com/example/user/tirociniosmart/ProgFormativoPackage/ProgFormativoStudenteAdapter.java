@@ -40,6 +40,12 @@ public class ProgFormativoStudenteAdapter extends ArrayAdapter<ProgFormativo> {
     private Context context;
     private ProgFormativo progettoFormativo;
 
+    /**
+     *
+     * @param context
+     * @param resourceId
+     * @param objects
+     */
     public ProgFormativoStudenteAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
         resource = resourceId;
@@ -47,6 +53,13 @@ public class ProgFormativoStudenteAdapter extends ArrayAdapter<ProgFormativo> {
         this.context = context;
     }
 
+    /**
+     *
+     * @param position
+     * @param v
+     * @param parent
+     * @return
+     */
     public View getView(final int position, View v, ViewGroup parent) {
         if (v == null) {
             Log.d("DEBUG","Inflating view");

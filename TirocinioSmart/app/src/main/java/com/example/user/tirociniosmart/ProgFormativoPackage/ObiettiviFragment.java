@@ -38,7 +38,6 @@ import java.util.ArrayList;
 public class ObiettiviFragment extends Fragment {
     private ListView listView;
     private View mProgressView;
-
     private ObiettiviAdapter adapter;
     private View view;
     private Button button;
@@ -49,6 +48,10 @@ public class ObiettiviFragment extends Fragment {
     private ArrayList<Obiettivo> lista;
     private String idAzienda;
 
+    /**
+     *
+     * @param activity
+     */
     @Override
     public void onAttach(Activity activity) {
         // TODO Auto-generated method stub
@@ -56,6 +59,13 @@ public class ObiettiviFragment extends Fragment {
         context = activity;
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param saveInstanceState
+     * @return
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
 
         view = inflater.inflate(R.layout.tutor_az_obiettivi_fragment, container, false);
@@ -146,6 +156,10 @@ public class ObiettiviFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @param show
+     */
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -170,13 +184,20 @@ public class ObiettiviFragment extends Fragment {
     }
 
     class InsertTask extends AsyncTask<Integer, Integer, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -192,11 +213,19 @@ public class ObiettiviFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
@@ -216,13 +245,20 @@ public class ObiettiviFragment extends Fragment {
 
 
     class RemoveTask extends AsyncTask<Integer, Integer, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -235,11 +271,19 @@ public class ObiettiviFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
@@ -261,13 +305,20 @@ public class ObiettiviFragment extends Fragment {
 
 
     class LoadTask extends AsyncTask<Integer, Integer, String> {
-
+        /**
+         *
+         */
         @Override
         protected void onPreExecute() {
 
             showProgress(true);
         }
 
+        /**
+         *
+         * @param img_ids
+         * @return
+         */
         @Override
         protected String doInBackground(Integer... img_ids) {
 
@@ -288,11 +339,19 @@ public class ObiettiviFragment extends Fragment {
             return s;
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Integer... values) {
 
         }
 
+        /**
+         *
+         * @param s
+         */
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
