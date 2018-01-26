@@ -31,7 +31,9 @@ import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.SegreteriaActivity;
 import com.example.user.tirociniosmart.UtenzaPackage.ActivityPackage.TutorAcActivity;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by User on 25/01/2018.
@@ -42,7 +44,7 @@ public class ProgFormSegreteriaFragment extends Fragment {
     private ProgressBar progressBar;
     private static Context context;
     private View view;
-    private ProgFormativoFirmaAdapter adapter;
+    private ProgFormativoSegreteriaAdapter adapter;
     private ListView listView;
     private Segreteria segreteria;
     private LinearLayout linear;
@@ -58,8 +60,8 @@ public class ProgFormSegreteriaFragment extends Fragment {
 
 
 
-        adapter = new ProgFormativoFirmaAdapter(context, R.layout.segreteria_custom_adapter_tirocini_layout, new ArrayList<ProgFormativo>());
-        adapter.setOnItemClickListener(new ProgFormativoFirmaAdapter.OnItemClickListener() {
+        adapter = new ProgFormativoSegreteriaAdapter(context, R.layout.segreteria_custom_adapter_tirocini_layout, new ArrayList<ProgFormativo>());
+        adapter.setOnItemClickListener(new ProgFormativoSegreteriaAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final View itemView, final int position) {
                 //     System.out.println(position);
@@ -77,12 +79,15 @@ public class ProgFormSegreteriaFragment extends Fragment {
                                     if (netInfo != null && netInfo.isConnected()) {
                                         if (itemView.getId() == R.id.accettaSegreteria) {
                                             ProgFormativo progetto = adapter.getItem(position);
+                                            Calendar now = Calendar.getInstance();
+
+                                            Date date = new Date((now.get((Calendar.YEAR))-1900),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH));
+                                            progetto.setDataStipula(date);
                                             progetto.setStato("ACCETTATO");
                                             new CambiaStatoProgettoTask().execute(progetto);
 
                                         } else if (itemView.getId() == R.id.rifiutaSegreteria) {
                                             ProgFormativo progetto = adapter.getItem(position);
-                                            adapter.remove(progetto);
                                             progetto.setStato("RIFIUTATO");
                                             new CambiaStatoProgettoTask().execute(progetto);
 
@@ -131,7 +136,7 @@ public class ProgFormSegreteriaFragment extends Fragment {
 
             ProgettoFormativoDAO.setConnectionPool(SegreteriaActivity.pool);
 
-         //   progetti = ProgettoFormativoDAO.findAllBySegreteria(segreteria);
+            progetti = ProgettoFormativoDAO.findAllBySegreteria(segreteria);
             return progetti;
 
         }
@@ -169,9 +174,15 @@ public class ProgFormSegreteriaFragment extends Fragment {
 
         @Override
         protected String doInBackground(ProgFormativo... progFormativo) {
-            ArrayList<ProgFormativo> progetti = new ArrayList<>();
             ProgettoFormativoDAO.setConnectionPool(SegreteriaActivity.pool);
-            String s = ProgettoFormativoDAO.rifiutaProgettoFormativo(progFormativo[0]);
+            String s = null;
+            if(progFormativo[0].getStato().equals("ACCETTATO")){
+                s = ProgettoFormativoDAO.acceptProgettoFormativoBySegreteria(progFormativo[0]);
+
+            }
+            else if(progFormativo[0].getStato().equals("RIFIUTATO")){
+                s = ProgettoFormativoDAO.rifiutaProgettoFormativo(progFormativo[0]);
+            }
             return s;
         }
 

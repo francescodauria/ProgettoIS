@@ -137,7 +137,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaDirettore=rs.getBlob(2);
                 Bitmap firmaDir=null;
@@ -186,6 +186,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
 
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
+                progetto.setId(id);
                 progetto.setGetFirmaTutorAz(firmaTutor);
                 progetto.setFirmaDirettore(firmaDir);
                 progetti.add(progetto);
@@ -437,7 +438,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             TutorAziendaleDAO.setConnectionPool(genericConnectionPool);
 
             System.out.println("Database connesso");
-            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Stato = ? and FirmaDirettore = IS NOT NULL");
+            PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Progetto_Formativo WHERE Stato = ? and FirmaDirettore IS NOT NULL");
             //Possibile problema con IS NOT NULL, eventualmente provare come parametrica
             stt.setString(1,"IN CORSO");
 
@@ -445,7 +446,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
             ResultSet rs=stt.executeQuery();
             while(rs.next()) {
 
-                String id=rs.getString(1);
+                int id=rs.getInt(1);
 
                 Blob firmaStudente = rs.getBlob(3);
                 Bitmap firmaStud =null;
@@ -489,6 +490,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
                 ProgFormativo progetto=new ProgFormativo(stato,motivazione,ore,obiettivi,data_inizio,data_fine,data_stipula,firmaStud,studente,direttore,tutorAc,tutorAz);
                 progetto.setFirmaStudente(firmaStud);
                 progetto.setGetFirmaTutorAz(firmaTutor);
+                progetto.setId(id);
                 progetto.setFirmaTutorAcc(firmaTutorAc);
                 progetto.setFirmaDirettore(null);
                 progetti.add(progetto);
@@ -546,7 +548,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
-    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByTutorAziendale(ProgFormativo progFormativo)  {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -580,7 +582,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
-    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByTutorAccademico(ProgFormativo progFormativo) {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -615,7 +617,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
-    public static String insertFirmaByDirettore(ProgFormativo progFormativo) throws SQLException {
+    public static String insertFirmaByDirettore(ProgFormativo progFormativo)  {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();
@@ -657,7 +659,10 @@ public class ProgettoFormativoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
 
-            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Data_Stipula = ? and Stato = ? WHERE ID = ?");
+            System.out.println(progFormativo.getId());
+            System.out.println(progFormativo.getStato());
+
+            stt = newConnection.prepareStatement("UPDATE Progetto_Formativo SET Data_Stipula = ?, Stato = ? WHERE ID = ?");
             stt.setDate(1, progFormativo.getDataStipula());
             stt.setString(2, progFormativo.getStato());
             stt.setInt(3, progFormativo.getId());
@@ -679,7 +684,7 @@ public class ProgettoFormativoDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
-    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo) throws SQLException {
+    public static String rifiutaProgettoFormativo(ProgFormativo progFormativo)  {
         Connection newConnection = null;
         try {
             newConnection = (Connection) genericConnectionPool.getConnection();

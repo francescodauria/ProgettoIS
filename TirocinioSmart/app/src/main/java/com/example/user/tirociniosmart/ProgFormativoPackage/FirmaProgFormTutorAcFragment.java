@@ -98,7 +98,6 @@ public class FirmaProgFormTutorAcFragment extends Fragment {
                                             }
                                         } else if (itemView.getId() == R.id.rifiutaTutorAc) {
                                             ProgFormativo progetto = adapter.getItem(position);
-                                            adapter.remove(progetto);
                                             progetto.setStato("RIFIUTATO");
                                             new RifiutaProgettoTask().execute(progetto);
 

@@ -49,13 +49,14 @@ public class ProgFormativoSegreteriaAdapter extends ArrayAdapter<ProgFormativo> 
     private ProgFormativo progettoFormativo;
 
 
-    private static OnItemClickListener listener;
+    private static ProgFormativoSegreteriaAdapter.OnItemClickListener listener;
     public interface OnItemClickListener{
         void onItemClick(View itemView, int position);
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(ProgFormativoSegreteriaAdapter.OnItemClickListener listener){
         this.listener=listener;
     }
+
 
     public ProgFormativoSegreteriaAdapter(Context context, int resourceId, List<ProgFormativo> objects) {
         super(context, resourceId, objects);
