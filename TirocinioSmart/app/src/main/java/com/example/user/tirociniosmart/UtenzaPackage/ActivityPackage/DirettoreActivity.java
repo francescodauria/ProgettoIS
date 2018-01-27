@@ -19,6 +19,7 @@ import com.example.user.tirociniosmart.ConvenzionePackage.VisualizzaConvenzioniF
 import com.example.user.tirociniosmart.DAOPackage.MySQLConnectionPoolFreeSqlDB;
 import com.example.user.tirociniosmart.EntityPackage.Direttore;
 import com.example.user.tirociniosmart.ProgFormativoPackage.FirmaProgFormDirettoreFragment;
+import com.example.user.tirociniosmart.ProgFormativoPackage.FirmaProgFormTutorAcFragment;
 import com.example.user.tirociniosmart.R;
 import com.example.user.tirociniosmart.UtenzaPackage.FragmentPackage.ModificaPasswordFragment;
 
@@ -49,6 +50,15 @@ public class DirettoreActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         pool = new MySQLConnectionPoolFreeSqlDB();
+
+        Fragment f = new VisualizzaConvenzioniFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("direttore", direttore);
+        f.setArguments(bundle);
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.contenitoreFrammentiDirettore,f,"richiesteConvenzione");
+        ft.addToBackStack(null);
+        ft.commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

@@ -50,6 +50,16 @@ public class TutorAcActivity extends AppCompatActivity
         toggle.syncState();
         pool = new MySQLConnectionPoolFreeSqlDB();
 
+        Fragment f = new FirmaProgFormTutorAcFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("tutorac", tutorAc);
+        f.setArguments(bundle);
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(R.id.contenitoreFrammentiTutorAccademico,f,"richiesteTutorAc");
+        ft.addToBackStack(null);
+        ft.commit();
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
