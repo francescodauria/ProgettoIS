@@ -85,10 +85,10 @@ public class ModificaPasswordFragment extends Fragment {
                     focusView = vecchiaPassword;
                     focusView.requestFocus();
                     vecchiaPassword.setError("Il campo password precedente non può essere vuoto");
-                } else if (nuovaPassword.getText().toString().length()<7) {
+                } else if (nuovaPassword.getText().toString().length()<6) {
                     focusView = nuovaPassword;
                     focusView.requestFocus();
-                    nuovaPassword.setError("La nuova password deve essere almeno di 7 caratteri");
+                    nuovaPassword.setError("La nuova password deve essere almeno di 6 caratteri");
                 } else if (!nuovaPassword.getText().toString().equals(ripetiPassword.getText().toString())) {
                     focusView = ripetiPassword;
                     focusView.requestFocus();

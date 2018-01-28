@@ -185,18 +185,6 @@ public class DirettoreDAO extends GenericDAO {
         }
     }
 
-    /**
-     *
-     * @return
-     */
-    public static String update() {
-        return "";
-    }
 
-    /**
-     *
-     */
-    public static void search() {
-    }
 
 }

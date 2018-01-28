@@ -229,7 +229,7 @@ public class ObiettiviFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             showProgress(false);
-            if (s.equals("Esiste già un obiettivo con questo nome") || !s.equals("Connessione al database non presente")) {
+            if ((!s.equals("Esiste già un obiettivo con questo nome") && !s.equals("Connessione al database non presente"))) {
                 lista.add(obiettivo);
                 adapter.add(obiettivo);
 

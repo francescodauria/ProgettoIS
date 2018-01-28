@@ -84,13 +84,13 @@ public class TutorAccademicoDAO extends GenericDAO {
             System.out.println("Database connesso");
             PreparedStatement stt = null;
             if(TutorAccademicoDAO.checkTutor(tutor)) {
-                stt=newConnection.prepareStatement("INSERT INTO Tutor_Accademico (Matricola,Nome,Cognome,Password,Username" +
-                        "VALUES (?,?,?,?,?");
+                stt=newConnection.prepareStatement("INSERT INTO Tutor_Accademico (Matricola,Nome,Cognome,Username,Password)" +
+                        "VALUES (?,?,?,?,?)");
                 stt.setString(1,tutor.getMatricola());
                 stt.setString(2,tutor.getNome());
                 stt.setString(3,tutor.getCognome());
-                stt.setString(4,tutor.getPassword());
-                stt.setString(5,tutor.getUsername());
+                stt.setString(4,tutor.getUsername());
+                stt.setString(5,tutor.getPassword());
                 stt.executeUpdate();
                 newConnection.commit();
                 stt.close();
@@ -101,23 +101,12 @@ public class TutorAccademicoDAO extends GenericDAO {
 
         }catch(SQLException e)
         {
+            e.printStackTrace();
             return "Connessione al database non presente";
         }
     }
 
-    /**
-     *
-     * @return
-     */
-    public static String update() {
-        return "";
-    }
 
-    /**
-     *
-     */
-    public static void search() {
-    }
 
     /**
      *

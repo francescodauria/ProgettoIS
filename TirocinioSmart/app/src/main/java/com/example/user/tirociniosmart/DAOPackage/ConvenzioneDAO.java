@@ -187,6 +187,7 @@ public class ConvenzioneDAO extends GenericDAO {
             } else
                 return "C'è già una convenzione in attesa di accettazione";
         } catch (SQLException e) {
+            e.printStackTrace();
             return "Connessione al database non presente";
         }
 

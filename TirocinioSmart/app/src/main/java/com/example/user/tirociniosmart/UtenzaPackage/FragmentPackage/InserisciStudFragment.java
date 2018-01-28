@@ -154,6 +154,16 @@ public class InserisciStudFragment extends android.app.Fragment implements View.
                 {
                     Toast.makeText(getActivity().getApplicationContext(),"Attenzione, il campo data deve essere settato",Toast.LENGTH_LONG).show();
                 }
+                else if(!(password.getText().toString().length()>5)){
+                    password.setError("Il campo password deve \navere almeno 6 caratteri");
+                    focusView = password;
+                    focusView.requestFocus();
+                }
+                else if(!(codiceFiscale.getText().toString().length()==16)){
+                    codiceFiscale.setError("Il campo codice fiscale \nnon è settato correttamente");
+                    focusView = codiceFiscale;
+                    focusView.requestFocus();
+                }
                 else if(!password.getText().toString().equals(passwordRipetuta.getText().toString())){
                     passwordRipetuta.setError("Attenzione, le password devono coincidere");
                     focusView = passwordRipetuta;

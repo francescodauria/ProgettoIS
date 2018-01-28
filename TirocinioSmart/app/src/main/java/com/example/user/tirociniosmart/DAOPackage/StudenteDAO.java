@@ -90,7 +90,7 @@ public class StudenteDAO extends GenericDAO {
 
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            if(StudenteDAO.checkStudente(studente)) {
+            if(StudenteDAO.checkStudente(studente)&&StudenteDAO.checkStudenteUsername(studente) && StudenteDAO.checkStudenteEmail(studente)) {
                 stt = newConnection.prepareStatement("INSERT INTO Studente VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 /*                stt = newConnection.prepareStatement("INSERT INTO Studente (Matricola, Nome, Cognome," +
                         "Indirizzo, Username, Password, CF, #tirocini, Luogo_Nascita, Data_Nascita, N_Tel, Email)" +
@@ -117,7 +117,7 @@ public class StudenteDAO extends GenericDAO {
 
                 return "Inserimento avvenuto correttamente";
             } else
-                return "Esiste già uno studente con tale matricola";
+                return "Esiste già uno studente con tale matricola, username o email";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Connessione al database non presente";
@@ -141,7 +141,26 @@ public class StudenteDAO extends GenericDAO {
         if(rs.next()) return false;
         else return true;
     }
-
+    public static boolean checkStudenteEmail(Studente studente) throws SQLException {
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        newConnection.setAutoCommit(false);
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Studente WHERE Email = ?");
+        stt.setString(1,studente.getEmail());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next()) return false;
+        else return true;
+    }
+    public static boolean checkStudenteUsername(Studente studente) throws SQLException {
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+        newConnection.setAutoCommit(false);
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Studente WHERE Username = ?");
+        stt.setString(1,studente.getUsername());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next()) return false;
+        else return true;
+    }
     /**
      *
      * @param utente

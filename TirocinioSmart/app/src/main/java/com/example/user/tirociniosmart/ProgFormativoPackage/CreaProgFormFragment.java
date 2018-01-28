@@ -87,7 +87,7 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
      * @param saveInstanceState
      * @return
      */
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle saveInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle saveInstanceState) {
         context=getActivity();
         view = inflater.inflate(R.layout.student_fragment_nuova_richiesta_layout, container, false);
 
@@ -149,8 +149,11 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
                 else if(data_F.before(data_I)){
                     Toast.makeText(context.getApplicationContext(), "Attenzione, la data di fine precede la data di inizio", Toast.LENGTH_LONG).show();
                 }
-                else
-                    new Insert().execute(1);
+                else if(obiettivo.getSelectedItem()==null)
+                {
+                    Toast.makeText(context.getApplicationContext(),"Attenzione, l'obiettivo non è stato selezionato",Toast.LENGTH_LONG).show();
+                }
+                 else   new Insert().execute(1);
             }
         });
         return view;
@@ -194,14 +197,14 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
      */
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        if(data_inizio.getTag().equals("click"))
+        if(data_inizio.getTag()!=null && data_inizio.getTag().equals("click"))
         {
             String data=""+i2+"/"+(i1+1)+"/"+i;
             data_I=new Date(i,i1,i2);
             data_inizio.setText(data);
             data_inizio.setTag("");
         }
-        else if (data_fine.getTag().equals("click"))
+        else if (data_fine.getTag()!=null && data_fine.getTag().equals("click"))
         {
             String data=""+i2+"/"+(i1+1)+"/"+i;
             data_F=new Date(i,i1,i2);
@@ -478,6 +481,9 @@ public class CreaProgFormFragment extends Fragment implements View.OnClickListen
             Bitmap bitmap = ((BitmapDrawable)firma).getBitmap();
             aziendale= TutorAziendaleDAO.getTutorAzByAzienda(az);
             ArrayList<Direttore> direttori=(ArrayList<Direttore>)DirettoreDAO.getAllDirettori();
+            if(direttori==null){
+                return "Connessione non presente";
+            }
             Direttore dir=((ArrayList<Direttore>)DirettoreDAO.getAllDirettori()).get(0);
             System.out.println(direttori.size());
             System.out.println(dir);

@@ -138,7 +138,10 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             focusView.requestFocus();
         }else if(null==logo.getDrawable()) {
             Toast.makeText(this, "Il campo logo azienda non può essere vuoto", Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(16!=CF.getText().toString().length())
+        {
+            Toast.makeText(this, "Il campo codice fiscale non è settato correttamente", Toast.LENGTH_SHORT).show();
+        } else{
             new RegistrazioneAziendaTask().execute(1);
         }
 
@@ -227,10 +230,15 @@ public class RegistrazioneTutorActivity extends AppCompatActivity {
             AziendaDAO.setConnectionPool(pool);
             TutorAziendaleDAO.setConnectionPool(pool);
             try{
-                s=AziendaDAO.insert(a);
-                s=TutorAziendaleDAO.insert(tutor,a.getId());
-
+                if(AziendaDAO.checkAziendaEmail(a)&&AziendaDAO.checkAzienda(a)&&TutorAziendaleDAO.checkTutorUsername(tutor)&&TutorAziendaleDAO.checkTutor(tutor)&&TutorAziendaleDAO.checkTutorEmail(tutor)) {
+                    s = AziendaDAO.insert(a);
+                    s = s + " " + TutorAziendaleDAO.insert(tutor, a.getId());
+                }
+                else{
+                    s="L'azienda e il tutor non sono stati inseriti, si prega di controllare i campi";
+                }
             } catch (SQLException e) {
+                s="Connessione al database non presente";
                 e.printStackTrace();
 
             }

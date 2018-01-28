@@ -115,14 +115,14 @@ public class SegreteriaActivity extends AppCompatActivity implements NavigationV
 
 
         } else if (id == R.id.richieste_tirocinio_segreteria) {
-            Fragment f = fm.findFragmentByTag("cambiaPassword");
+            Fragment f = fm.findFragmentByTag("richiesteTirocinioSegreteria");
             if (f == null) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("segreteria",segreteria);
                 f = new ProgFormSegreteriaFragment();
                 f.setArguments(bundle);
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
                 ft.addToBackStack(null);
 
                 ft.commit();
@@ -137,9 +137,9 @@ public class SegreteriaActivity extends AppCompatActivity implements NavigationV
                 bundle.putString("username",segreteria.getUsername());
                 bundle.putString("password",segreteria.getPassword());
 
-                f = new ModificaPasswordFragment();
+                f = new ProgFormSegreteriaFragment();
                 f.setArguments(bundle);
-                ft.add(R.id.contenitoreFrammentiSegreteria, f, "cambiaPassword");
+                ft.add(R.id.contenitoreFrammentiSegreteria, f, "richiesteTirocinioSegreteria");
                 ft.addToBackStack(null);
 
                 ft.commit();

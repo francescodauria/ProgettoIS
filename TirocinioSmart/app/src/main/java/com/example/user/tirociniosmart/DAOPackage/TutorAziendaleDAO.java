@@ -89,7 +89,7 @@ public class TutorAziendaleDAO extends GenericDAO {
             newConnection.setAutoCommit(false);
             System.out.println("Database connesso");
             PreparedStatement stt = null;
-            if(TutorAziendaleDAO.checkTutor(tutor))
+            if(TutorAziendaleDAO.checkTutor(tutor)&&TutorAziendaleDAO.checkTutorEmail(tutor)&&TutorAziendaleDAO.checkTutorUsername(tutor))
             {
                 stt=newConnection.prepareStatement("INSERT INTO Tutor_Aziendale (CF,Nome,Cognome,Email,Password,Username,N_tel,AziendaID)" +
                         "VALUES (?,?,?,?,?,?,?,?)");
@@ -109,7 +109,8 @@ public class TutorAziendaleDAO extends GenericDAO {
                 System.out.println(s);
                 return s;
             }
-            else s="Tutor già presente"; System.out.println(s);return s;
+            else s="I campi username, email e matricola devono essere univoci";
+            System.out.println(s);return s;
 
         }catch(SQLException e)
         {
@@ -138,6 +139,54 @@ public class TutorAziendaleDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
+
+    public static boolean checkTutorEmail(TutorAz tutor) throws SQLException
+    {
+        Connection newConnection = null;
+        newConnection = (Connection) genericConnectionPool.getConnection();
+        newConnection.setAutoCommit(false);
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE Email = ?");
+        stt.setString(1,tutor.getEmail());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next())
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
+    }
+    public static boolean checkTutorUsername(TutorAz tutor) throws SQLException
+    {
+        Connection newConnection = null;
+        newConnection = (Connection) genericConnectionPool.getConnection();
+        newConnection.setAutoCommit(false);
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Tutor_Aziendale WHERE Username = ?");
+        stt.setString(1,tutor.getUsername());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next())
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
+    }
+
     public static boolean checkTutor(TutorAz tutor) throws SQLException
     {
         Connection newConnection = null;

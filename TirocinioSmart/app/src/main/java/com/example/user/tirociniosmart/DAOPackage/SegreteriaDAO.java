@@ -96,26 +96,5 @@ public class SegreteriaDAO extends GenericDAO {
         }
     }
 
-    /**
-     *
-     * @return
-     */
-    public static String insert() {
-        return "";
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static String update() {
-        return "";
-    }
-
-    /**
-     *
-     */
-    public static void search() {
-    }
 
 }

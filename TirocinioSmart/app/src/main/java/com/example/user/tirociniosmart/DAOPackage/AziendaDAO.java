@@ -42,7 +42,7 @@ public class AziendaDAO extends GenericDAO {
     public static String insert(Azienda azienda) throws SQLException {
         String s;
         try {
-            if (AziendaDAO.checkAzienda(azienda)) {
+            if (AziendaDAO.checkAzienda(azienda)&&AziendaDAO.checkAziendaEmail(azienda)) {
                 Connection newConnection = (Connection) genericConnectionPool.getConnection();
 
                 newConnection.setAutoCommit(false);
@@ -71,10 +71,16 @@ public class AziendaDAO extends GenericDAO {
                 s="Inserimento dell'azienda avvenuto con successo";
                 System.out.println(s);
                 return s;
-            } else s="L'azienda è già presente";System.out.println(s);return s;
+            } else s="L'azienda è già presente";
+
+                System.out.println(s);
+                return s;
         }catch (SQLException e)
         {
-            s="Connessione al database non presente";e.printStackTrace();System.out.println(s);return s;
+            s="Connessione al database non presente";
+            e.printStackTrace();
+            System.out.println(s);
+            return s;
         }
     }
 
@@ -84,6 +90,32 @@ public class AziendaDAO extends GenericDAO {
      * @return
      * @throws SQLException
      */
+
+    public static boolean checkAziendaEmail(Azienda azienda) throws SQLException
+    {
+        Connection newConnection = (Connection) genericConnectionPool.getConnection();
+
+        newConnection.setAutoCommit(false);
+
+        System.out.println("Database connesso");
+        PreparedStatement stt = newConnection.prepareStatement("SELECT * FROM Azienda WHERE Email = ?");
+        stt.setString(1,azienda.getEmail());
+        ResultSet rs=stt.executeQuery();
+        if(rs.next()) {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return false;
+        }
+        else
+        {
+            newConnection.commit();
+            stt.close();
+            genericConnectionPool.releaseConnection(newConnection);
+            return true;
+        }
+    }
+
     public static boolean checkAzienda(Azienda azienda) throws SQLException
     {
         Connection newConnection = (Connection) genericConnectionPool.getConnection();
@@ -95,6 +127,7 @@ public class AziendaDAO extends GenericDAO {
         stt.setString(1,azienda.getId());
         ResultSet rs=stt.executeQuery();
         if(rs.next()) {
+            System.out.println("Entrato nel check dell'azienda, è già presente");
             newConnection.commit();
             stt.close();
             genericConnectionPool.releaseConnection(newConnection);
